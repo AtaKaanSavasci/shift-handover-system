@@ -14,7 +14,8 @@
     "dev:api": "tsx watch src/index.ts",
     "dev:web": "vite",
     "build:web": "tsc --project frontend/tsconfig.json && tsc --project tsconfig.tools.json && vite build",
-    "pretest": "npm run build:web"
+    "pretest": "npm run build:web",
+    "pretest:integration": "npm run build:web"
   },
   "keywords": [],
   "author": "",

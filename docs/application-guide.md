@@ -45,7 +45,8 @@ For development, use `npm run dev`. Open **http://localhost:3000/app/**.
 The root URL `/` also redirects to this page. React/TypeScript frontend source
 lives in `frontend/`. Vite compiles it into the generated, git-ignored `public/`
 directory, which Express serves on the same address as the API. `npm run build`
-builds both parts, and `npm test` first builds browser assets for static-asset checks.
+builds both parts. Both `npm test` and `npm run test:integration` first build
+browser assets, including on clean checkouts, for their static-asset checks.
 Do not edit generated files in `public/`; edit `frontend/` instead.
 
 ### React frontend

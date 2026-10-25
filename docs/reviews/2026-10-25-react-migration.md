@@ -26,6 +26,12 @@ Edit `frontend/`, not `public/`. The latter is generated and ignored by Git.
 `npm test` also builds browser assets before the existing static-asset checks.
 No database migration is needed for this change.
 
+CI follow-up: the integration security suite also requests `/app/` to check
+response headers. A clean checkout has no generated assets, so the integration
+job initially passed 20 tests and failed this one with HTTP 404. The
+`pretest:integration` hook now builds browser assets before that suite as well.
+This preserves the security assertion and fixes the missing preparation step.
+
 ## Validation
 
 Validation used Node 24.19 on Linux, system Chromium and a disposable PostgreSQL
