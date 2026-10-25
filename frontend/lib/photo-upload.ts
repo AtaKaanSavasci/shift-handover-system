@@ -1,8 +1,8 @@
 // Best-effort optimization only. Keep original files for previews, retries and
 // session recovery; the server remains responsible for all image validation.
-export async function preparePhoto(file) {
+export async function preparePhoto(file: File): Promise<File> {
   if (!["image/jpeg", "image/png", "image/webp"].includes(file.type) || typeof createImageBitmap !== "function") return file;
-  let bitmap, canvas;
+  let bitmap: ImageBitmap | undefined, canvas: HTMLCanvasElement | undefined;
   try {
     bitmap = await createImageBitmap(file, { imageOrientation: "from-image" });
     if (!bitmap.width || !bitmap.height || bitmap.width * bitmap.height > 20_000_000) return file;
@@ -16,7 +16,7 @@ export async function preparePhoto(file) {
     if (!context) return file;
     // Preserve transparent PNG/WebP pixels; JPEG camera images stay JPEG.
     context.drawImage(bitmap, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise(resolve => canvas.toBlob(resolve, file.type, 0.8));
+    const blob = await new Promise<Blob | null>(resolve => canvas!.toBlob(resolve, file.type, 0.8));
     if (!blob || blob.type !== file.type || blob.size >= file.size) return file;
     return new File([blob], file.name, { type: blob.type, lastModified: file.lastModified });
   } catch {

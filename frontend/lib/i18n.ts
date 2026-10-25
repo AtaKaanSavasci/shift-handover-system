@@ -1,4 +1,4 @@
-const messages = {
+export const messages: Record<string, [string, string]> = {
   fieldRequired:["Bu alanı doldur.", "Fill in this field."],
   fieldEmail:["Geçerli bir e-posta adresi gir.", "Enter a valid email address."],
   fieldMinLength:["En az {count} karakter kullan.", "Use at least {count} characters."],
@@ -187,7 +187,7 @@ const messages = {
   operationHistory:["Olaylar ve devir geçmişi","Events and handover history"],noEntries:["Henüz olay veya not eklenmedi.","No events or notes yet."],shiftHistory:["Vardiya geçmişi","Shift history"],historyHint:["Kayıtlarını incele veya Excel olarak indir.","Review your records or download an Excel file."],export:["Excel’e aktar","Export to Excel"],from:["Başlangıç tarihi","Start date"],to:["Bitiş tarihi","End date"],records:["Kayıtlar","Records"],own:["Kendi vardiyalarım","My shifts"],all:["Tüm personel","All staff"],apply:["Uygula","Apply"],clear:["Temizle","Clear"],allDates:["Tüm tarihler gösteriliyor. Saatler İstanbul saatidir.","Showing all dates. Times are in Europe/Istanbul."],filterNote:["{from} → {to} · Vardiya başlangıcına göre · İstanbul saati","{from} → {to} · By shift start · Istanbul time"],firstRecord:["İlk kayıttan","From the first record"],lastRecord:["Son kayda kadar","To the last record"],scroll:["Tüm sütunları görmek için tabloyu yana kaydırabilirsin.","Scroll the table sideways to see all columns."],noShift:["Henüz bir vardiya kaydı yok.","No shift records yet."],noShiftHint:["İlk kaydını oluşturmak için yukarıdan vardiyanı başlat.","Start your first shift using the button above."],noResults:["Bu tarih aralığında kayıt bulunamadı.","No records in this date range."],noResultsHint:["Tarih aralığını değiştir veya filtreleri temizle.","Change the date range or clear the filters."],shift:["Vardiya","Shift"],staff:["Personel","Staff member"],actualStart:["Gerçek başlangıç","Actual start"],actualEnd:["Gerçek bitiş","Actual end"],inProgress:["Devam ediyor","In progress"],completed:["Tamamlandı","Completed"],unspecified:["Belirtilmemiş","Not specified"],previous:["Önceki","Previous"],next:["Sonraki","Next"],pageLabel:["{from}–{to} / {total} kayıt","{from}–{to} of {total} records"],zero:["0 kayıt","0 records"],exportLimit:["Excel seçili tarih aralığını kapsar · En fazla 5.000 vardiya","Excel includes the selected date range · Maximum 5,000 shifts"],WORKER:["Çalışan","Worker"],SUPERVISOR:["Sorumlu","Supervisor"],MANAGER:["Yönetici","Manager"],
   loginProgress:["Giriş yapılıyor…","Signing in…"],signupProgress:["Hesabın oluşturuluyor…","Creating your account…"],signupDone:["Hesabın oluşturuldu. Şimdi giriş yapabilirsin.","Account created. You can now sign in."],signedOut:["Çıkış yapıldı.","Signed out."],connection:["Sunucuya ulaşılamadı. Bağlantını kontrol edip tekrar dene.","Unable to reach the server. Check your connection and try again."],expired:["Oturumun sona erdi. Lütfen tekrar giriş yap.","Your session expired. Please sign in again."],failed:["İşlem tamamlanamadı. Tekrar dene.","The request could not be completed. Please try again."],applyFirst:["Seçtiğin filtreyi görmek ve Excel’e aktarmak için Uygula’ya bas.","Select Apply to view and export the chosen filters."],invalidRange:["Bitiş tarihi başlangıçtan önce olamaz.","End date cannot be before start date."],historyFailed:["Kayıtlar yüklenemedi. Uygula ile tekrar dene.","Records could not be loaded. Select Apply to retry."],exporting:["Excel dosyan hazırlanıyor…","Preparing your Excel file…"],exportReady:["Excel dosyan hazır. İndirme başlatıldı.","Your Excel file is ready. Download started."],photoLimit:["En fazla 3 fotoğraf, fotoğraf başına en fazla 5 MB yükleyin.","Upload up to 3 photos, maximum 5 MB per photo."],saveProgress:["Kaydediliyor…","Saving…"]
 };
-const errors = {
+const errors: Record<string, string> = {
   "Kayıt kapalı.":"Registration is closed. Contact your team lead.",
   "Kayıt yapılamadı. Bilgileri kontrol edin veya ekip sorumlusuyla iletişime geçin.":"Unable to register. Check your details or contact your team lead.",
   "Geçersiz filtre parametresi.":"Invalid search filters.",
@@ -205,33 +205,13 @@ const errors = {
   "Yalnızca JPEG, PNG veya WebP fotoğraf yükleyin.":"Upload JPEG, PNG or WebP images only.","Fotoğraf okunamadı. Geçerli JPEG, PNG veya WebP seçin.":"Unable to read the photo. Select a valid JPEG, PNG or WebP image.","En fazla 3 fotoğraf, fotoğraf başına en fazla 5 MB yükleyin.":"Upload up to 3 photos, maximum 5 MB per photo.",
   "Geçerli bir tarih aralığı seçin (YYYY-AA-GG).":"Select a valid date range (YYYY-MM-DD).", "En fazla 5000 vardiya aktarılabilir. Tarih aralığını daraltın.":"Export is limited to 5,000 shifts. Narrow the date range."
 };
-let language = "tr";
-try { if (localStorage.getItem("vardiya-language") === "en") language = "en"; } catch {}
-export const locale = () => language === "en" ? "en-GB" : "tr-TR";
-export const lang = () => language;
-export function t(key, vars = {}) {
+
+export type Language = "tr" | "en";
+export function translate(language: Language, key: string, vars: Record<string, string | number> = {}): string {
   let value = messages[key]?.[language === "en" ? 1 : 0] || key;
   for (const [name, text] of Object.entries(vars)) value = value.replaceAll(`{${name}}`, String(text));
   return value;
 }
-export const apiError = message => messages[message] ? t(message) : language === "en" ? errors[message] || t("failed") : message;
-function apply() {
-  document.documentElement.lang = language;
-  document.title = t("brand");
-  document.querySelectorAll("[data-i18n]").forEach(el => { el.textContent = t(el.dataset.i18n); });
-  document.querySelectorAll("[data-i18n-label]").forEach(el => el.setAttribute("aria-label", t(el.dataset.i18nLabel)));
-  document.querySelectorAll("[data-language]").forEach(select => {
-    select.value = language;
-    select.setAttribute("aria-label", t("chooseLanguage"));
-    select.closest(".language-control").title = `${t("chooseLanguage")} · ${language === "en" ? "English" : "Türkçe"}`;
-  });
+export function translateApiError(language: Language, message: string): string {
+  return messages[message] ? translate(language, message) : language === "en" ? errors[message] || translate(language, "failed") : message;
 }
-export function initializeLanguage() {
-  apply();
-  document.querySelectorAll("[data-language]").forEach(select => select.addEventListener("change", () => {
-    language = select.value === "en" ? "en" : "tr";
-    try { localStorage.setItem("vardiya-language", language); } catch {}
-    apply(); window.dispatchEvent(new Event("languagechange"));
-  }));
-}
-window.appI18n = { t };

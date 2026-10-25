@@ -13,7 +13,7 @@ unfinished work to the next shift. Built around GT1, GT2 and ST turbine operatio
 - Excel export, Turkish/English interface, light/dark themes and mobile layouts.
 - Optional AI chat with evidence and review suggestions; the operator makes the final decision.
 
-**Stack:** TypeScript, Express 5, Prisma 7, PostgreSQL and vanilla JavaScript.
+**Stack:** React 19, TypeScript, Vite, Express 5, Prisma 7 and PostgreSQL.
 
 ## Quick start
 
@@ -45,7 +45,9 @@ npm start
 ```
 
 Open **http://localhost:3000/app/**. For development, use `npm run dev`.
-The frontend and API run together; no separate frontend setup is needed.
+React source lives in `frontend/`; Vite builds it into `public/`, served by the API.
+`npm run dev` watches both frontend and backend at the same address.
+See the [React development guide](docs/application-guide.md#react-frontend) for Fast Refresh.
 
 AI is disabled by default. To enable it, configure `AI_ENABLED`, `OPENAI_API_KEY`
 and `OPENAI_MODEL` as described in the [AI setup guide](docs/application-guide.md#configuration).

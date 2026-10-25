@@ -5,12 +5,16 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "tsx --test tests/*.test.ts",
-    "dev": "tsx watch src/index.ts",
-    "build": "prisma generate && tsc",
+    "dev": "node scripts/dev.mjs",
+    "build": "prisma generate && tsc && npm run build:web",
     "start": "node dist/index.js",
-    "typecheck": "tsc --noEmit",
+    "typecheck": "tsc --noEmit && tsc --project frontend/tsconfig.json && tsc --project tsconfig.tools.json",
     "test:integration": "tsx --test --test-concurrency=1 tests/integration/*.test.ts",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "dev:api": "tsx watch src/index.ts",
+    "dev:web": "vite",
+    "build:web": "tsc --project frontend/tsconfig.json && tsc --project tsconfig.tools.json && vite build",
+    "pretest": "npm run build:web"
   },
   "keywords": [],
   "author": "",
@@ -24,11 +28,15 @@
     "@types/multer": "^2.3.0",
     "@types/node": "^26.6.3",
     "@types/pg": "^8.23.1",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@types/supertest": "^7.2.1",
+    "@vitejs/plugin-react": "^6.1.2",
     "prisma": "^7.10.1",
     "supertest": "^7.3.1",
     "tsx": "^4.23.15",
-    "typescript": "^7.0.2"
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.10.1",
@@ -43,6 +51,8 @@
     "multer": "^2.4.0",
     "openai": "^7.39.0",
     "pg": "^8.23.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
     "sharp": "^0.35.5"
   },
   "engines": {
