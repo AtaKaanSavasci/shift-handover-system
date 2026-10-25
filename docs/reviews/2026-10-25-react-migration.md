@@ -59,6 +59,10 @@ returns the same findings. This migration adds React/build dependencies without
 updating existing package versions or weakening the CI audit gate. A separate
 backend dependency update is needed; the current CI audit step can fail.
 
+Follow-up: the [dependency security update](2026-10-25-dependency-security.md)
+resolves these baseline findings in a subsequent commit. Both production and
+full dependency audits then report zero vulnerabilities.
+
 React adds runtime JavaScript. The browser bundle is about 343 kB before
 compression; Vite's approximately 103 kB gzip estimate is not a measured network
 transfer or a performance improvement claim. Server compression remains a
