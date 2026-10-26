@@ -285,3 +285,11 @@ td{font-size:13px}th{font-size:11px}.date-cell small{font-size:11px;color:#71806
   .ai-chat{bottom:calc(76px + env(safe-area-inset-bottom));max-height:calc(var(--visible-viewport-height,100dvh) - 92px - env(safe-area-inset-bottom));overflow-y:auto}
   .ai-chat-header{position:sticky;top:0;z-index:2;background:var(--surface)}
 }
+
+/* React keeps the established accessible palette; subtle elevation clarifies groups. */
+#root{min-height:100dvh}
+:root[data-theme] .panel,:root[data-theme] .history-card{border-radius:14px;box-shadow:0 5px 20px #0f172a05}
+:root[data-theme=dark] .panel,:root[data-theme=dark] .history-card{box-shadow:0 5px 20px #00000014}
+.workspace-nav a{border-radius:10px}
+.overview-topline .button svg{flex-shrink:0}
+.ai-details-empty{display:none}

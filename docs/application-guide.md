@@ -42,8 +42,39 @@ npm start
 ```
 
 For development, use `npm run dev`. Open **http://localhost:3000/app/**.
-The root URL `/` also redirects to this page. The frontend lives in `public/`
-and runs on the same server as the API; no separate frontend installation or build is needed.
+The root URL `/` also redirects to this page. React/TypeScript frontend source
+lives in `frontend/`. Vite compiles it into the generated, git-ignored `public/`
+directory, which Express serves on the same address as the API. `npm run build`
+builds both parts. Both `npm test` and `npm run test:integration` first build
+browser assets, including on clean checkouts, for their static-asset checks.
+Do not edit generated files in `public/`; edit `frontend/` instead.
+
+### React frontend
+
+`frontend/components/` contains the authentication, overview, entry, handover,
+history, dialogs and AI components. Shared controls use React props and state;
+`frontend/state/` owns the in-memory session, drafts, request generations and API
+coordination. `useSyncExternalStore` subscriptions let components observe stable
+state slices. No legacy DOM-rendering controller is loaded inside React.
+
+The default `npm run dev` builds/watches frontend assets before starting the API
+watcher, keeping **http://localhost:3000/app/** for existing local/LAN use. For
+Vite Fast Refresh, use two terminals:
+
+```sh
+npm run dev:api
+```
+
+```sh
+npm run dev:web -- --host 0.0.0.0
+```
+
+Open **http://localhost:5173/app/** in that mode. Vite proxies API routes to port
+3000; production continues to use the single Express origin. The frontend reads
+no server `.env` file and receives no JWT/registration/OpenAI secrets at build time.
+Frontend typechecking is included in `npm run typecheck`. React, Vite and types
+are installed by the repository's existing `npm ci`; there is no second package directory.
+No database migration is introduced by the frontend migration.
 
 Prisma commands require `DATABASE_URL`. Unit tests require a generated Prisma
 client (`npx prisma generate`), but do not use a real database.
