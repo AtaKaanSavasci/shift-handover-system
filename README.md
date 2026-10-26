@@ -74,5 +74,6 @@ role. Use HTTPS in production and keep `.env` and secrets out of Git.
 **Logout does not yet revoke issued tokens; they expire after eight hours.**
 
 - [Application guide](docs/application-guide.md): setup, updates, troubleshooting, API and feature details.
+- [Illustrated project guide (Turkish)](docs/illustrated-guide/README.md): architecture, React, charts, design trade-offs and security results; PDF and offline HTML.
 - [Security assessment](docs/reviews/2026-10-24-security-assessment.md): tested boundaries, fixes and remaining risks.
 - [Contribution conventions](docs/application-guide.md#contribution-language): English documentation and `AtaK/` working branches.
