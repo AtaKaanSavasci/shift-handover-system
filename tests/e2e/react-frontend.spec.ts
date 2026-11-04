@@ -1,4 +1,5 @@
 import { test, expect, type Page } from "@playwright/test";
+import { builtFrontend } from "../frontend-assets.js";
 import { navigate } from "./navigation.js";
 
 async function setup(page: Page) {
@@ -52,7 +53,7 @@ test("saved theme applies before the React bundle finishes loading", async ({ pa
   await page.addInitScript(() => localStorage.setItem("vardiya-theme", "dark"));
   let release!: () => void;
   const gate = new Promise<void>(resolve => { release = resolve; });
-  await page.route("**/app/app.js", async route => { await gate; await route.continue(); });
+  await page.route("**" + builtFrontend().script, async route => { await gate; await route.continue(); });
   await page.goto("/app/", { waitUntil: "commit" });
   try {
     await expect(page.locator("html")).toHaveAttribute("data-theme", "dark");

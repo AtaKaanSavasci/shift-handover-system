@@ -76,6 +76,30 @@ Frontend typechecking is included in `npm run typecheck`. React, Vite and types
 are installed by the repository's existing `npm ci`; there is no second package directory.
 No database migration is introduced by the frontend migration.
 
+### Startup compression and browser caching
+
+`npm run build` generates content-hashed JavaScript, CSS and the early theme
+script under `public/assets/`, plus precompressed Brotli (`.br`) and gzip (`.gz`)
+variants. Compression happens during the build rather than on each request.
+Express negotiates an available encoding using the browser's `Accept-Encoding`
+preferences and sends `Vary: Accept-Encoding` and the original content type.
+
+The HTML shell uses `Cache-Control: no-cache`, so each visit checks for a new
+version. Hashed public assets use a one-year `immutable` cache lifetime. A build
+with changed content produces new asset URLs, so an ordinary page refresh loads
+the new version without clearing the browser cache. Unversioned files revalidate;
+missing assets and directly requested compression sidecars are not cached.
+
+Only public frontend files receive these policies. Authentication responses,
+operational JSON, Excel downloads and protected photos retain `no-store` and
+are not compressed by this middleware. No service worker or offline data store
+is added, and session tokens/private drafts remain in memory.
+
+The usual `npm run dev` watcher rebuilds the hashed files and compression variants,
+including the prepaint theme script. The optional Vite Fast Refresh server keeps
+its normal development behavior. Edit `frontend/`; do not edit generated assets.
+See the [measured before/after results](reviews/2026-11-04-static-asset-performance.md).
+
 Prisma commands require `DATABASE_URL`. Unit tests require a generated Prisma
 client (`npx prisma generate`), but do not use a real database.
 

@@ -1,5 +1,6 @@
 import { test, expect, type Page } from "@playwright/test";
 import sharp from "sharp";
+import { builtFrontend } from "../frontend-assets.js";
 import { navigate } from "./navigation.js";
 
 const summary = { equipment: [], counts: { total: 0, important: 0, VALVE: 0, ATTENTION: 0, TASK: 0 }, openItems: [], important: [], recent: [], activeShiftId: null, receipt: null, revision: 1 };
@@ -106,9 +107,8 @@ test("connection warnings survive other successful requests, translate and recov
 
 test("photo optimization keeps small and damaged files, preserves alpha and falls back without bitmap support", async ({ page }) => {
   await page.goto("/app/");
-  const results = await page.evaluate(async () => {
-    // @ts-expect-error Browser-served module is outside the TypeScript source tree.
-    const { preparePhoto } = await import("/app/photo-upload.js");
+  const results = await page.evaluate(async (photoUploadUrl) => {
+    const { preparePhoto } = await import(photoUploadUrl);
     const damaged = new File(["damaged"], "broken.jpg", { type: "image/jpeg" });
     const brokenKept = await preparePhoto(damaged) === damaged;
     const canvas = document.createElement("canvas"); canvas.width = canvas.height = 2000;
@@ -124,7 +124,7 @@ test("photo optimization keeps small and damaged files, preserves alpha and fall
     const unsupportedKept = await preparePhoto(original) === original;
     Object.defineProperty(window, "createImageBitmap", { configurable: true, value: originalBitmap });
     return { brokenKept, smallKept, unsupportedKept, width: canvas.width, resizedBytes: resized.size, originalBytes: original.size, alpha };
-  });
+  }, builtFrontend().photoUpload);
   expect(results.brokenKept && results.smallKept && results.unsupportedKept).toBe(true);
   expect(results.resizedBytes).toBeLessThan(results.originalBytes); expect(results.alpha).toBeGreaterThan(120); expect(results.alpha).toBeLessThan(135);
 });
