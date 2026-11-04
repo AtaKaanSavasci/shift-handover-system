@@ -1,0 +1,281 @@
+{
+  "desktop": {
+    "baseline": {
+      "first": {
+        "readyMs": {
+          "median": 582.9000000003725,
+          "min": 504.80000000074506,
+          "max": 724.1000000005588
+        },
+        "transferBytes": {
+          "median": 400932,
+          "min": 400932,
+          "max": 400932
+        },
+        "assetBytes": {
+          "median": 400075,
+          "min": 400075,
+          "max": 400075
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 332.59999999962747,
+          "min": 281.70000000018626,
+          "max": 417.30000000074506
+        },
+        "transferBytes": {
+          "median": 400932,
+          "min": 400932,
+          "max": 400932
+        },
+        "assetBytes": {
+          "median": 400075,
+          "min": 400075,
+          "max": 400075
+        }
+      },
+      "reload": {
+        "readyMs": {
+          "median": 113.5,
+          "min": 112,
+          "max": 128.09999999962747
+        },
+        "transferBytes": {
+          "median": 400932,
+          "min": 400932,
+          "max": 400932
+        },
+        "assetBytes": {
+          "median": 400075,
+          "min": 400075,
+          "max": 400075
+        }
+      }
+    },
+    "updated": {
+      "first": {
+        "readyMs": {
+          "median": 548.8999999994412,
+          "min": 504.90000000037253,
+          "max": 613.4000000003725
+        },
+        "transferBytes": {
+          "median": 115938,
+          "min": 115938,
+          "max": 115938
+        },
+        "assetBytes": {
+          "median": 115288,
+          "min": 115288,
+          "max": 115288
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 349.79999999981374,
+          "min": 307.70000000018626,
+          "max": 414
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "reload": {
+        "readyMs": {
+          "median": 111.29999999981374,
+          "min": 94.29999999981374,
+          "max": 113.6000000005588
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    }
+  },
+  "mobile": {
+    "baseline": {
+      "first": {
+        "readyMs": {
+          "median": 3187.5,
+          "min": 3164.7999999998137,
+          "max": 3313
+        },
+        "transferBytes": {
+          "median": 400932,
+          "min": 400932,
+          "max": 400932
+        },
+        "assetBytes": {
+          "median": 400075,
+          "min": 400075,
+          "max": 400075
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 3148.2999999998137,
+          "min": 3097.7000000001863,
+          "max": 3181.7000000001863
+        },
+        "transferBytes": {
+          "median": 400932,
+          "min": 400932,
+          "max": 400932
+        },
+        "assetBytes": {
+          "median": 400075,
+          "min": 400075,
+          "max": 400075
+        }
+      },
+      "reload": {
+        "readyMs": {
+          "median": 2630.2000000001863,
+          "min": 2608.399999999441,
+          "max": 2644
+        },
+        "transferBytes": {
+          "median": 400932,
+          "min": 400932,
+          "max": 400932
+        },
+        "assetBytes": {
+          "median": 400075,
+          "min": 400075,
+          "max": 400075
+        }
+      }
+    },
+    "updated": {
+      "first": {
+        "readyMs": {
+          "median": 1806.199999999255,
+          "min": 1708,
+          "max": 1867.5
+        },
+        "transferBytes": {
+          "median": 115938,
+          "min": 115938,
+          "max": 115938
+        },
+        "assetBytes": {
+          "median": 115288,
+          "min": 115288,
+          "max": 115288
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 978,
+          "min": 969.2999999998137,
+          "max": 1078.7999999998137
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "reload": {
+        "readyMs": {
+          "median": 474.40000000037253,
+          "min": 445.20000000018626,
+          "max": 508.69999999925494
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    }
+  },
+  "browser": "154.0.8037.57",
+  "encoding": [
+    [
+      "/app/",
+      "gzip"
+    ],
+    [
+      "/app/assets/index-C_Hp0L_i.css",
+      "gzip"
+    ],
+    [
+      "/app/assets/theme-79fc9b9f4336.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/photo-upload-D5DiEFZ5.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/app-B9K2ogBO.js",
+      "gzip"
+    ],
+    [
+      "/app/",
+      "gzip"
+    ],
+    [
+      "/app/assets/index-C_Hp0L_i.css",
+      "gzip"
+    ],
+    [
+      "/app/assets/theme-79fc9b9f4336.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/photo-upload-D5DiEFZ5.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/app-B9K2ogBO.js",
+      "gzip"
+    ],
+    [
+      "/app/",
+      "gzip"
+    ],
+    [
+      "/app/assets/theme-79fc9b9f4336.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/app-B9K2ogBO.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/photo-upload-D5DiEFZ5.js",
+      "gzip"
+    ],
+    [
+      "/app/assets/index-C_Hp0L_i.css",
+      "gzip"
+    ]
+  ]
+}

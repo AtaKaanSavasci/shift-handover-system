@@ -1,0 +1,3786 @@
+{
+  "date": "2026-11-04",
+  "baselineSource": "ba102ce6cc319d33d1dce0ca365b73e403b465df",
+  "browser": "154.0.8037.57",
+  "trialCount": 5,
+  "server": {
+    "appCpu": 1,
+    "memoryMiB": 512,
+    "Node": "22",
+    "mode": "production",
+    "transport": "loopback HTTP"
+  },
+  "method": "Five fresh contexts per variant/profile, counterbalanced variant order. Each loads anonymous login screen, visits about:blank and returns using the same cache, then reloads. No routing, service workers, cache disabling, login or API mocks. Readiness=visible login form plus two animation frames. Timing is not Lighthouse or field CWV.",
+  "trials": [
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 1,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 724.1000000005588,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 288.70000000018626,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 128.09999999962747,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 1,
+      "variant": "updated",
+      "first": {
+        "readyMs": 613.4000000003725,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 376.20000000018626,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 111.5,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 2,
+      "variant": "updated",
+      "first": {
+        "readyMs": 548.8999999994412,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 414,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 111.29999999981374,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 2,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 582.9000000003725,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 363.1000000005588,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 124.5,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 3,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 596.8999999994412,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 281.70000000018626,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 112,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 3,
+      "variant": "updated",
+      "first": {
+        "readyMs": 506.59999999962747,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 307.70000000018626,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 94.29999999981374,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 4,
+      "variant": "updated",
+      "first": {
+        "readyMs": 504.90000000037253,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 321.30000000074506,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 113.6000000005588,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 4,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 579.4000000003725,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 417.30000000074506,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 112.70000000018626,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 5,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 504.80000000074506,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 332.59999999962747,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 113.5,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "desktop",
+      "conditions": {
+        "name": "desktop",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1
+      },
+      "trial": 5,
+      "variant": "updated",
+      "first": {
+        "readyMs": 588.2999999998137,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 349.79999999981374,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 96.70000000018626,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 1,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 3259.9000000003725,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 3148.2999999998137,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 2630.2000000001863,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 1,
+      "variant": "updated",
+      "first": {
+        "readyMs": 1806.199999999255,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 1078.7999999998137,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 474.40000000037253,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 2,
+      "variant": "updated",
+      "first": {
+        "readyMs": 1708,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 969.5999999996275,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 460.09999999962747,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 2,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 3183.5,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 3158.5,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 2608.399999999441,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 3,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 3313,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 3102.4000000003725,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 2615.2000000001863,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 3,
+      "variant": "updated",
+      "first": {
+        "readyMs": 1867.5,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 969.2999999998137,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 478.3999999994412,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 4,
+      "variant": "updated",
+      "first": {
+        "readyMs": 1795.4000000003725,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 978,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 445.20000000018626,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 4,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 3164.7999999998137,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 3097.7000000001863,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 2630.2000000001863,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 5,
+      "variant": "baseline",
+      "first": {
+        "readyMs": 3187.5,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "revisit": {
+        "readyMs": 3181.7000000001863,
+        "html": {
+          "transferSize": 857,
+          "encodedBodySize": 557
+        },
+        "resources": [
+          {
+            "path": "/app/theme.js",
+            "transferSize": 944,
+            "encodedBodySize": 644,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/app.js",
+            "transferSize": 343685,
+            "encodedBodySize": 343385,
+            "decodedBodySize": 343385
+          },
+          {
+            "path": "/app/photo-upload.js",
+            "transferSize": 1062,
+            "encodedBodySize": 762,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/styles.css",
+            "transferSize": 54384,
+            "encodedBodySize": 54084,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 400932,
+        "assetTransfer": 400075
+      },
+      "reload": {
+        "readyMs": 2644,
+        "htmlTransfer": 857,
+        "assetTransfer": 400075,
+        "totalTransfer": 400932
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/styles.css",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/theme.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/photo-upload.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        },
+        {
+          "path": "/app/app.js",
+          "status": 200,
+          "cache": "no-store",
+          "encoding": null
+        }
+      ],
+      "errors": [],
+      "failed": []
+    },
+    {
+      "profile": "mobile",
+      "conditions": {
+        "name": "mobile",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "trial": 5,
+      "variant": "updated",
+      "first": {
+        "readyMs": 1808,
+        "html": {
+          "transferSize": 650,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 698,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 102270,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 741,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 11579,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 115938,
+        "assetTransfer": 115288
+      },
+      "revisit": {
+        "readyMs": 999.3999999994412,
+        "html": {
+          "transferSize": 300,
+          "encodedBodySize": 350
+        },
+        "resources": [
+          {
+            "path": "/app/assets/theme-79fc9b9f4336.js",
+            "transferSize": 0,
+            "encodedBodySize": 398,
+            "decodedBodySize": 644
+          },
+          {
+            "path": "/app/assets/app-B9K2ogBO.js",
+            "transferSize": 0,
+            "encodedBodySize": 101970,
+            "decodedBodySize": 343394
+          },
+          {
+            "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+            "transferSize": 0,
+            "encodedBodySize": 441,
+            "decodedBodySize": 762
+          },
+          {
+            "path": "/app/assets/index-C_Hp0L_i.css",
+            "transferSize": 0,
+            "encodedBodySize": 11279,
+            "decodedBodySize": 54084
+          }
+        ],
+        "totalTransfer": 300,
+        "assetTransfer": 0
+      },
+      "reload": {
+        "readyMs": 508.69999999925494,
+        "htmlTransfer": 300,
+        "assetTransfer": 0,
+        "totalTransfer": 300
+      },
+      "headers": [
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/",
+          "status": 200,
+          "cache": "no-cache",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/theme-79fc9b9f4336.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/app-B9K2ogBO.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/photo-upload-D5DiEFZ5.js",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        },
+        {
+          "path": "/app/assets/index-C_Hp0L_i.css",
+          "status": 200,
+          "cache": "public, max-age=31536000, immutable",
+          "encoding": "gzip"
+        }
+      ],
+      "errors": [],
+      "failed": []
+    }
+  ]
+}

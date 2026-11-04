@@ -15,6 +15,7 @@ import { Role, type PrismaClient } from "./generated/prisma/client.js";
 import { authenticateToken, requireManager } from "./middleware/auth.js";
 import { createShiftService } from "./services/shift.service.js";
 import { hashPassword, verifyPassword } from "./password.js";
+import { frontendAssets } from "./frontend-assets.js";
 
 function credentials(body: unknown, registration = false) {
   if (!body || typeof body !== "object" || Array.isArray(body)) return null;
@@ -46,7 +47,7 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
 
 
   app.get("/", (_req, res) => { res.redirect("/app/"); });
-  app.use("/app", express.static(fileURLToPath(new URL("../public", import.meta.url))));
+  app.use("/app", frontendAssets(fileURLToPath(new URL("../public", import.meta.url))));
   app.get("/users", authenticate, requireManager, async (_req, res) => {
     const users = await prisma.user.findMany({ select: {
       id: true, email: true, name: true, role: true, createdAt: true
