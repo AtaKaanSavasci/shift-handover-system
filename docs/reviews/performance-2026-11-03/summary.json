@@ -1,0 +1,2326 @@
+{
+  "sourceCommit": "f123f6e47125816d4ca871b4075a2ba9435ede9e",
+  "reportDate": "2026-11-03",
+  "environment": {
+    "app": {
+      "cpuLimit": 1.0,
+      "memoryLimitBytes": 536870912
+    },
+    "postgres": {
+      "cpuLimit": 0.5,
+      "memoryLimitBytes": 536870912,
+      "version": "17.11"
+    },
+    "sourceCommit": "f123f6e47125816d4ca871b4075a2ba9435ede9e",
+    "hostNode": "v24.19.0",
+    "applicationNode": "v22.23.4",
+    "hostPlatform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "visibleLogicalCpus": 3,
+    "hostCpuMax": "200000 100000",
+    "hostMemoryMax": "8589934592",
+    "transport": "loopback HTTP; app→PG on isolated Docker bridge; no external network/proxy/TLS",
+    "testOnly": true,
+    "profiles": {
+      "1cpu": {
+        "cpuLimit": 1,
+        "memoryMiB": 512
+      },
+      "0.1cpu": {
+        "cpuLimit": 0.1,
+        "memoryMiB": 512
+      }
+    },
+    "images": {
+      "node:22-bookworm-slim": [
+        "node@sha256:4b150b48b4116e2a22f2c39cc27025fbf4f153e2078fd3b14d159fdb5c7279da"
+      ],
+      "postgres:17": [
+        "postgres@sha256:b8faeff7712663c2773a190181e1246e37e364b887611c04658c28b44e2408fe"
+      ]
+    },
+    "unmeasured": [
+      "public internet/TLS/CDN/real Render or Neon",
+      "hosting sleep/cold start",
+      "paid AI model latency",
+      "physical phone",
+      "long duration soak/leak/worst-case3x5MB upload"
+    ]
+  },
+  "fixture": {
+    "users": 10,
+    "shifts": 3010,
+    "entries": 10000,
+    "open_items": 120,
+    "photos": 500,
+    "updates": 3000,
+    "work_changes": 300,
+    "database_bytes": "90202639"
+  },
+  "profiles": {
+    "1cpu": {
+      "cases": [
+        {
+          "name": "paced-10-sessions",
+          "profile": "1cpu",
+          "sessions": 10,
+          "scheduledRps": 1,
+          "startAt": "2026-11-03T19:08:18.523Z",
+          "endAt": "2026-11-03T19:09:18.530Z",
+          "seconds": 60.000112482,
+          "completed": 60,
+          "successful": 60,
+          "statuses": {
+            "200": 60
+          },
+          "transportErrors": 0,
+          "rps": 0.9999981253035145,
+          "successRps": 0.9999981253035145,
+          "latencyMs": {
+            "n": 60,
+            "p50": 14.576710999999705,
+            "p95": 34.37039899999945,
+            "p99": 46.55849499999931,
+            "max": 46.55849499999931
+          },
+          "successLatencyMs": {
+            "n": 60,
+            "p50": 14.576710999999705,
+            "p95": 34.37039899999945,
+            "p99": 46.55849499999931,
+            "max": 46.55849499999931
+          },
+          "ttfbMs": {
+            "n": 60,
+            "p50": 14.449061999999685,
+            "p95": 34.20999999999913,
+            "p99": 45.952486000000135,
+            "max": 45.952486000000135
+          },
+          "clientCpuMs": 142.777,
+          "clientEventLoopP95ms": 20.168703,
+          "bytes": 769882,
+          "runtime": {
+            "sampleCount": 60,
+            "rssPeakMiB": 229.9609375,
+            "cpuMeanPercent": 1.392436193158813,
+            "cpuPeakPercent": 25.74189743615074,
+            "eventLoopP95MaxMs": 21.037055
+          }
+        },
+        {
+          "name": "summary",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:09:18.533Z",
+          "endAt": "2026-11-03T19:09:19.176Z",
+          "seconds": 0.6409680619999999,
+          "completed": 30,
+          "successful": 30,
+          "statuses": {
+            "200": 30
+          },
+          "transportErrors": 0,
+          "rps": 46.8042041071307,
+          "successRps": 46.8042041071307,
+          "latencyMs": {
+            "n": 30,
+            "p50": 15.366899000000558,
+            "p95": 58.69161599999643,
+            "p99": 68.64211000000068,
+            "max": 68.64211000000068
+          },
+          "successLatencyMs": {
+            "n": 30,
+            "p50": 15.366899000000558,
+            "p95": 58.69161599999643,
+            "p99": 68.64211000000068,
+            "max": 68.64211000000068
+          },
+          "ttfbMs": {
+            "n": 30,
+            "p50": 15.274927999998908,
+            "p95": 58.5821719999949,
+            "p99": 68.52926000000298,
+            "max": 68.52926000000298
+          },
+          "clientCpuMs": 19.621,
+          "clientEventLoopP95ms": 20.791295,
+          "bytes": 706650,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 229.9609375,
+            "cpuMeanPercent": 3.56255356499137,
+            "cpuPeakPercent": 3.56255356499137,
+            "eventLoopP95MaxMs": 20.217855
+          }
+        },
+        {
+          "name": "open-board",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:09:19.176Z",
+          "endAt": "2026-11-03T19:09:19.330Z",
+          "seconds": 0.15176486199999636,
+          "completed": 30,
+          "successful": 30,
+          "statuses": {
+            "200": 30
+          },
+          "transportErrors": 0,
+          "rps": 197.67421526071507,
+          "successRps": 197.67421526071507,
+          "latencyMs": {
+            "n": 30,
+            "p50": 4.760247999998683,
+            "p95": 6.3303240000022925,
+            "p99": 7.576214000000618,
+            "max": 7.576214000000618
+          },
+          "successLatencyMs": {
+            "n": 30,
+            "p50": 4.760247999998683,
+            "p95": 6.3303240000022925,
+            "p99": 7.576214000000618,
+            "max": 7.576214000000618
+          },
+          "ttfbMs": {
+            "n": 30,
+            "p50": 4.706037999996624,
+            "p95": 6.264652000005299,
+            "p99": 7.466410000000906,
+            "max": 7.466410000000906
+          },
+          "clientCpuMs": 14.047,
+          "clientEventLoopP95ms": 20.660223,
+          "bytes": 441480
+        },
+        {
+          "name": "history",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:09:19.331Z",
+          "endAt": "2026-11-03T19:09:19.636Z",
+          "seconds": 0.30358608700000334,
+          "completed": 30,
+          "successful": 30,
+          "statuses": {
+            "200": 30
+          },
+          "transportErrors": 0,
+          "rps": 98.81875779109623,
+          "successRps": 98.81875779109623,
+          "latencyMs": {
+            "n": 30,
+            "p50": 7.7550479999990785,
+            "p95": 30.62286199999653,
+            "p99": 34.08381999999983,
+            "max": 34.08381999999983
+          },
+          "successLatencyMs": {
+            "n": 30,
+            "p50": 7.7550479999990785,
+            "p95": 30.62286199999653,
+            "p99": 34.08381999999983,
+            "max": 34.08381999999983
+          },
+          "ttfbMs": {
+            "n": 30,
+            "p50": 7.687561999999161,
+            "p95": 30.563781999997445,
+            "p99": 34.01490099999501,
+            "max": 34.01490099999501
+          },
+          "clientCpuMs": 14.528,
+          "clientEventLoopP95ms": 20.955135,
+          "bytes": 442170,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 230.8359375,
+            "cpuMeanPercent": 59.55761700268569,
+            "cpuPeakPercent": 59.55761700268569,
+            "eventLoopP95MaxMs": 21.168127
+          }
+        },
+        {
+          "name": "search",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:09:19.637Z",
+          "endAt": "2026-11-03T19:09:21.118Z",
+          "seconds": 1.4800331309999966,
+          "completed": 30,
+          "successful": 30,
+          "statuses": {
+            "200": 30
+          },
+          "transportErrors": 0,
+          "rps": 20.269816513992666,
+          "successRps": 20.269816513992666,
+          "latencyMs": {
+            "n": 30,
+            "p50": 31.53382899999997,
+            "p95": 92.26158799999394,
+            "p99": 100.57616499999858,
+            "max": 100.57616499999858
+          },
+          "successLatencyMs": {
+            "n": 30,
+            "p50": 31.53382899999997,
+            "p95": 92.26158799999394,
+            "p99": 100.57616499999858,
+            "max": 100.57616499999858
+          },
+          "ttfbMs": {
+            "n": 30,
+            "p50": 31.446295999994618,
+            "p95": 92.18001599999843,
+            "p99": 100.41803100000106,
+            "max": 100.41803100000106
+          },
+          "clientCpuMs": 19.669,
+          "clientEventLoopP95ms": 23.052287,
+          "bytes": 443730,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 231.3359375,
+            "cpuMeanPercent": 15.912815655396189,
+            "cpuPeakPercent": 15.912815655396189,
+            "eventLoopP95MaxMs": 20.971519
+          }
+        },
+        {
+          "name": "shift-history",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:09:21.119Z",
+          "endAt": "2026-11-03T19:09:21.214Z",
+          "seconds": 0.09367212600000493,
+          "completed": 30,
+          "successful": 30,
+          "statuses": {
+            "200": 30
+          },
+          "transportErrors": 0,
+          "rps": 320.2660309001465,
+          "successRps": 320.2660309001465,
+          "latencyMs": {
+            "n": 30,
+            "p50": 2.842506000000867,
+            "p95": 3.78835799999797,
+            "p99": 5.573523999999452,
+            "max": 5.573523999999452
+          },
+          "successLatencyMs": {
+            "n": 30,
+            "p50": 2.842506000000867,
+            "p95": 3.78835799999797,
+            "p99": 5.573523999999452,
+            "max": 5.573523999999452
+          },
+          "ttfbMs": {
+            "n": 30,
+            "p50": 2.797341999998025,
+            "p95": 3.736881999997422,
+            "p99": 5.526396000001114,
+            "max": 5.526396000001114
+          },
+          "clientCpuMs": 11.657,
+          "clientEventLoopP95ms": 20.692991,
+          "bytes": 159516
+        },
+        {
+          "name": "photo",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:09:21.215Z",
+          "endAt": "2026-11-03T19:09:21.400Z",
+          "seconds": 0.18278349499999605,
+          "completed": 30,
+          "successful": 30,
+          "statuses": {
+            "200": 30
+          },
+          "transportErrors": 0,
+          "rps": 164.12860471893617,
+          "successRps": 164.12860471893617,
+          "latencyMs": {
+            "n": 30,
+            "p50": 5.097616999999445,
+            "p95": 12.064467000003788,
+            "p99": 12.343566999996256,
+            "max": 12.343566999996256
+          },
+          "successLatencyMs": {
+            "n": 30,
+            "p50": 5.097616999999445,
+            "p95": 12.064467000003788,
+            "p99": 12.343566999996256,
+            "max": 12.343566999996256
+          },
+          "ttfbMs": {
+            "n": 30,
+            "p50": 4.494603999999526,
+            "p95": 11.679659999994328,
+            "p99": 11.709415999997873,
+            "max": 11.709415999997873
+          },
+          "clientCpuMs": 50.049,
+          "clientEventLoopP95ms": 20.791295,
+          "bytes": 8548950
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "trial": 1,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:09:21.406Z",
+          "endAt": "2026-11-03T19:09:33.418Z",
+          "seconds": 12.009583592000002,
+          "completed": 1699,
+          "successful": 1699,
+          "statuses": {
+            "200": 1699
+          },
+          "transportErrors": 0,
+          "rps": 141.47035049006715,
+          "successRps": 141.47035049006715,
+          "latencyMs": {
+            "n": 1699,
+            "p50": 4.418332000001101,
+            "p95": 14.983485000004293,
+            "p99": 22.035512999995262,
+            "max": 78.14233700001205
+          },
+          "successLatencyMs": {
+            "n": 1699,
+            "p50": 4.418332000001101,
+            "p95": 14.983485000004293,
+            "p99": 22.035512999995262,
+            "max": 78.14233700001205
+          },
+          "ttfbMs": {
+            "n": 1699,
+            "p50": 4.3663459999952465,
+            "p95": 14.925577000001795,
+            "p99": 21.959130999995978,
+            "max": 78.07877800001006
+          },
+          "clientCpuMs": 569.908,
+          "clientEventLoopP95ms": 20.905983,
+          "bytes": 21811215,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 245.28515625,
+            "cpuMeanPercent": 59.90746512207721,
+            "cpuPeakPercent": 78.49114244379737,
+            "eventLoopP95MaxMs": 23.838719
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "trial": 2,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:09:33.426Z",
+          "endAt": "2026-11-03T19:09:45.429Z",
+          "seconds": 12.001315428000002,
+          "completed": 1724,
+          "successful": 1724,
+          "statuses": {
+            "200": 1724
+          },
+          "transportErrors": 0,
+          "rps": 143.6509197964895,
+          "successRps": 143.6509197964895,
+          "latencyMs": {
+            "n": 1724,
+            "p50": 4.287328999998863,
+            "p95": 14.636018000004697,
+            "p99": 22.83018699999957,
+            "max": 76.92119900000398
+          },
+          "successLatencyMs": {
+            "n": 1724,
+            "p50": 4.287328999998863,
+            "p95": 14.636018000004697,
+            "p99": 22.83018699999957,
+            "max": 76.92119900000398
+          },
+          "ttfbMs": {
+            "n": 1724,
+            "p50": 4.2442469999950845,
+            "p95": 14.602926000006846,
+            "p99": 22.784962999998243,
+            "max": 76.86588599999959
+          },
+          "clientCpuMs": 469.762,
+          "clientEventLoopP95ms": 20.922367,
+          "bytes": 22119391,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 245.91015625,
+            "cpuMeanPercent": 57.9385250568697,
+            "cpuPeakPercent": 67.2000187795335,
+            "eventLoopP95MaxMs": 21.905407
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "trial": 3,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:09:45.437Z",
+          "endAt": "2026-11-03T19:09:57.448Z",
+          "seconds": 12.009203515999994,
+          "completed": 1843,
+          "successful": 1843,
+          "statuses": {
+            "200": 1843
+          },
+          "transportErrors": 0,
+          "rps": 153.46563138384246,
+          "successRps": 153.46563138384246,
+          "latencyMs": {
+            "n": 1843,
+            "p50": 4.0115440000081435,
+            "p95": 13.540196000001743,
+            "p99": 22.522891000000527,
+            "max": 76.63986200001091
+          },
+          "successLatencyMs": {
+            "n": 1843,
+            "p50": 4.0115440000081435,
+            "p95": 13.540196000001743,
+            "p99": 22.522891000000527,
+            "max": 76.63986200001091
+          },
+          "ttfbMs": {
+            "n": 1843,
+            "p50": 3.9866969999857247,
+            "p95": 13.505881999997655,
+            "p99": 22.48304600000847,
+            "max": 76.5953290000034
+          },
+          "clientCpuMs": 455.397,
+          "clientEventLoopP95ms": 20.922367,
+          "bytes": 23658932,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 248.66015625,
+            "cpuMeanPercent": 57.97579381997517,
+            "cpuPeakPercent": 62.69100042628668,
+            "eventLoopP95MaxMs": 21.037055
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 10,
+          "trial": 1,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:09:57.458Z",
+          "endAt": "2026-11-03T19:10:09.541Z",
+          "seconds": 12.081710758000002,
+          "completed": 1770,
+          "successful": 1770,
+          "statuses": {
+            "200": 1770
+          },
+          "transportErrors": 0,
+          "rps": 146.50243127431108,
+          "successRps": 146.50243127431108,
+          "latencyMs": {
+            "n": 1770,
+            "p50": 59.30696600000374,
+            "p95": 177.8512069999997,
+            "p99": 223.24028099999123,
+            "max": 296.1360090000089
+          },
+          "successLatencyMs": {
+            "n": 1770,
+            "p50": 59.30696600000374,
+            "p95": 177.8512069999997,
+            "p99": 223.24028099999123,
+            "max": 296.1360090000089
+          },
+          "ttfbMs": {
+            "n": 1770,
+            "p50": 59.279865000004065,
+            "p95": 177.81513000000268,
+            "p99": 223.2094439999928,
+            "max": 296.0681429999968
+          },
+          "clientCpuMs": 492.335,
+          "clientEventLoopP95ms": 20.856831,
+          "bytes": 22711519,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 251.03515625,
+            "cpuMeanPercent": 58.39092804924035,
+            "cpuPeakPercent": 69.7735962829571,
+            "eventLoopP95MaxMs": 30.097407
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 10,
+          "trial": 2,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:10:09.552Z",
+          "endAt": "2026-11-03T19:10:21.636Z",
+          "seconds": 12.081975137999994,
+          "completed": 1766,
+          "successful": 1766,
+          "statuses": {
+            "200": 1766
+          },
+          "transportErrors": 0,
+          "rps": 146.1681537851879,
+          "successRps": 146.1681537851879,
+          "latencyMs": {
+            "n": 1766,
+            "p50": 57.624981000000844,
+            "p95": 174.4963979999884,
+            "p99": 206.679799000005,
+            "max": 301.3837019999919
+          },
+          "successLatencyMs": {
+            "n": 1766,
+            "p50": 57.624981000000844,
+            "p95": 174.4963979999884,
+            "p99": 206.679799000005,
+            "max": 301.3837019999919
+          },
+          "ttfbMs": {
+            "n": 1766,
+            "p50": 57.55919099999301,
+            "p95": 174.47360599999956,
+            "p99": 206.6569060000038,
+            "max": 301.3275670000003
+          },
+          "clientCpuMs": 473.091,
+          "clientEventLoopP95ms": 20.856831,
+          "bytes": 22658309,
+          "runtime": {
+            "sampleCount": 13,
+            "rssPeakMiB": 251.28515625,
+            "cpuMeanPercent": 60.047349064613286,
+            "cpuPeakPercent": 68.37180222624374,
+            "eventLoopP95MaxMs": 28.196863
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 10,
+          "trial": 3,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:10:21.647Z",
+          "endAt": "2026-11-03T19:10:33.723Z",
+          "seconds": 12.073640031999997,
+          "completed": 1694,
+          "successful": 1694,
+          "statuses": {
+            "200": 1694
+          },
+          "transportErrors": 0,
+          "rps": 140.30565724257303,
+          "successRps": 140.30565724257303,
+          "latencyMs": {
+            "n": 1694,
+            "p50": 59.51994800000102,
+            "p95": 181.00328600000648,
+            "p99": 219.22050900000613,
+            "max": 295.0882949999941
+          },
+          "successLatencyMs": {
+            "n": 1694,
+            "p50": 59.51994800000102,
+            "p95": 181.00328600000648,
+            "p99": 219.22050900000613,
+            "max": 295.0882949999941
+          },
+          "ttfbMs": {
+            "n": 1694,
+            "p50": 59.49358899999061,
+            "p95": 180.88355600000068,
+            "p99": 219.19837800000096,
+            "max": 295.0398750000022
+          },
+          "clientCpuMs": 604.571,
+          "clientEventLoopP95ms": 20.938751,
+          "bytes": 21734450,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 251.78515625,
+            "cpuMeanPercent": 59.48578739677489,
+            "cpuPeakPercent": 70.16633290478622,
+            "eventLoopP95MaxMs": 25.231359
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 30,
+          "trial": 1,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:10:33.736Z",
+          "endAt": "2026-11-03T19:10:46.038Z",
+          "seconds": 12.300339637000027,
+          "completed": 1738,
+          "successful": 1738,
+          "statuses": {
+            "200": 1738
+          },
+          "transportErrors": 0,
+          "rps": 141.2969114098289,
+          "successRps": 141.2969114098289,
+          "latencyMs": {
+            "n": 1738,
+            "p50": 210.95945300001767,
+            "p95": 350.0160789999936,
+            "p99": 417.0723439999856,
+            "max": 474.4358920000086
+          },
+          "successLatencyMs": {
+            "n": 1738,
+            "p50": 210.95945300001767,
+            "p95": 350.0160789999936,
+            "p99": 417.0723439999856,
+            "max": 474.4358920000086
+          },
+          "ttfbMs": {
+            "n": 1738,
+            "p50": 210.90938999998616,
+            "p95": 349.98748499999056,
+            "p99": 417.0537389999954,
+            "max": 474.4099029999925
+          },
+          "clientCpuMs": 495.871,
+          "clientEventLoopP95ms": 20.807679,
+          "bytes": 22311639,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 252.78515625,
+            "cpuMeanPercent": 63.86242073003787,
+            "cpuPeakPercent": 69.35617432203153,
+            "eventLoopP95MaxMs": 25.804799
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 30,
+          "trial": 2,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:10:46.054Z",
+          "endAt": "2026-11-03T19:10:58.240Z",
+          "seconds": 12.184454414000006,
+          "completed": 1743,
+          "successful": 1743,
+          "statuses": {
+            "200": 1743
+          },
+          "transportErrors": 0,
+          "rps": 143.0511322687771,
+          "successRps": 143.0511322687771,
+          "latencyMs": {
+            "n": 1743,
+            "p50": 213.7937700000184,
+            "p95": 319.7348420000053,
+            "p99": 404.1730910000042,
+            "max": 447.16302700000233
+          },
+          "successLatencyMs": {
+            "n": 1743,
+            "p50": 213.7937700000184,
+            "p95": 319.7348420000053,
+            "p99": 404.1730910000042,
+            "max": 447.16302700000233
+          },
+          "ttfbMs": {
+            "n": 1743,
+            "p50": 213.71080000000075,
+            "p95": 319.6361279999837,
+            "p99": 404.13561100000516,
+            "max": 447.13132799998857
+          },
+          "clientCpuMs": 435.862,
+          "clientEventLoopP95ms": 20.840447,
+          "bytes": 22365072,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 252.78515625,
+            "cpuMeanPercent": 61.93012367324459,
+            "cpuPeakPercent": 69.29578440464029,
+            "eventLoopP95MaxMs": 25.608191
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 30,
+          "trial": 3,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:10:58.255Z",
+          "endAt": "2026-11-03T19:11:10.436Z",
+          "seconds": 12.179140283000015,
+          "completed": 1800,
+          "successful": 1800,
+          "statuses": {
+            "200": 1800
+          },
+          "transportErrors": 0,
+          "rps": 147.79368314793865,
+          "successRps": 147.79368314793865,
+          "latencyMs": {
+            "n": 1800,
+            "p50": 208.68526399999973,
+            "p95": 304.1433970000071,
+            "p99": 367.76556299999356,
+            "max": 405.1455249999999
+          },
+          "successLatencyMs": {
+            "n": 1800,
+            "p50": 208.68526399999973,
+            "p95": 304.1433970000071,
+            "p99": 367.76556299999356,
+            "max": 405.1455249999999
+          },
+          "ttfbMs": {
+            "n": 1800,
+            "p50": 208.66563800000586,
+            "p95": 304.1013469999889,
+            "p99": 367.7462869999872,
+            "max": 405.1201880000008
+          },
+          "clientCpuMs": 436.056,
+          "clientEventLoopP95ms": 20.873215,
+          "bytes": 23096460,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 252.78515625,
+            "cpuMeanPercent": 61.42102611638181,
+            "cpuPeakPercent": 68.34824294633403,
+            "eventLoopP95MaxMs": 36.798463
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 50,
+          "trial": 1,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:11:10.453Z",
+          "endAt": "2026-11-03T19:11:22.720Z",
+          "seconds": 12.264526570999994,
+          "completed": 1806,
+          "successful": 1806,
+          "statuses": {
+            "200": 1806
+          },
+          "transportErrors": 0,
+          "rps": 147.2539514301649,
+          "successRps": 147.2539514301649,
+          "latencyMs": {
+            "n": 1806,
+            "p50": 331.05178599999635,
+            "p95": 525.0396039999905,
+            "p99": 615.2620440000028,
+            "max": 682.6977860000043
+          },
+          "successLatencyMs": {
+            "n": 1806,
+            "p50": 331.05178599999635,
+            "p95": 525.0396039999905,
+            "p99": 615.2620440000028,
+            "max": 682.6977860000043
+          },
+          "ttfbMs": {
+            "n": 1806,
+            "p50": 330.98528199997963,
+            "p95": 525.0095480000018,
+            "p99": 615.2425679999869,
+            "max": 682.6801630000118
+          },
+          "clientCpuMs": 445.339,
+          "clientEventLoopP95ms": 20.824063,
+          "bytes": 23173448,
+          "runtime": {
+            "sampleCount": 13,
+            "rssPeakMiB": 253.53515625,
+            "cpuMeanPercent": 63.146892129299374,
+            "cpuPeakPercent": 72.08166585716917,
+            "eventLoopP95MaxMs": 27.181055
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 50,
+          "trial": 2,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:11:22.739Z",
+          "endAt": "2026-11-03T19:11:35.126Z",
+          "seconds": 12.38256462400002,
+          "completed": 1767,
+          "successful": 1767,
+          "statuses": {
+            "200": 1767
+          },
+          "transportErrors": 0,
+          "rps": 142.70064834349273,
+          "successRps": 142.70064834349273,
+          "latencyMs": {
+            "n": 1767,
+            "p50": 353.2930819999892,
+            "p95": 536.109798999998,
+            "p99": 610.7954670000181,
+            "max": 668.513546000002
+          },
+          "successLatencyMs": {
+            "n": 1767,
+            "p50": 353.2930819999892,
+            "p95": 536.109798999998,
+            "p99": 610.7954670000181,
+            "max": 668.513546000002
+          },
+          "ttfbMs": {
+            "n": 1767,
+            "p50": 353.24288900001557,
+            "p95": 535.912421999994,
+            "p99": 610.7324200000148,
+            "max": 668.4693540000007
+          },
+          "clientCpuMs": 544.821,
+          "clientEventLoopP95ms": 20.873215,
+          "bytes": 22673025,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 253.78515625,
+            "cpuMeanPercent": 64.22724174048649,
+            "cpuPeakPercent": 71.70676283535998,
+            "eventLoopP95MaxMs": 33.619967
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "1cpu",
+          "concurrency": 50,
+          "trial": 3,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:11:35.172Z",
+          "endAt": "2026-11-03T19:11:47.519Z",
+          "seconds": 12.344694248999993,
+          "completed": 1741,
+          "successful": 1741,
+          "statuses": {
+            "200": 1741
+          },
+          "transportErrors": 0,
+          "rps": 141.03224955458361,
+          "successRps": 141.03224955458361,
+          "latencyMs": {
+            "n": 1741,
+            "p50": 354.05110499999137,
+            "p95": 530.5654560000112,
+            "p99": 598.0821709999873,
+            "max": 653.6578169999993
+          },
+          "successLatencyMs": {
+            "n": 1741,
+            "p50": 354.05110499999137,
+            "p95": 530.5654560000112,
+            "p99": 598.0821709999873,
+            "max": 653.6578169999993
+          },
+          "ttfbMs": {
+            "n": 1741,
+            "p50": 353.9374339999922,
+            "p95": 530.5453180000186,
+            "p99": 598.054930000013,
+            "max": 653.6298750000133
+          },
+          "clientCpuMs": 488.07,
+          "clientEventLoopP95ms": 20.856831,
+          "bytes": 22350133,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 254.03515625,
+            "cpuMeanPercent": 62.48250402804428,
+            "cpuPeakPercent": 71.2167548213303,
+            "eventLoopP95MaxMs": 26.574847
+          }
+        },
+        {
+          "name": "login",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:11:47.540Z",
+          "endAt": "2026-11-03T19:11:48.100Z",
+          "seconds": 0.5584630379999871,
+          "completed": 6,
+          "successful": 6,
+          "statuses": {
+            "200": 6
+          },
+          "transportErrors": 0,
+          "rps": 10.743772804530957,
+          "successRps": 10.743772804530957,
+          "latencyMs": {
+            "n": 6,
+            "p50": 66.05797399999574,
+            "p95": 140.06926599997678,
+            "p99": 140.06926599997678,
+            "max": 140.06926599997678
+          },
+          "successLatencyMs": {
+            "n": 6,
+            "p50": 66.05797399999574,
+            "p95": 140.06926599997678,
+            "p99": 140.06926599997678,
+            "max": 140.06926599997678
+          },
+          "ttfbMs": {
+            "n": 6,
+            "p50": 66.00558699999237,
+            "p95": 140.01691799997934,
+            "p99": 140.01691799997934,
+            "max": 140.01691799997934
+          },
+          "clientCpuMs": 7.121,
+          "clientEventLoopP95ms": 20.430847,
+          "bytes": 1494,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 254.03515625,
+            "cpuMeanPercent": 61.76980991652753,
+            "cpuPeakPercent": 61.76980991652753,
+            "eventLoopP95MaxMs": 21.512191
+          }
+        },
+        {
+          "name": "create-text",
+          "profile": "1cpu",
+          "concurrency": 4,
+          "startAt": "2026-11-03T19:11:48.133Z",
+          "endAt": "2026-11-03T19:11:48.316Z",
+          "seconds": 0.17643009899999015,
+          "completed": 24,
+          "successful": 24,
+          "statuses": {
+            "201": 24
+          },
+          "transportErrors": 0,
+          "rps": 136.03121086499723,
+          "successRps": 136.03121086499723,
+          "latencyMs": {
+            "n": 24,
+            "p50": 23.431651000020793,
+            "p95": 62.2110560000001,
+            "p99": 72.34986300001037,
+            "max": 72.34986300001037
+          },
+          "successLatencyMs": {
+            "n": 24,
+            "p50": 23.431651000020793,
+            "p95": 62.2110560000001,
+            "p99": 72.34986300001037,
+            "max": 72.34986300001037
+          },
+          "ttfbMs": {
+            "n": 24,
+            "p50": 23.41156300000148,
+            "p95": 62.184315999998944,
+            "p99": 72.2954219999956,
+            "max": 72.2954219999956
+          },
+          "clientCpuMs": 20.392,
+          "clientEventLoopP95ms": 20.725759,
+          "bytes": 9258
+        },
+        {
+          "name": "create-photo",
+          "profile": "1cpu",
+          "concurrency": 2,
+          "inputPhotoBytes": 284965,
+          "startAt": "2026-11-03T19:11:48.341Z",
+          "endAt": "2026-11-03T19:11:48.848Z",
+          "seconds": 0.5046675249999971,
+          "completed": 8,
+          "successful": 8,
+          "statuses": {
+            "201": 8
+          },
+          "transportErrors": 0,
+          "rps": 15.852020595143397,
+          "successRps": 15.852020595143397,
+          "latencyMs": {
+            "n": 8,
+            "p50": 93.96384599999874,
+            "p95": 259.65696399999433,
+            "p99": 259.65696399999433,
+            "max": 259.65696399999433
+          },
+          "successLatencyMs": {
+            "n": 8,
+            "p50": 93.96384599999874,
+            "p95": 259.65696399999433,
+            "p99": 259.65696399999433,
+            "max": 259.65696399999433
+          },
+          "ttfbMs": {
+            "n": 8,
+            "p50": 93.91196999998647,
+            "p95": 259.6054779999831,
+            "p99": 259.6054779999831,
+            "max": 259.6054779999831
+          },
+          "clientCpuMs": 93.074,
+          "clientEventLoopP95ms": 22.069247,
+          "bytes": 3440,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 294.40625,
+            "cpuMeanPercent": 93.15974364101795,
+            "cpuPeakPercent": 93.15974364101795,
+            "eventLoopP95MaxMs": 22.953983
+          }
+        },
+        {
+          "name": "export-3010-shifts",
+          "profile": "1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:13:25.234Z",
+          "endAt": "2026-11-03T19:13:27.230Z",
+          "seconds": 1.991739081,
+          "completed": 3,
+          "successful": 3,
+          "statuses": {
+            "200": 3
+          },
+          "transportErrors": 0,
+          "rps": 1.5062213864347025,
+          "successRps": 1.5062213864347025,
+          "latencyMs": {
+            "n": 3,
+            "p50": 588.528078,
+            "p95": 974.3254469999999,
+            "p99": 974.3254469999999,
+            "max": 974.3254469999999
+          },
+          "successLatencyMs": {
+            "n": 3,
+            "p50": 588.528078,
+            "p95": 974.3254469999999,
+            "p99": 974.3254469999999,
+            "max": 974.3254469999999
+          },
+          "ttfbMs": {
+            "n": 3,
+            "p50": 588.1308079999999,
+            "p95": 972.873513,
+            "p99": 972.873513,
+            "max": 972.873513
+          },
+          "clientCpuMs": 15.844,
+          "clientEventLoopP95ms": 20.594687,
+          "bytes": 367887,
+          "runtime": {
+            "sampleCount": 2,
+            "rssPeakMiB": 179.4453125,
+            "cpuMeanPercent": 76.04888177735847,
+            "cpuPeakPercent": 97.87779228829773,
+            "eventLoopP95MaxMs": 344.457215
+          }
+        }
+      ],
+      "mix": [
+        {
+          "concurrency": 1,
+          "trials": 3,
+          "requests": 5266,
+          "medianRps": 143.6509197964895,
+          "rpsMin": 141.47035049006715,
+          "rpsMax": 153.46563138384246,
+          "medianTrialP95ms": 14.636018000004697,
+          "p95Min": 13.540196000001743,
+          "p95Max": 14.983485000004293,
+          "medianTrialP99ms": 22.522891000000527,
+          "httpErrors": 0,
+          "transportErrors": 0
+        },
+        {
+          "concurrency": 10,
+          "trials": 3,
+          "requests": 5230,
+          "medianRps": 146.1681537851879,
+          "rpsMin": 140.30565724257303,
+          "rpsMax": 146.50243127431108,
+          "medianTrialP95ms": 177.8512069999997,
+          "p95Min": 174.4963979999884,
+          "p95Max": 181.00328600000648,
+          "medianTrialP99ms": 219.22050900000613,
+          "httpErrors": 0,
+          "transportErrors": 0
+        },
+        {
+          "concurrency": 30,
+          "trials": 3,
+          "requests": 5281,
+          "medianRps": 143.0511322687771,
+          "rpsMin": 141.2969114098289,
+          "rpsMax": 147.79368314793865,
+          "medianTrialP95ms": 319.7348420000053,
+          "p95Min": 304.1433970000071,
+          "p95Max": 350.0160789999936,
+          "medianTrialP99ms": 404.1730910000042,
+          "httpErrors": 0,
+          "transportErrors": 0
+        },
+        {
+          "concurrency": 50,
+          "trials": 3,
+          "requests": 5314,
+          "medianRps": 142.70064834349273,
+          "rpsMin": 141.03224955458361,
+          "rpsMax": 147.2539514301649,
+          "medianTrialP95ms": 530.5654560000112,
+          "p95Min": 525.0396039999905,
+          "p95Max": 536.109798999998,
+          "medianTrialP99ms": 610.7954670000181,
+          "httpErrors": 0,
+          "transportErrors": 0
+        }
+      ],
+      "reportedRequests": 21372,
+      "httpErrors": 0,
+      "transportErrors": 0,
+      "runtimeSampledPeakMiB": 294.40625,
+      "timedSeconds": 211.99736823
+    },
+    "0.1cpu": {
+      "cases": [
+        {
+          "name": "paced-10-sessions",
+          "profile": "0.1cpu",
+          "sessions": 10,
+          "scheduledRps": 1,
+          "startAt": "2026-11-03T19:19:48.496Z",
+          "endAt": "2026-11-03T19:20:48.501Z",
+          "seconds": 59.999544921,
+          "completed": 60,
+          "successful": 60,
+          "statuses": {
+            "200": 60
+          },
+          "transportErrors": 0,
+          "rps": 1.0000075847075274,
+          "successRps": 1.0000075847075274,
+          "latencyMs": {
+            "n": 60,
+            "p50": 14.355608999998367,
+            "p95": 298.6144290000011,
+            "p99": 394.8071760000021,
+            "max": 394.8071760000021
+          },
+          "successLatencyMs": {
+            "n": 60,
+            "p50": 14.355608999998367,
+            "p95": 298.6144290000011,
+            "p99": 394.8071760000021,
+            "max": 394.8071760000021
+          },
+          "ttfbMs": {
+            "n": 60,
+            "p50": 14.180822999995144,
+            "p95": 298.49784100000034,
+            "p99": 394.6866520000003,
+            "max": 394.6866520000003
+          },
+          "clientCpuMs": 162.615,
+          "clientEventLoopP95ms": 20.185087,
+          "bytes": 769882,
+          "runtime": {
+            "sampleCount": 60,
+            "rssPeakMiB": 242.76171875,
+            "cpuMeanPercent": 1.2510407546161302,
+            "cpuPeakPercent": 9.961186418993984,
+            "eventLoopP95MaxMs": 100.859903
+          }
+        },
+        {
+          "name": "summary",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:14:40.225Z",
+          "endAt": "2026-11-03T19:14:42.595Z",
+          "seconds": 2.368346982000003,
+          "completed": 15,
+          "successful": 15,
+          "statuses": {
+            "200": 15
+          },
+          "transportErrors": 0,
+          "rps": 6.33353140988358,
+          "successRps": 6.33353140988358,
+          "latencyMs": {
+            "n": 15,
+            "p50": 191.73302899999544,
+            "p95": 289.9837750000006,
+            "p99": 289.9837750000006,
+            "max": 289.9837750000006
+          },
+          "successLatencyMs": {
+            "n": 15,
+            "p50": 191.73302899999544,
+            "p95": 289.9837750000006,
+            "p99": 289.9837750000006,
+            "max": 289.9837750000006
+          },
+          "ttfbMs": {
+            "n": 15,
+            "p50": 191.60227499999746,
+            "p95": 289.78326200000447,
+            "p99": 289.78326200000447,
+            "max": 289.78326200000447
+          },
+          "clientCpuMs": 17.542,
+          "clientEventLoopP95ms": 20.234239,
+          "bytes": 353325,
+          "runtime": {
+            "sampleCount": 2,
+            "rssPeakMiB": 150.19140625,
+            "cpuMeanPercent": 9.058446558429292,
+            "cpuPeakPercent": 10.23149253121096,
+            "eventLoopP95MaxMs": 103.350271
+          }
+        },
+        {
+          "name": "open-board",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:14:42.596Z",
+          "endAt": "2026-11-03T19:14:43.496Z",
+          "seconds": 0.8983822319999963,
+          "completed": 15,
+          "successful": 15,
+          "statuses": {
+            "200": 15
+          },
+          "transportErrors": 0,
+          "rps": 16.69667928160901,
+          "successRps": 16.69667928160901,
+          "latencyMs": {
+            "n": 15,
+            "p50": 91.47070199999871,
+            "p95": 104.36685099999886,
+            "p99": 104.36685099999886,
+            "max": 104.36685099999886
+          },
+          "successLatencyMs": {
+            "n": 15,
+            "p50": 91.47070199999871,
+            "p95": 104.36685099999886,
+            "p99": 104.36685099999886,
+            "max": 104.36685099999886
+          },
+          "ttfbMs": {
+            "n": 15,
+            "p50": 91.37823999999819,
+            "p95": 104.28466800000024,
+            "p99": 104.28466800000024,
+            "max": 104.28466800000024
+          },
+          "clientCpuMs": 10.193,
+          "clientEventLoopP95ms": 20.398079,
+          "bytes": 220740,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 151.44140625,
+            "cpuMeanPercent": 9.846633554506544,
+            "cpuPeakPercent": 9.846633554506544,
+            "eventLoopP95MaxMs": 101.056511
+          }
+        },
+        {
+          "name": "history",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:14:43.497Z",
+          "endAt": "2026-11-03T19:14:44.905Z",
+          "seconds": 1.4059400509999977,
+          "completed": 15,
+          "successful": 15,
+          "statuses": {
+            "200": 15
+          },
+          "transportErrors": 0,
+          "rps": 10.669018205528042,
+          "successRps": 10.669018205528042,
+          "latencyMs": {
+            "n": 15,
+            "p50": 89.63953200000105,
+            "p95": 599.7614060000051,
+            "p99": 599.7614060000051,
+            "max": 599.7614060000051
+          },
+          "successLatencyMs": {
+            "n": 15,
+            "p50": 89.63953200000105,
+            "p95": 599.7614060000051,
+            "p99": 599.7614060000051,
+            "max": 599.7614060000051
+          },
+          "ttfbMs": {
+            "n": 15,
+            "p50": 89.53194200000144,
+            "p95": 599.6069780000034,
+            "p99": 599.6069780000034,
+            "max": 599.6069780000034
+          },
+          "clientCpuMs": 11.122,
+          "clientEventLoopP95ms": 20.332543,
+          "bytes": 221085,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 152.56640625,
+            "cpuMeanPercent": 10.091042026257032,
+            "cpuPeakPercent": 10.091042026257032,
+            "eventLoopP95MaxMs": 195.297279
+          }
+        },
+        {
+          "name": "search",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:14:44.906Z",
+          "endAt": "2026-11-03T19:14:46.019Z",
+          "seconds": 1.1115497840000026,
+          "completed": 15,
+          "successful": 15,
+          "statuses": {
+            "200": 15
+          },
+          "transportErrors": 0,
+          "rps": 13.494672227834256,
+          "successRps": 13.494672227834256,
+          "latencyMs": {
+            "n": 15,
+            "p50": 78.68074999999953,
+            "p95": 151.54027399999904,
+            "p99": 151.54027399999904,
+            "max": 151.54027399999904
+          },
+          "successLatencyMs": {
+            "n": 15,
+            "p50": 78.68074999999953,
+            "p95": 151.54027399999904,
+            "p99": 151.54027399999904,
+            "max": 151.54027399999904
+          },
+          "ttfbMs": {
+            "n": 15,
+            "p50": 78.55296200000157,
+            "p95": 151.35325600000215,
+            "p99": 151.35325600000215,
+            "max": 151.35325600000215
+          },
+          "clientCpuMs": 14.437,
+          "clientEventLoopP95ms": 22.659071,
+          "bytes": 221865,
+          "runtime": {
+            "sampleCount": 2,
+            "rssPeakMiB": 152.69140625,
+            "cpuMeanPercent": 9.753794480956461,
+            "cpuPeakPercent": 10.099847275880121,
+            "eventLoopP95MaxMs": 103.874559
+          }
+        },
+        {
+          "name": "shift-history",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:14:46.020Z",
+          "endAt": "2026-11-03T19:14:46.501Z",
+          "seconds": 0.4808471669999999,
+          "completed": 15,
+          "successful": 15,
+          "statuses": {
+            "200": 15
+          },
+          "transportErrors": 0,
+          "rps": 31.194943070133558,
+          "successRps": 31.194943070133558,
+          "latencyMs": {
+            "n": 15,
+            "p50": 4.0866490000044,
+            "p95": 93.16687699999602,
+            "p99": 93.16687699999602,
+            "max": 93.16687699999602
+          },
+          "successLatencyMs": {
+            "n": 15,
+            "p50": 4.0866490000044,
+            "p95": 93.16687699999602,
+            "p99": 93.16687699999602,
+            "max": 93.16687699999602
+          },
+          "ttfbMs": {
+            "n": 15,
+            "p50": 4.021477000002051,
+            "p95": 93.06131099999766,
+            "p99": 93.06131099999766,
+            "max": 93.06131099999766
+          },
+          "clientCpuMs": 9.279,
+          "clientEventLoopP95ms": 20.676607,
+          "bytes": 79727
+        },
+        {
+          "name": "photo",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:14:46.502Z",
+          "endAt": "2026-11-03T19:14:47.704Z",
+          "seconds": 1.2008408159999964,
+          "completed": 15,
+          "successful": 15,
+          "statuses": {
+            "200": 15
+          },
+          "transportErrors": 0,
+          "rps": 12.491247632608822,
+          "successRps": 12.491247632608822,
+          "latencyMs": {
+            "n": 15,
+            "p50": 90.51451900000393,
+            "p95": 400.58278599999903,
+            "p99": 400.58278599999903,
+            "max": 400.58278599999903
+          },
+          "successLatencyMs": {
+            "n": 15,
+            "p50": 90.51451900000393,
+            "p95": 400.58278599999903,
+            "p99": 400.58278599999903,
+            "max": 400.58278599999903
+          },
+          "ttfbMs": {
+            "n": 15,
+            "p50": 90.12325999999302,
+            "p95": 400.00587099998666,
+            "p99": 400.00587099998666,
+            "max": 400.00587099998666
+          },
+          "clientCpuMs": 36.048,
+          "clientEventLoopP95ms": 20.217855,
+          "bytes": 4274475,
+          "runtime": {
+            "sampleCount": 1,
+            "rssPeakMiB": 154.66015625,
+            "cpuMeanPercent": 11.483470767058366,
+            "cpuPeakPercent": 11.483470767058366,
+            "eventLoopP95MaxMs": 103.284735
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "trial": 1,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:14:47.705Z",
+          "endAt": "2026-11-03T19:14:59.793Z",
+          "seconds": 12.086811786000005,
+          "completed": 160,
+          "successful": 160,
+          "statuses": {
+            "200": 160
+          },
+          "transportErrors": 0,
+          "rps": 13.237568585731259,
+          "successRps": 13.237568585731259,
+          "latencyMs": {
+            "n": 160,
+            "p50": 89.42901100000017,
+            "p95": 197.5632570000016,
+            "p99": 397.6579320000019,
+            "max": 500.18508100000327
+          },
+          "successLatencyMs": {
+            "n": 160,
+            "p50": 89.42901100000017,
+            "p95": 197.5632570000016,
+            "p99": 397.6579320000019,
+            "max": 500.18508100000327
+          },
+          "ttfbMs": {
+            "n": 160,
+            "p50": 89.3332620000001,
+            "p95": 197.45391299999028,
+            "p99": 397.5502320000087,
+            "max": 500.07529700000305
+          },
+          "clientCpuMs": 119.484,
+          "clientEventLoopP95ms": 20.545535,
+          "bytes": 2063742,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 157.359375,
+            "cpuMeanPercent": 9.767334005647664,
+            "cpuPeakPercent": 10.380505417416066,
+            "eventLoopP95MaxMs": 200.146943
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "trial": 2,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:14:59.795Z",
+          "endAt": "2026-11-03T19:15:11.893Z",
+          "seconds": 12.096386033000002,
+          "completed": 187,
+          "successful": 187,
+          "statuses": {
+            "200": 187
+          },
+          "transportErrors": 0,
+          "rps": 15.459162719331841,
+          "successRps": 15.459162719331841,
+          "latencyMs": {
+            "n": 187,
+            "p50": 84.27677199999744,
+            "p95": 191.59184700000333,
+            "p99": 308.63256199999887,
+            "max": 592.3464699999895
+          },
+          "successLatencyMs": {
+            "n": 187,
+            "p50": 84.27677199999744,
+            "p95": 191.59184700000333,
+            "p99": 308.63256199999887,
+            "max": 592.3464699999895
+          },
+          "ttfbMs": {
+            "n": 187,
+            "p50": 84.16444200000842,
+            "p95": 191.48782300000312,
+            "p99": 308.53757499999483,
+            "max": 592.2423449999915
+          },
+          "clientCpuMs": 137.536,
+          "clientEventLoopP95ms": 20.545535,
+          "bytes": 2410189,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 159.90625,
+            "cpuMeanPercent": 9.935677432486356,
+            "cpuPeakPercent": 10.421462809391796,
+            "eventLoopP95MaxMs": 200.146943
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "trial": 3,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:15:11.895Z",
+          "endAt": "2026-11-03T19:15:23.993Z",
+          "seconds": 12.096283291999994,
+          "completed": 189,
+          "successful": 189,
+          "statuses": {
+            "200": 189
+          },
+          "transportErrors": 0,
+          "rps": 15.624634066316649,
+          "successRps": 15.624634066316649,
+          "latencyMs": {
+            "n": 189,
+            "p50": 84.91575499999453,
+            "p95": 192.3648450000037,
+            "p99": 497.5832820000069,
+            "max": 497.83019599999534
+          },
+          "successLatencyMs": {
+            "n": 189,
+            "p50": 84.91575499999453,
+            "p95": 192.3648450000037,
+            "p99": 497.5832820000069,
+            "max": 497.83019599999534
+          },
+          "ttfbMs": {
+            "n": 189,
+            "p50": 84.85342899999523,
+            "p95": 192.26168300000427,
+            "p99": 497.4838170000003,
+            "max": 497.7550659999979
+          },
+          "clientCpuMs": 132.248,
+          "clientEventLoopP95ms": 20.479999,
+          "bytes": 2425128,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 160.53125,
+            "cpuMeanPercent": 9.97139825557826,
+            "cpuPeakPercent": 10.293651479692416,
+            "eventLoopP95MaxMs": 105.447423
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "0.1cpu",
+          "concurrency": 10,
+          "trial": 1,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:15:23.995Z",
+          "endAt": "2026-11-03T19:15:36.394Z",
+          "seconds": 12.397055066999993,
+          "completed": 204,
+          "successful": 204,
+          "statuses": {
+            "200": 204
+          },
+          "transportErrors": 0,
+          "rps": 16.45552100055055,
+          "successRps": 16.45552100055055,
+          "latencyMs": {
+            "n": 204,
+            "p50": 396.4599320000125,
+            "p95": 1400.241510000007,
+            "p99": 1596.2019900000014,
+            "max": 1696.5771680000034
+          },
+          "successLatencyMs": {
+            "n": 204,
+            "p50": 396.4599320000125,
+            "p95": 1400.241510000007,
+            "p99": 1596.2019900000014,
+            "max": 1696.5771680000034
+          },
+          "ttfbMs": {
+            "n": 204,
+            "p50": 395.9465160000109,
+            "p95": 1400.180336000005,
+            "p99": 1596.1448539999983,
+            "max": 1696.4989729999943
+          },
+          "clientCpuMs": 123.194,
+          "clientEventLoopP95ms": 20.365311,
+          "bytes": 2617599,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 162.90625,
+            "cpuMeanPercent": 9.889724293740793,
+            "cpuPeakPercent": 10.386535849600728,
+            "eventLoopP95MaxMs": 394.264575
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "0.1cpu",
+          "concurrency": 10,
+          "trial": 2,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:15:36.396Z",
+          "endAt": "2026-11-03T19:15:48.704Z",
+          "seconds": 12.306696643000002,
+          "completed": 221,
+          "successful": 221,
+          "statuses": {
+            "200": 221
+          },
+          "transportErrors": 0,
+          "rps": 17.957702737858895,
+          "successRps": 17.957702737858895,
+          "latencyMs": {
+            "n": 221,
+            "p50": 304.8849259999988,
+            "p95": 1302.8644459999923,
+            "p99": 1606.197107,
+            "max": 1888.0136150000035
+          },
+          "successLatencyMs": {
+            "n": 221,
+            "p50": 304.8849259999988,
+            "p95": 1302.8644459999923,
+            "p99": 1606.197107,
+            "max": 1888.0136150000035
+          },
+          "ttfbMs": {
+            "n": 221,
+            "p50": 304.85086299999966,
+            "p95": 1302.8093430000008,
+            "p99": 1606.160579000003,
+            "max": 1887.9635019999987
+          },
+          "clientCpuMs": 131.929,
+          "clientEventLoopP95ms": 20.561919,
+          "bytes": 2833847,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 163.40625,
+            "cpuMeanPercent": 9.87088990682245,
+            "cpuPeakPercent": 10.619468649369262,
+            "eventLoopP95MaxMs": 699.924479
+          }
+        },
+        {
+          "name": "handover-read-mix",
+          "profile": "0.1cpu",
+          "concurrency": 10,
+          "trial": 3,
+          "durationSeconds": 12,
+          "startAt": "2026-11-03T19:15:48.707Z",
+          "endAt": "2026-11-03T19:16:01.104Z",
+          "seconds": 12.396112852000005,
+          "completed": 250,
+          "successful": 250,
+          "statuses": {
+            "200": 250
+          },
+          "transportErrors": 0,
+          "rps": 20.167612459228675,
+          "successRps": 20.167612459228675,
+          "latencyMs": {
+            "n": 250,
+            "p50": 300.20980000001146,
+            "p95": 1101.77936700001,
+            "p99": 1392.5965670000005,
+            "max": 1407.2836139999854
+          },
+          "successLatencyMs": {
+            "n": 250,
+            "p50": 300.20980000001146,
+            "p95": 1101.77936700001,
+            "p99": 1392.5965670000005,
+            "max": 1407.2836139999854
+          },
+          "ttfbMs": {
+            "n": 250,
+            "p50": 300.09041800000705,
+            "p95": 1101.7430900000036,
+            "p99": 1392.5511119999865,
+            "max": 1407.2199559999863
+          },
+          "clientCpuMs": 128.835,
+          "clientEventLoopP95ms": 20.414463,
+          "bytes": 3218565,
+          "runtime": {
+            "sampleCount": 12,
+            "rssPeakMiB": 163.65625,
+            "cpuMeanPercent": 9.946530746596492,
+            "cpuPeakPercent": 10.401661600547788,
+            "eventLoopP95MaxMs": 302.776319
+          }
+        },
+        {
+          "name": "login",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:16:01.107Z",
+          "endAt": "2026-11-03T19:16:04.193Z",
+          "seconds": 3.084614600000001,
+          "completed": 6,
+          "successful": 6,
+          "statuses": {
+            "200": 6
+          },
+          "transportErrors": 0,
+          "rps": 1.9451376518803996,
+          "successRps": 1.9451376518803996,
+          "latencyMs": {
+            "n": 6,
+            "p50": 499.85038199997507,
+            "p95": 593.0571439999912,
+            "p99": 593.0571439999912,
+            "max": 593.0571439999912
+          },
+          "successLatencyMs": {
+            "n": 6,
+            "p50": 499.85038199997507,
+            "p95": 593.0571439999912,
+            "p99": 593.0571439999912,
+            "max": 593.0571439999912
+          },
+          "ttfbMs": {
+            "n": 6,
+            "p50": 499.78635300000315,
+            "p95": 592.9872629999882,
+            "p99": 592.9872629999882,
+            "max": 592.9872629999882
+          },
+          "clientCpuMs": 14.442,
+          "clientEventLoopP95ms": 20.267007,
+          "bytes": 1494,
+          "runtime": {
+            "sampleCount": 3,
+            "rssPeakMiB": 227.8203125,
+            "cpuMeanPercent": 9.936782724618283,
+            "cpuPeakPercent": 10.308704391327932,
+            "eventLoopP95MaxMs": 100.401151
+          }
+        },
+        {
+          "name": "create-text",
+          "profile": "0.1cpu",
+          "concurrency": 4,
+          "startAt": "2026-11-03T19:16:04.196Z",
+          "endAt": "2026-11-03T19:16:06.007Z",
+          "seconds": 1.8095455169999914,
+          "completed": 24,
+          "successful": 24,
+          "statuses": {
+            "201": 24
+          },
+          "transportErrors": 0,
+          "rps": 13.2629987886622,
+          "successRps": 13.2629987886622,
+          "latencyMs": {
+            "n": 24,
+            "p50": 202.26795100001618,
+            "p95": 606.5069310000108,
+            "p99": 898.0445199999958,
+            "max": 898.0445199999958
+          },
+          "successLatencyMs": {
+            "n": 24,
+            "p50": 202.26795100001618,
+            "p95": 606.5069310000108,
+            "p99": 898.0445199999958,
+            "max": 898.0445199999958
+          },
+          "ttfbMs": {
+            "n": 24,
+            "p50": 202.2021990000212,
+            "p95": 606.4443640000245,
+            "p99": 897.9801199999929,
+            "max": 897.9801199999929
+          },
+          "clientCpuMs": 17.623,
+          "clientEventLoopP95ms": 20.316159,
+          "bytes": 9306,
+          "runtime": {
+            "sampleCount": 2,
+            "rssPeakMiB": 228.6953125,
+            "cpuMeanPercent": 10.028997176447067,
+            "cpuPeakPercent": 10.17951494821245,
+            "eventLoopP95MaxMs": 103.415807
+          }
+        },
+        {
+          "name": "create-photo",
+          "profile": "0.1cpu",
+          "concurrency": 2,
+          "inputPhotoBytes": 284965,
+          "startAt": "2026-11-03T19:16:06.009Z",
+          "endAt": "2026-11-03T19:16:10.007Z",
+          "seconds": 3.9962510769999935,
+          "completed": 8,
+          "successful": 8,
+          "statuses": {
+            "201": 8
+          },
+          "transportErrors": 0,
+          "rps": 2.001876219951035,
+          "successRps": 2.001876219951035,
+          "latencyMs": {
+            "n": 8,
+            "p50": 810.2730270000175,
+            "p95": 1577.6154859999951,
+            "p99": 1577.6154859999951,
+            "max": 1577.6154859999951
+          },
+          "successLatencyMs": {
+            "n": 8,
+            "p50": 810.2730270000175,
+            "p95": 1577.6154859999951,
+            "p99": 1577.6154859999951,
+            "max": 1577.6154859999951
+          },
+          "ttfbMs": {
+            "n": 8,
+            "p50": 810.2111819999991,
+            "p95": 1577.505701999995,
+            "p99": 1577.505701999995,
+            "max": 1577.505701999995
+          },
+          "clientCpuMs": 40.536,
+          "clientEventLoopP95ms": 20.217855,
+          "bytes": 3456,
+          "runtime": {
+            "sampleCount": 4,
+            "rssPeakMiB": 249.32421875,
+            "cpuMeanPercent": 9.874679655734049,
+            "cpuPeakPercent": 10.839739369897078,
+            "eventLoopP95MaxMs": 101.515263
+          }
+        },
+        {
+          "name": "export-3010-shifts",
+          "profile": "0.1cpu",
+          "concurrency": 1,
+          "startAt": "2026-11-03T19:16:10.009Z",
+          "endAt": "2026-11-03T19:16:29.700Z",
+          "seconds": 19.68839076899999,
+          "completed": 3,
+          "successful": 3,
+          "statuses": {
+            "200": 3
+          },
+          "transportErrors": 0,
+          "rps": 0.15237405815429045,
+          "successRps": 0.15237405815429045,
+          "latencyMs": {
+            "n": 3,
+            "p50": 5806.430889999989,
+            "p95": 9384.012495000003,
+            "p99": 9384.012495000003,
+            "max": 9384.012495000003
+          },
+          "successLatencyMs": {
+            "n": 3,
+            "p50": 5806.430889999989,
+            "p95": 9384.012495000003,
+            "p99": 9384.012495000003,
+            "max": 9384.012495000003
+          },
+          "ttfbMs": {
+            "n": 3,
+            "p50": 5806.328940000007,
+            "p95": 9383.902049999975,
+            "p99": 9383.902049999975,
+            "max": 9383.902049999975
+          },
+          "clientCpuMs": 33.642,
+          "clientEventLoopP95ms": 20.168703,
+          "bytes": 367856,
+          "runtime": {
+            "sampleCount": 5,
+            "rssPeakMiB": 273.359375,
+            "cpuMeanPercent": 9.940965887136919,
+            "cpuPeakPercent": 10.100594235115663,
+            "eventLoopP95MaxMs": 6601.834495
+          }
+        }
+      ],
+      "mix": [
+        {
+          "concurrency": 1,
+          "trials": 3,
+          "requests": 536,
+          "medianRps": 15.459162719331841,
+          "rpsMin": 13.237568585731259,
+          "rpsMax": 15.624634066316649,
+          "medianTrialP95ms": 192.3648450000037,
+          "p95Min": 191.59184700000333,
+          "p95Max": 197.5632570000016,
+          "medianTrialP99ms": 397.6579320000019,
+          "httpErrors": 0,
+          "transportErrors": 0
+        },
+        {
+          "concurrency": 10,
+          "trials": 3,
+          "requests": 675,
+          "medianRps": 17.957702737858895,
+          "rpsMin": 16.45552100055055,
+          "rpsMax": 20.167612459228675,
+          "medianTrialP95ms": 1302.8644459999923,
+          "p95Min": 1101.77936700001,
+          "p95Max": 1400.241510000007,
+          "medianTrialP99ms": 1596.2019900000014,
+          "httpErrors": 0,
+          "transportErrors": 0
+        }
+      ],
+      "reportedRequests": 1402,
+      "httpErrors": 0,
+      "transportErrors": 0,
+      "runtimeSampledPeakMiB": 273.359375,
+      "timedSeconds": 169.42359958899996
+    }
+  },
+  "payload": {
+    "app.js": {
+      "rawBytes": 343385,
+      "gzipBytes": 101716
+    },
+    "styles.css": {
+      "rawBytes": 54084,
+      "gzipBytes": 11289
+    },
+    "index.html": {
+      "rawBytes": 557,
+      "gzipBytes": 301
+    },
+    "theme.js": {
+      "rawBytes": 644,
+      "gzipBytes": 400
+    },
+    "photo-upload.js": {
+      "rawBytes": 762,
+      "gzipBytes": 443
+    }
+  },
+  "browser": [
+    {
+      "name": "desktop_local",
+      "conditions": {
+        "name": "desktop_local",
+        "viewport": {
+          "width": 1440,
+          "height": 1000
+        },
+        "deviceScaleFactor": 1,
+        "isMobile": false,
+        "hasTouch": false,
+        "cpu": 1,
+        "network": null
+      },
+      "summary": {
+        "authReadyMs": {
+          "n": 5,
+          "min": 438.5,
+          "median": 532.5,
+          "max": 631.5
+        },
+        "reloadAuthReadyMs": {
+          "n": 5,
+          "min": 124.5,
+          "median": 158.80000000074506,
+          "max": 159.89999999850988
+        },
+        "loginOverviewReadyMs": {
+          "n": 5,
+          "min": 143.19999999925494,
+          "median": 159.69999999925494,
+          "max": 391.40000000037253
+        },
+        "themeToggleMs": {
+          "n": 5,
+          "min": 46.899999998509884,
+          "median": 47.09999999962747,
+          "max": 60.20000000111759
+        },
+        "navigation": {
+          "handover": {
+            "n": 5,
+            "min": 96.60000000149012,
+            "median": 111,
+            "max": 115.40000000037253
+          },
+          "history": {
+            "n": 5,
+            "min": 80.09999999962747,
+            "median": 94.59999999962747,
+            "max": 98.40000000037253
+          },
+          "new-record": {
+            "n": 5,
+            "min": 61.30000000074506,
+            "median": 63.09999999962747,
+            "max": 63.80000000074506
+          },
+          "overview": {
+            "n": 5,
+            "min": 73,
+            "median": 80.60000000149012,
+            "max": 95.80000000074506
+          }
+        }
+      }
+    },
+    {
+      "name": "mobile_emulated_4x_cpu_150ms_1_6mbps",
+      "conditions": {
+        "name": "mobile_emulated_4x_cpu_150ms_1_6mbps",
+        "viewport": {
+          "width": 390,
+          "height": 844
+        },
+        "deviceScaleFactor": 1,
+        "isMobile": true,
+        "hasTouch": true,
+        "cpu": 4,
+        "network": {
+          "offline": false,
+          "latency": 150,
+          "downloadThroughput": 200000,
+          "uploadThroughput": 93750,
+          "connectionType": "cellular4g"
+        }
+      },
+      "summary": {
+        "authReadyMs": {
+          "n": 5,
+          "min": 3117.9000000003725,
+          "median": 3258.2000000011176,
+          "max": 3327.9000000003725
+        },
+        "reloadAuthReadyMs": {
+          "n": 5,
+          "min": 2667.39999999851,
+          "median": 2691.5,
+          "max": 2753.2000000011176
+        },
+        "loginOverviewReadyMs": {
+          "n": 5,
+          "min": 639.1999999992549,
+          "median": 651.0999999996275,
+          "max": 680.0999999996275
+        },
+        "themeToggleMs": {
+          "n": 5,
+          "min": 101.19999999925494,
+          "median": 104.80000000074506,
+          "max": 124
+        },
+        "navigation": {
+          "handover": {
+            "n": 5,
+            "min": 497.59999999962747,
+            "median": 503.90000000037253,
+            "max": 534.9000000003725
+          },
+          "history": {
+            "n": 5,
+            "min": 355.59999999962747,
+            "median": 369.90000000037253,
+            "max": 424.69999999925494
+          },
+          "new-record": {
+            "n": 5,
+            "min": 74,
+            "median": 89.09999999962747,
+            "max": 94.5
+          },
+          "overview": {
+            "n": 5,
+            "min": 340.19999999925494,
+            "median": 341.1000000014901,
+            "max": 342.40000000037253
+          }
+        }
+      }
+    }
+  ],
+  "indexExperiment": {
+    "methodology": {
+      "repetitions": 30,
+      "warmupsPerPhasePerQuery": 3,
+      "order": "Photo and shift queries alternate within each repetition; their leading order alternates. Baseline phase precedes indexed phase.",
+      "sql": "EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON); planner Execution Time excludes HTTP/auth/ORM overhead, and client wall time includes the local round trip.",
+      "parameters": "Last20 OperationEntry IDs at the start of the experiment; fixed userId=1 for personal shift history.",
+      "caveats": [
+        "Small synthetic fixture, warm shared buffers and OS cache; no cold-cache claims.",
+        "Index creation itself warms pages, so before/after phases are not a fully randomized crossover.",
+        "Only30 observations per query/phase: medians describe this run and are not a capacity or p95 production estimate.",
+        "The direct SQL probes approximate two route/relation query shapes; they do not measure end-to-end API improvements.",
+        "Indexes add write, storage and migration costs, which this experiment does not benchmark.",
+        "SELECT of photo IDs does not read or transmit stored photo bytes."
+      ]
+    },
+    "fixture": {
+      "users": 10,
+      "shifts": 3010,
+      "entries": 10032,
+      "photos": 508,
+      "notes": 3000,
+      "selectedEntryIds": [
+        10032,
+        10031,
+        10030,
+        10029,
+        10028,
+        10027,
+        10026,
+        10025,
+        10024,
+        10023,
+        10022,
+        10021,
+        10020,
+        10019,
+        10018,
+        10017,
+        10016,
+        10015,
+        10014,
+        10013
+      ],
+      "matchingPhotos": 8,
+      "user1Shifts": 301
+    },
+    "phases": {
+      "before": {
+        "photo_relation": {
+          "count": 30,
+          "executionMedianMs": 0.045,
+          "planningMedianMs": 0.022,
+          "clientWallMedianMs": 0.4853089999999938,
+          "executionMinMs": 0.043,
+          "executionMaxMs": 0.108
+        },
+        "personal_shift_history": {
+          "count": 30,
+          "executionMedianMs": 0.2225,
+          "planningMedianMs": 0.03,
+          "clientWallMedianMs": 0.6926245000000009,
+          "executionMinMs": 0.217,
+          "executionMaxMs": 1.213
+        }
+      },
+      "after": {
+        "photo_relation": {
+          "count": 30,
+          "executionMedianMs": 0.023,
+          "planningMedianMs": 0.041,
+          "clientWallMedianMs": 0.5717399999999913,
+          "executionMinMs": 0.016,
+          "executionMaxMs": 0.053
+        },
+        "personal_shift_history": {
+          "count": 30,
+          "executionMedianMs": 0.0305,
+          "planningMedianMs": 0.055,
+          "clientWallMedianMs": 0.6709094999999934,
+          "executionMinMs": 0.023,
+          "executionMaxMs": 0.066
+        }
+      }
+    },
+    "cleanup": {
+      "droppedIndexes": [
+        "perf_probe_operation_photo_entry_idx",
+        "perf_probe_shift_user_time_idx"
+      ],
+      "remainingProbeIndexes": []
+    }
+  },
+  "totalScoredApiSamples": 22774,
+  "measurementCorrections": {
+    "1cpu": [
+      {
+        "case": "export-3010-shifts",
+        "reason": "Export was repeated in a fresh1CPU process with all three requests inside the timed and SQL-statistics window. The initial export timing wrapper was superseded; other cases are unchanged.",
+        "source": "api-1cpu-export.json"
+      }
+    ],
+    "0.1cpu": [
+      {
+        "case": "paced-10-sessions",
+        "reason": "The initial phase began while the0.1CPU container was still starting and saw12 immediate ECONNRESETs. Warm comparison was repeated after explicit HTTP readiness,30 successful warm-up requests and a fresh identical fixture. Initial cold/preparation observations are preserved separately and not counted as warm-service failures.",
+        "source": "api-0.1cpu-paced.json"
+      }
+    ]
+  }
+}
