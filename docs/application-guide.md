@@ -132,6 +132,11 @@ distributed capacity guarantee. The six handover preview lists use one bounded
 SQL statement inside the existing consistent transaction; panel filters, ordering,
 limits and acknowledgment behavior are preserved.
 
+Migration `20261105000100_open_board_order` adds a partial ordering index for open
+tasks, valves and attention items. It supports the priority/date/ID preview order
+without indexing historical notes or closed work. Apply it with the usual
+`npx prisma migrate deploy` before starting the updated backend.
+
 Prisma commands require `DATABASE_URL`. Unit tests require a generated Prisma
 client (`npx prisma generate`), but do not use a real database.
 
