@@ -100,6 +100,22 @@ including the prepaint theme script. The optional Vite Fast Refresh server keeps
 its normal development behavior. Edit `frontend/`; do not edit generated assets.
 See the [measured before/after results](reviews/2026-11-04-static-asset-performance.md).
 
+### Optional backend timings
+
+Set `PERFORMANCE_LOGGING=true` in the server environment and restart to emit one
+JSON `http_request` record per API response. It includes the method, route template,
+status, completion flag, elapsed milliseconds, Prisma query-event count/duration,
+pool total/idle/waiting counts and process RSS. Static `/app` requests are excluded.
+Logging is disabled by default; SQL, parameters, headers, raw URLs, IDs and user
+content are not written to these records. There is no public metrics endpoint.
+
+Database duration is the sum reported by Prisma, including driver/round-trip work;
+it is not PostgreSQL execution time alone and concurrent query durations can
+overlap. Pool counts and process-wide memory are snapshots at response completion,
+not peak measurements or memory attributed to a single request. Aggregate completed
+records by route to calculate p50/p95 and error rates; use PostgreSQL query plans
+and `pg_stat_statements` for database-specific investigation.
+
 Prisma commands require `DATABASE_URL`. Unit tests require a generated Prisma
 client (`npx prisma generate`), but do not use a real database.
 

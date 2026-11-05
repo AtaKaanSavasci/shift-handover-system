@@ -16,6 +16,8 @@ import { authenticateToken, requireManager } from "./middleware/auth.js";
 import { createShiftService } from "./services/shift.service.js";
 import { hashPassword, verifyPassword } from "./password.js";
 import { frontendAssets } from "./frontend-assets.js";
+import { requestPerformance, type PerformanceLogger } from "./performance.js";
+import { databasePoolStats } from "./database.js";
 
 function credentials(body: unknown, registration = false) {
   if (!body || typeof body !== "object" || Array.isArray(body)) return null;
@@ -28,8 +30,9 @@ function credentials(body: unknown, registration = false) {
   return { email, password, name: typeof name === "string" ? name.trim() : "" };
 }
 
-export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null } = {}) {
+export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null; performanceLogger?: PerformanceLogger } = {}) {
   const app = express();
+  if (options.performanceLogger) app.use(requestPerformance(options.performanceLogger, () => databasePoolStats(prisma)));
   const registrationHash = options.registrationCode ? createHash("sha256").update(options.registrationCode).digest() : null;
   const authenticate = authenticateToken(prisma, secret);
   const shifts = createShiftService(prisma);
