@@ -116,6 +116,22 @@ not peak measurements or memory attributed to a single request. Aggregate comple
 records by route to calculate p50/p95 and error rates; use PostgreSQL query plans
 and `pg_stat_statements` for database-specific investigation.
 
+### Bounded backend work
+
+Each application instance admits one multipart entry upload and one Excel build
+at a time, in separate slots shared by all users. Excess work receives HTTP 503
+with `Retry-After: 3` before upload buffering or export queries. There is no waiting
+queue. Slots are released when the work settles, including validation/database
+failures; closing a browser connection does not free a slot while work continues.
+Authentication, role checks, file/row limits and existing rate limits still apply.
+
+Entries without photos are sent as JSON and do not occupy the upload slot. Busy
+responses are translated in Turkish and English, and entry drafts/photos remain
+available for an explicit retry. The limits are local to one process, not a
+distributed capacity guarantee. The six handover preview lists use one bounded
+SQL statement inside the existing consistent transaction; panel filters, ordering,
+limits and acknowledgment behavior are preserved.
+
 Prisma commands require `DATABASE_URL`. Unit tests require a generated Prisma
 client (`npx prisma generate`), but do not use a real database.
 

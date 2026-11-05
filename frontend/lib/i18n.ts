@@ -200,6 +200,7 @@ const errors: Record<string, string> = {
   "Zaten açık bir vardiyanız var":"You already have an active shift.","Sonlandırılacak aktif bir vardiya bulunamadı.":"No active shift to end.",
   "Geçerli vardiya tarihi ve saat aralığı gerekli.":"Enter a valid shift date and time slot.",
   "Çok fazla deneme. Lütfen daha sonra tekrar deneyin.":"Too many requests. Please try again later.","Sunucu hatası oluştu.":"A server error occurred.",
+  "Sunucu şu anda yoğun. Birkaç saniye sonra tekrar deneyin.":"The server is busy. Please try again in a few seconds.",
   "Tüm personeli görmek için yönetici yetkisi gerekli.":"Manager permission is required to view all staff.","Metin alanlarını kontrol edin.":"Check the text fields.","Geçerli bir kayıt türü seçin.":"Select a valid entry type.","Ekipman durumunu kontrol edin.":"Check the equipment status.",
   "Kayıt başka bir kullanıcı tarafından güncellendi. Yenileyip tekrar deneyin.":"Another user updated this record. Refresh and try again.","Kayıt bulunamadı veya zaten kapatıldı.":"The item was not found or has already been closed.","Fotoğraf bulunamadı.":"Photo not found.",
   "Yalnızca JPEG, PNG veya WebP fotoğraf yükleyin.":"Upload JPEG, PNG or WebP images only.","Fotoğraf okunamadı. Geçerli JPEG, PNG veya WebP seçin.":"Unable to read the photo. Select a valid JPEG, PNG or WebP image.","En fazla 3 fotoğraf, fotoğraf başına en fazla 5 MB yükleyin.":"Upload up to 3 photos, maximum 5 MB per photo.",

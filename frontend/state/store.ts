@@ -301,7 +301,8 @@ export class AppStore {
       for (const file of files) { const prepared = await preparePhoto(file); if (!active()) throw aborted(); body.append("photos", prepared); }
       if (!active()) return;
       this.patch({ entryMessage: { key: "saveProgress" } });
-      await this.api("/operations/entries", { method: "POST", body });
+      if (files.length) await this.api("/operations/entries", { method: "POST", body });
+      else await this.json("/operations/entries", "POST", Object.fromEntries(body));
       if (!active()) return;
       this.resetEntry();
       this.patch({ board: { ...this.state.board, page: 1 }, operations: { ...this.state.operations, page: 1 }, entryMessage: { key: "entrySaved" } });
