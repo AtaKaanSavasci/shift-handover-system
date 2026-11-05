@@ -177,6 +177,7 @@ model OperationEntry {
   @@index([closedAt, id])
   @@index([equipmentCode, createdAt])
   @@index([closedAt, kind, createdAt])
+  @@index([priority(sort: Desc), createdAt(sort: Desc), id(sort: Desc)], map: "OperationEntry_open_board_order", where: raw("((\"closedAt\" IS NULL) AND (kind = ANY (ARRAY['TASK'::\"EntryKind\", 'VALVE'::\"EntryKind\", 'ATTENTION'::\"EntryKind\"])))"))
 }
 
 model OperationPhoto {

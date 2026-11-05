@@ -16,6 +16,9 @@ import { authenticateToken, requireManager } from "./middleware/auth.js";
 import { createShiftService } from "./services/shift.service.js";
 import { hashPassword, verifyPassword } from "./password.js";
 import { frontendAssets } from "./frontend-assets.js";
+import { requestPerformance, type PerformanceLogger } from "./performance.js";
+import { databasePoolStats } from "./database.js";
+import { createWorkLimit, WorkloadBusyError } from "./workload.js";
 
 function credentials(body: unknown, registration = false) {
   if (!body || typeof body !== "object" || Array.isArray(body)) return null;
@@ -28,11 +31,13 @@ function credentials(body: unknown, registration = false) {
   return { email, password, name: typeof name === "string" ? name.trim() : "" };
 }
 
-export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null } = {}) {
+export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null; performanceLogger?: PerformanceLogger } = {}) {
   const app = express();
+  if (options.performanceLogger) app.use(requestPerformance(options.performanceLogger, () => databasePoolStats(prisma)));
   const registrationHash = options.registrationCode ? createHash("sha256").update(options.registrationCode).digest() : null;
   const authenticate = authenticateToken(prisma, secret);
   const shifts = createShiftService(prisma);
+  const exports = createWorkLimit();
   app.disable("x-powered-by");
   app.use(helmet({ contentSecurityPolicy: { directives: {
     imgSrc: ["'self'", "data:", "blob:"],
@@ -114,7 +119,7 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
   });
   app.get("/shifts/export", authenticate, limiter(5), async (req, res) => {
     const where = shiftFilter(req.query, req.user!);
-    const buffer = await createShiftWorkbook(prisma, where, req.get("Accept-Language")?.toLowerCase().startsWith("en") ? "en" : "tr");
+    const buffer = await exports.run(() => createShiftWorkbook(prisma, where, req.get("Accept-Language")?.toLowerCase().startsWith("en") ? "en" : "tr"));
     if (!buffer) {
       return res.status(413).json({ error: `En fazla ${MAX_EXPORT_ROWS} vardiya aktarılabilir. Tarih aralığını daraltın.` });
     }
@@ -126,6 +131,7 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
   app.use("/ai", authenticate, createAiRouter(options.analyzer));
   app.use("/operations", authenticate, createOperationsRouter(prisma));
   const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
+    if (error instanceof WorkloadBusyError) res.setHeader("Retry-After", String(error.retryAfterSeconds));
     if (error instanceof multer.MulterError) return res.status(400).json({ error: "En fazla 3 fotoğraf, fotoğraf başına en fazla 5 MB yükleyin." });
     const status = error?.statusCode ?? error?.status;
     if (status === 413) return res.status(413).json({ error: "İstek boyutu çok büyük." });

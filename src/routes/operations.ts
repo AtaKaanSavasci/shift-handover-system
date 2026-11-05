@@ -3,12 +3,13 @@ import { appendUpdate, listUpdates, updatePreviews, emptyUpdates } from "../serv
 import { handoverSummary } from "../services/handover-summary.js";
 import { operationQuery } from "../services/operation-query.js";
 import { Prisma } from "../generated/prisma/client.js";
-import { Router } from "express";
+import { Router, type RequestHandler } from "express";
 import multer from "multer";
 import sharp from "sharp";
 import { rateLimit } from "express-rate-limit";
 import { EntryKind, EntryPriority, EquipmentStatus, type PrismaClient } from "../generated/prisma/client.js";
 import { RequestError } from "../services/shift-query.js";
+import { createWorkLimit } from "../workload.js";
 const user = { select: { id: true, name: true } } as const;
 const entrySelect = { ...workSelect, id: true, kind: true, priority: true, title: true, description: true, createdAt: true,
   shiftId: true, equipmentCode: true, author: user, closedAt: true, closedBy: user, closeNote: true,
@@ -24,6 +25,7 @@ function id(value: unknown) {
 }
 export function createOperationsRouter(prisma: PrismaClient) {
   const router = Router();
+  const uploadWork = createWorkLimit();
   const uploads = multer({ storage: multer.memoryStorage(), limits: { fileSize: 5 * 1024 * 1024, files: 3, fields: 8, fieldSize: 16000 },
     fileFilter: (_req, file, done) => {
       if (!["image/jpeg", "image/png", "image/webp"].includes(file.mimetype)) return done(new RequestError("Yalnızca JPEG, PNG veya WebP fotoğraf yükleyin.", 400));
@@ -61,7 +63,9 @@ export function createOperationsRouter(prisma: PrismaClient) {
     const previews = await updatePreviews(prisma, items.map(item => item.id));
     res.json({ items: items.map(item => ({ ...item, ...(previews.get(item.id) ?? emptyUpdates) })), total, page: Number(page), pageSize: 20 });
   });
-  router.post("/entries", writeLimit, uploads.array("photos", 3), async (req, res) => {
+  const parsePhotos = uploads.array("photos", 3);
+  const createEntry: RequestHandler = async (req, res) => {
+    await new Promise<void>((resolve, reject) => parsePhotos(req, res, error => error ? reject(error) : resolve()));
     const { kind, priority = "NORMAL" } = req.body ?? {};
     if (!Object.values(EntryKind).includes(kind) || !Object.values(EntryPriority).includes(priority)) throw new RequestError("Geçerli bir kayıt türü seçin.", 400);
     const equipmentCode = [undefined, null, ""].includes(req.body.equipmentCode) ? null : req.body.equipmentCode;
@@ -90,6 +94,12 @@ export function createOperationsRouter(prisma: PrismaClient) {
         ...(shift ? { shiftId: shift.id } : {}), photos: { create: photos } }, select: entrySelect });
     });
     res.status(201).json(entry);
+  };
+  router.post("/entries", writeLimit, async (req, res, next) => {
+    const create = async () => { await createEntry(req, res, next); };
+    // JSON-only notes remain available while another operator uploads photos.
+    if (req.is("multipart")) await uploadWork.run(create);
+    else await create();
   });
   router.get("/entries/:id/work", async (req, res) => {
     const entryId = id(req.params.id), page = req.query.page ?? "1";

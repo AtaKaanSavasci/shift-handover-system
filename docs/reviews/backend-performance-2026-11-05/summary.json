@@ -1,0 +1,244 @@
+{
+  "date": "2026-11-05",
+  "baseline": "b2e3b98 (observability on original 8c851c0 business code)",
+  "updatedCommit": "61d2f6b60b1d9cd1e762e3fa296c445c568e94fb",
+  "conditions": {
+    "appCpu": 1,
+    "appMemoryMiB": 512,
+    "postgresCpu": 0.5,
+    "postgresMemoryMiB": 512,
+    "node": "22",
+    "transport": "loopback HTTP",
+    "logging": "PERFORMANCE_LOGGING=true in both variants",
+    "mix": [
+      "/operations/summary",
+      "/shifts/current",
+      "/operations/entries?view=open&page=1"
+    ]
+  },
+  "fixture": {
+    "users": 10,
+    "shifts": 3010,
+    "entries": 10000,
+    "open_items": 120,
+    "photos": 500,
+    "updates": 3000,
+    "work_changes": 300,
+    "database_bytes": "90243599"
+  },
+  "variants": {
+    "baseline": {
+      "summary-1": {
+        "trials": 3,
+        "requests": 150,
+        "medianTrialRps": 53.54791086445605,
+        "medianTrialP50Ms": 15.705450000000383,
+        "medianTrialP95Ms": 31.10803600000054,
+        "trialP95RangeMs": [
+          23.01437199999964,
+          45.384184000000005
+        ]
+      },
+      "read-mix-1": {
+        "trials": 3,
+        "requests": 3093,
+        "medianTrialRps": 131.44067133585764,
+        "medianTrialP50Ms": 4.7516709999981686,
+        "medianTrialP95Ms": 16.550801000004867,
+        "trialP95RangeMs": [
+          16.4266540000026,
+          18.174349999999322
+        ]
+      },
+      "read-mix-10": {
+        "trials": 3,
+        "requests": 3440,
+        "medianTrialRps": 141.88080673990277,
+        "medianTrialP50Ms": 49.021022999993875,
+        "medianTrialP95Ms": 171.36273799999617,
+        "trialP95RangeMs": [
+          169.13520699999935,
+          179.47812400000112
+        ]
+      },
+      "paced": {
+        "requests": 60,
+        "p50Ms": 13.85324599998421,
+        "p95Ms": 40.143516000011005
+      },
+      "concurrent-photos": {
+        "statuses": {
+          "201": 3
+        },
+        "transportErrors": 0,
+        "maxMs": 209.12979100001394,
+        "samples": [
+          {
+            "path": "/operations/entries",
+            "status": 201,
+            "error": null,
+            "ms": 209.12979100001394,
+            "bytes": 428
+          },
+          {
+            "path": "/operations/entries",
+            "status": 201,
+            "error": null,
+            "ms": 174.78952999998,
+            "bytes": 428
+          },
+          {
+            "path": "/operations/entries",
+            "status": 201,
+            "error": null,
+            "ms": 155.21436600000015,
+            "bytes": 428
+          }
+        ]
+      },
+      "concurrent-exports": {
+        "statuses": {
+          "200": 3
+        },
+        "transportErrors": 0,
+        "maxMs": 1849.7832270000072,
+        "samples": [
+          {
+            "path": "/shifts/export?scope=all",
+            "status": 200,
+            "error": null,
+            "ms": 1849.7832270000072,
+            "bytes": 122725
+          },
+          {
+            "path": "/shifts/export?scope=all",
+            "status": 200,
+            "error": null,
+            "ms": 1847.1720729999943,
+            "bytes": 122725
+          },
+          {
+            "path": "/shifts/export?scope=all",
+            "status": 200,
+            "error": null,
+            "ms": 1845.7356969999964,
+            "bytes": 122725
+          }
+        ]
+      },
+      "summaryMetrics": {
+        "n": 150,
+        "medianQueries": 16.0,
+        "medianDatabaseDurationMs": 9.9
+      }
+    },
+    "updated": {
+      "summary-1": {
+        "trials": 3,
+        "requests": 150,
+        "medianTrialRps": 65.4010038549196,
+        "medianTrialP50Ms": 12.955476999999973,
+        "medianTrialP95Ms": 23.09560300000021,
+        "trialP95RangeMs": [
+          16.272135000000162,
+          24.839680000000044
+        ]
+      },
+      "read-mix-1": {
+        "trials": 3,
+        "requests": 3618,
+        "medianTrialRps": 151.46107821887605,
+        "medianTrialP50Ms": 4.7993509999942034,
+        "medianTrialP95Ms": 13.570630000001984,
+        "trialP95RangeMs": [
+          12.249738999998954,
+          13.728052000000389
+        ]
+      },
+      "read-mix-10": {
+        "trials": 3,
+        "requests": 4066,
+        "medianTrialRps": 167.9136998525293,
+        "medianTrialP50Ms": 50.316606000007596,
+        "medianTrialP95Ms": 122.61519099998986,
+        "trialP95RangeMs": [
+          120.47445800001151,
+          134.8054359999951
+        ]
+      },
+      "paced": {
+        "requests": 60,
+        "p50Ms": 13.054258999996819,
+        "p95Ms": 27.876126999995904
+      },
+      "concurrent-photos": {
+        "statuses": {
+          "201": 1,
+          "503": 2
+        },
+        "transportErrors": 0,
+        "maxMs": 123.13588500002516,
+        "samples": [
+          {
+            "path": "/operations/entries",
+            "status": 201,
+            "error": null,
+            "ms": 123.13588500002516,
+            "bytes": 428
+          },
+          {
+            "path": "/operations/entries",
+            "status": 503,
+            "error": null,
+            "ms": 25.560685999982525,
+            "bytes": 72
+          },
+          {
+            "path": "/operations/entries",
+            "status": 503,
+            "error": null,
+            "ms": 43.13806999998633,
+            "bytes": 72
+          }
+        ]
+      },
+      "concurrent-exports": {
+        "statuses": {
+          "200": 1,
+          "503": 2
+        },
+        "transportErrors": 0,
+        "maxMs": 951.900335000013,
+        "samples": [
+          {
+            "path": "/shifts/export?scope=all",
+            "status": 503,
+            "error": null,
+            "ms": 8.862911000003805,
+            "bytes": 72
+          },
+          {
+            "path": "/shifts/export?scope=all",
+            "status": 503,
+            "error": null,
+            "ms": 8.873920000012731,
+            "bytes": 72
+          },
+          {
+            "path": "/shifts/export?scope=all",
+            "status": 200,
+            "error": null,
+            "ms": 951.900335000013,
+            "bytes": 122725
+          }
+        ]
+      },
+      "summaryMetrics": {
+        "n": 150,
+        "medianQueries": 11.0,
+        "medianDatabaseDurationMs": 7.705
+      }
+    }
+  },
+  "scoredReadRequests": 14637
+}

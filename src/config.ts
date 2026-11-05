@@ -16,3 +16,10 @@ export function getRegistrationCode(): string | null {
   }
   return code;
 }
+
+export function getPerformanceLogging(): boolean {
+  const value = process.env.PERFORMANCE_LOGGING?.trim().toLowerCase();
+  if (!value || value === "false") return false;
+  if (value === "true") return true;
+  throw new Error("PERFORMANCE_LOGGING true veya false olmalıdır.");
+}

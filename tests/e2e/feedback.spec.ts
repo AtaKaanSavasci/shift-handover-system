@@ -78,6 +78,45 @@ test("new-entry feedback preserves drafts on failure and uploads a smaller real 
   await expect(page.locator("#entry-title")).toHaveValue(""); await expect(page.locator("#photo-previews figure")).toHaveCount(0);
 });
 
+test("text-only entries send JSON with the same equipment and work fields", async ({ page }) => {
+  await setup(page); await navigate(page, "new-record");
+  let submitted: unknown;
+  await page.route("**/operations/entries", route => {
+    expect(route.request().headers()["content-type"]).toContain("application/json");
+    submitted = route.request().postDataJSON(); return route.fulfill({ status: 201, json: { id: 10 } });
+  });
+  await page.locator("#entry-kind").selectOption("TASK");
+  await page.locator("#entry-unit").selectOption("GT2");
+  await page.locator("#entry-title").fill("Inspect GT2");
+  await page.locator("#entry-description").fill("Inspection is pending.");
+  await page.locator("#entry-save").click();
+  await expect(page.locator("#entry-message")).toContainText("Kayıt eklendi.");
+  expect(submitted).toEqual({ kind: "TASK", priority: "NORMAL", equipmentCode: "GT2", title: "Inspect GT2",
+    description: "Inspection is pending.", workStatus: "OPEN", responsibleTeam: "", nextStep: "" });
+});
+
+for (const language of ["tr", "en"]) test(`busy photo uploads preserve the draft and allow an explicit retry (${language})`, async ({ page }) => {
+  await setup(page); await page.locator("#dashboard [data-language]").selectOption(language); await navigate(page, "new-record");
+  let attempts = 0;
+  await page.route("**/operations/entries", route => {
+    expect(route.request().headers()["content-type"]).toContain("multipart/form-data");
+    if (++attempts === 1) return route.fulfill({ status: 503, headers: { "Retry-After": "3" }, json: { error: "Sunucu şu anda yoğun. Birkaç saniye sonra tekrar deneyin." } });
+    return route.fulfill({ status: 201, json: { id: 11 } });
+  });
+  await page.locator("#entry-title").fill("GT1 inspection"); await page.locator("#entry-description").fill("Keep these details and the photo.");
+  const buffer = await sharp({ create: { width: 20, height: 20, channels: 3, background: "#335577" } }).png().toBuffer();
+  await page.locator("#entry-photos").setInputFiles({ name: "inspection.png", mimeType: "image/png", buffer });
+  await page.locator("#entry-save").click();
+  await expect(page.locator("#entry-message")).toHaveText(language === "tr" ? "Sunucu şu anda yoğun. Birkaç saniye sonra tekrar deneyin." : "The server is busy. Please try again in a few seconds.");
+  await expect(page.locator("#entry-title")).toHaveValue("GT1 inspection");
+  await expect(page.locator("#entry-description")).toHaveValue("Keep these details and the photo.");
+  await expect(page.locator("#photo-previews figure")).toHaveCount(1); await expect(page.locator("#entry-save")).toBeEnabled();
+  expect(attempts).toBe(1);
+  await page.locator("#entry-save").click();
+  await expect(page.locator("#entry-message")).toContainText(language === "tr" ? "Kayıt eklendi." : "Entry saved");
+  await expect(page.locator("#photo-previews figure")).toHaveCount(0); expect(attempts).toBe(2);
+});
+
 test("connection warnings survive other successful requests, translate and recover without submitting drafts", async ({ page, context }) => {
   await setup(page);
   let writes = 0;
