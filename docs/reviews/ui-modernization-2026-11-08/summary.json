@@ -1,0 +1,500 @@
+{
+  "date": "2026-11-08",
+  "baselineCommit": "35961353759de7cbb746e89ddef8c13a43e9cc59",
+  "node": "24.19.0",
+  "browser": "154.0.8037.57",
+  "skill": {
+    "name": "UI UX Pro Max",
+    "sourceCommit": "4f2dbb67e64969a9a30ab00742f2d55d66ddec2b"
+  },
+  "startupMethod": "Five fresh contexts per variant/profile; alternating variant order; first anonymous auth view then about:blank and return with the same cache. No request routing, mocks, cache disabling or service worker. Readiness is visible auth UI and enabled login button plus two animation frames. LayoutShiftSum is a local sum, not field CLS. One local Node process serves both variants with the existing frontend-assets middleware.",
+  "startupProfiles": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "isMobile": false,
+      "hasTouch": false,
+      "cpu": 1
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "isMobile": true,
+      "hasTouch": true,
+      "cpu": 4,
+      "network": {
+        "offline": false,
+        "latency": 150,
+        "downloadThroughput": 200000,
+        "uploadThroughput": 93750,
+        "connectionType": "cellular4g"
+      }
+    }
+  ],
+  "payloads": {
+    "baseline": [
+      {
+        "path": "assets/app-BYaVanwT.js",
+        "bytes": 343591,
+        "sha256": "4f76cc13ed6951838e8fad01bdad498b5bf1b47656d598808278858ed95f2ff2",
+        "gz": 102034,
+        "br": 96154
+      },
+      {
+        "path": "assets/index-C_Hp0L_i.css",
+        "bytes": 54084,
+        "sha256": "99fc01915b2c986ff2ffe59fddf1a6d3258d31bbf4b63d101a95df20b3f722aa",
+        "gz": 11279,
+        "br": 10771
+      },
+      {
+        "path": "assets/photo-upload-D5DiEFZ5.js",
+        "bytes": 762,
+        "sha256": "52e78ab1646beb808d23486d5f565ef0739fa8a36f4558eb4114ff0c1d4f97b9",
+        "gz": 441,
+        "br": 400
+      },
+      {
+        "path": "assets/theme-79fc9b9f4336.js",
+        "bytes": 644,
+        "sha256": "79fc9b9f4336f9c7d7a9d1260c72346cf1c05acdc2a66f9e3cf713046dfbb01e",
+        "gz": 398,
+        "br": 354
+      },
+      {
+        "path": "index.html",
+        "bytes": 624,
+        "sha256": "f3477cae32831f7388beeabb4f300c7f8ae3422e2c10b41cef93e9bf388953a6",
+        "gz": 348,
+        "br": 254
+      }
+    ],
+    "updated": [
+      {
+        "path": "assets/app-OeRwxyjB.js",
+        "bytes": 343591,
+        "sha256": "4f76cc13ed6951838e8fad01bdad498b5bf1b47656d598808278858ed95f2ff2",
+        "gz": 102034,
+        "br": 96154
+      },
+      {
+        "path": "assets/index-BciPrNgG.css",
+        "bytes": 56420,
+        "sha256": "4a273a89991879c23e28b0232fcc76ed4a9568ee672c1de99f32c1a15ff44ee1",
+        "gz": 11732,
+        "br": 11157
+      },
+      {
+        "path": "assets/photo-upload-D5DiEFZ5.js",
+        "bytes": 762,
+        "sha256": "52e78ab1646beb808d23486d5f565ef0739fa8a36f4558eb4114ff0c1d4f97b9",
+        "gz": 441,
+        "br": 400
+      },
+      {
+        "path": "assets/theme-79fc9b9f4336.js",
+        "bytes": 644,
+        "sha256": "79fc9b9f4336f9c7d7a9d1260c72346cf1c05acdc2a66f9e3cf713046dfbb01e",
+        "gz": 398,
+        "br": 354
+      },
+      {
+        "path": "index.html",
+        "bytes": 624,
+        "sha256": "25db6cb86eb76b25e4e92f367e3c9c3ea1e2f890e1c21e652090286d0ca0b812",
+        "gz": 348,
+        "br": 253
+      }
+    ]
+  },
+  "startup": {
+    "desktop-baseline": {
+      "first": {
+        "readyMs": {
+          "median": 866.2000000001863,
+          "min": 769.2000000001863,
+          "max": 909.3000000002794
+        },
+        "transferBytes": {
+          "median": 116000,
+          "min": 116000,
+          "max": 116000
+        },
+        "assetBytes": {
+          "median": 115352,
+          "min": 115352,
+          "max": 115352
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 398.10000000009313,
+          "min": 384.29999999981374,
+          "max": 499.3000000002794
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    },
+    "desktop-updated": {
+      "first": {
+        "readyMs": {
+          "median": 861.8999999999069,
+          "min": 714.2000000001863,
+          "max": 1077.8999999999069
+        },
+        "transferBytes": {
+          "median": 116453,
+          "min": 116453,
+          "max": 116453
+        },
+        "assetBytes": {
+          "median": 115805,
+          "min": 115805,
+          "max": 115805
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 440.39999999990687,
+          "min": 371.5,
+          "max": 606.6999999997206
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    },
+    "mobile-baseline": {
+      "first": {
+        "readyMs": {
+          "median": 2451.2000000001863,
+          "min": 2191.399999999907,
+          "max": 2965.2999999998137
+        },
+        "transferBytes": {
+          "median": 116000,
+          "min": 116000,
+          "max": 116000
+        },
+        "assetBytes": {
+          "median": 115352,
+          "min": 115352,
+          "max": 115352
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 1442,
+          "min": 1391.6000000000931,
+          "max": 2116.899999999907
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    },
+    "mobile-updated": {
+      "first": {
+        "readyMs": {
+          "median": 2319.5,
+          "min": 2230,
+          "max": 2404.9000000003725
+        },
+        "transferBytes": {
+          "median": 116453,
+          "min": 116453,
+          "max": 116453
+        },
+        "assetBytes": {
+          "median": 115805,
+          "min": 115805,
+          "max": 115805
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "revisit": {
+        "readyMs": {
+          "median": 1472.5,
+          "min": 1391.3999999999069,
+          "max": 1744.1999999997206
+        },
+        "transferBytes": {
+          "median": 300,
+          "min": 300,
+          "max": 300
+        },
+        "assetBytes": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "layoutShiftSum": {
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      }
+    }
+  },
+  "navigationMethod": "Synthetic API responses isolate client UI and are not backend latency measurements. Routing disables HTTP cache equally. Network throttling is disabled; desktop CPU is unthrottled and mobile client CPU is throttled 4x. Five fresh contexts/profile/variant, alternating variant order; each navigates new-record/handover/history/overview. Browser readiness is click event until visible destination plus two animation frames, without waiting for decorative animation completion.",
+  "navigationProfiles": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "isMobile": false,
+      "hasTouch": false,
+      "cpu": 1,
+      "network": null
+    },
+    {
+      "name": "mobile",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "isMobile": true,
+      "hasTouch": true,
+      "cpu": 4,
+      "network": null
+    }
+  ],
+  "navigation": {
+    "desktop-baseline-new-record": {
+      "median": 105.29999999981374,
+      "min": 68.60000000009313,
+      "max": 144.5
+    },
+    "desktop-baseline-handover": {
+      "median": 109.5,
+      "min": 89.8000000002794,
+      "max": 149
+    },
+    "desktop-baseline-history": {
+      "median": 101,
+      "min": 91.1999999997206,
+      "max": 334.10000000009313
+    },
+    "desktop-baseline-overview": {
+      "median": 83.79999999981374,
+      "min": 72.39999999990687,
+      "max": 169.79999999981374
+    },
+    "desktop-updated-new-record": {
+      "median": 75.5,
+      "min": 74.79999999981374,
+      "max": 111
+    },
+    "desktop-updated-handover": {
+      "median": 120,
+      "min": 110.1999999997206,
+      "max": 138.60000000009313
+    },
+    "desktop-updated-history": {
+      "median": 124.89999999990687,
+      "min": 76.60000000009313,
+      "max": 152
+    },
+    "desktop-updated-overview": {
+      "median": 105.1999999997206,
+      "min": 85.70000000018626,
+      "max": 128.10000000009313
+    },
+    "mobile-baseline-new-record": {
+      "median": 154.89999999990687,
+      "min": 147.6999999997206,
+      "max": 255.59999999962747
+    },
+    "mobile-baseline-handover": {
+      "median": 295.29999999981374,
+      "min": 257.20000000018626,
+      "max": 405.70000000018626
+    },
+    "mobile-baseline-history": {
+      "median": 216,
+      "min": 201.1999999997206,
+      "max": 309.29999999981374
+    },
+    "mobile-baseline-overview": {
+      "median": 186.79999999981374,
+      "min": 138.6999999997206,
+      "max": 281
+    },
+    "mobile-updated-new-record": {
+      "median": 141.70000000018626,
+      "min": 135.10000000009313,
+      "max": 181.60000000009313
+    },
+    "mobile-updated-handover": {
+      "median": 293,
+      "min": 264.89999999990687,
+      "max": 375.39999999990687
+    },
+    "mobile-updated-history": {
+      "median": 242.39999999990687,
+      "min": 231.39999999990687,
+      "max": 256.10000000009313
+    },
+    "mobile-updated-overview": {
+      "median": 159.6999999997206,
+      "min": 143.20000000018626,
+      "max": 200.79999999981374
+    }
+  },
+  "validation": {
+    "typecheck": "passed",
+    "unit": {
+      "passed": 60,
+      "failed": 0
+    },
+    "integration": {
+      "passed": 23,
+      "failed": 0,
+      "database": "disposable PostgreSQL 17"
+    },
+    "e2e": {
+      "passed": 75,
+      "failed": 0,
+      "suites": [
+        {
+          "suite": "ai",
+          "exitCode": 0
+        },
+        {
+          "suite": "dashboard",
+          "exitCode": 0
+        },
+        {
+          "suite": "feedback",
+          "exitCode": 0
+        },
+        {
+          "suite": "mobile-layout",
+          "exitCode": 0
+        },
+        {
+          "suite": "modern-ui",
+          "exitCode": 0
+        },
+        {
+          "suite": "operations",
+          "exitCode": 0
+        },
+        {
+          "suite": "progress-notes",
+          "exitCode": 0
+        },
+        {
+          "suite": "react-frontend",
+          "exitCode": 0
+        },
+        {
+          "suite": "registration",
+          "exitCode": 0
+        },
+        {
+          "suite": "review",
+          "exitCode": 0
+        },
+        {
+          "suite": "security",
+          "exitCode": 0
+        },
+        {
+          "suite": "static-delivery",
+          "exitCode": 0
+        },
+        {
+          "suite": "theme",
+          "exitCode": 0
+        },
+        {
+          "suite": "usability",
+          "exitCode": 0
+        },
+        {
+          "suite": "work-details",
+          "exitCode": 0
+        },
+        {
+          "suite": "workspace",
+          "exitCode": 0
+        }
+      ]
+    },
+    "productionBuild": "passed; hashes match measured inventory",
+    "productionAudit": "npm audit --omit=dev --audit-level=high: 0 vulnerabilities",
+    "gitDiffCheck": "passed"
+  },
+  "limits": [
+    "Five trials per variant/profile; local descriptive comparison, no causal speedup claim.",
+    "Synthetic API navigation isolates client UI and is not backend latency or field INP.",
+    "Mobile emulation is not a physical Android/iOS test. Native tap-highlight paint on physical phones is unverified.",
+    "Production field performance, Safari and Firefox were not verified."
+  ]
+}

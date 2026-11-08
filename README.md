@@ -77,5 +77,6 @@ role. Use HTTPS in production and keep `.env` and secrets out of Git.
 - [Illustrated project guide (Turkish)](docs/illustrated-guide/README.md): architecture, React, charts, design trade-offs and security results; PDF and offline HTML.
 - [Performance baseline](docs/reviews/2026-11-03-performance-baseline.md): dated API/browser measurements, resource limits and improvement options; Turkish PDF/HTML report.
 - [Backend improvements](docs/reviews/2026-11-05-backend-performance.md): request timings, query/index changes, workload limits and measured before/after results.
+- [UI refresh](docs/reviews/2026-11-08-ui-modernization.md): design decisions, screenshots, accessibility checks and browser performance comparison.
 - [Security assessment](docs/reviews/2026-10-24-security-assessment.md): tested boundaries, fixes and remaining risks.
 - [Contribution conventions](docs/application-guide.md#contribution-language): English documentation and `AtaK/` working branches.
