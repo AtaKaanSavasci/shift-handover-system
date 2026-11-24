@@ -45,7 +45,7 @@ test("phone pages have readable fields, large targets and no horizontal overflow
     if (await page.locator("html").getAttribute("data-theme") !== theme) await page.locator("#dashboard [data-theme-toggle]").click();
     for (const width of [320, 360, 390, 430]) {
       await page.setViewportSize({ width, height: 844 });
-      for (const section of ["overview", "new-record", "handover", "history"] as const) {
+      for (const section of ["overview", "analytics", "new-record", "handover", "history"] as const) {
         await navigate(page, section); await targets(page);
         expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true);
         const smallFields = await page.evaluate(() => [...document.querySelectorAll<HTMLElement>('input:not([type=checkbox]):not([type=file]),select,textarea')].filter(el => el.getClientRects().length && parseFloat(getComputedStyle(el).fontSize) < 16).map(el => el.id));

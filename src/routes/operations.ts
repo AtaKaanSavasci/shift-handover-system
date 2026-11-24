@@ -1,6 +1,7 @@
 import { readWork, writeWork, workSelect, workFields } from "../services/work-details.js";
 import { appendUpdate, listUpdates, updatePreviews, emptyUpdates } from "../services/operation-updates.js";
 import { handoverSummary } from "../services/handover-summary.js";
+import { analytics, analyticsPeriod } from "../services/analytics.js";
 import { operationQuery } from "../services/operation-query.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { Router, type RequestHandler } from "express";
@@ -133,6 +134,9 @@ export function createOperationsRouter(prisma: PrismaClient) {
       return tx.operationEntry.findUniqueOrThrow({ where: { id: entryId }, select: entrySelect });
     });
     res.json(entry);
+  });
+  router.get("/analytics", async (req, res) => {
+    res.json(await analytics(prisma, analyticsPeriod(req.query)));
   });
   router.get("/summary", async (req, res) => {
     res.json(await prisma.$transaction(tx => handoverSummary(tx, req.user!.id), { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead }));

@@ -5,13 +5,22 @@ import { defaults, emptyEntry } from "./defaults";
 import { aborted, ApiError, errorMessage, isAbort } from "./errors";
 import { AiController } from "./ai";
 import { NotesController, WorkController } from "./editors";
-import type { AppState, EntryDraft, Entry, Page, PageResult, Shift, Summary, User, Message, Theme, Equipment, EquipmentStatus, Kind } from "./types";
+import type { Analytics, AnalyticsDays, AppState, EntryDraft, Entry, Page, PageResult, Shift, Summary, User, Message, Theme, Equipment, EquipmentStatus, Kind } from "./types";
 
 const same = <T>(previous: T, next: T): T => JSON.stringify(previous) === JSON.stringify(next) ? previous : next;
 const query = (fields: Record<string, string>) => new URLSearchParams(Object.entries(fields).filter(([, value]) => value.trim())).toString();
+const validDate = (value: unknown) => typeof value === "string" && Number.isFinite(Date.parse(value));
+function isAnalytics(value: unknown): value is Analytics {
+  const data = value as Partial<Analytics> | null;
+  return Boolean(data && typeof data === "object" && [7, 30, 90].includes(data.days as number) && validDate(data.from) && validDate(data.to) &&
+    data.current && data.previous && typeof data.comparable === "boolean" &&
+    Array.isArray(data.daily) && data.daily.every(point => /^\d{4}-\d{2}-\d{2}$/.test(point?.day ?? "")) &&
+    Array.isArray(data.availability) && Array.isArray(data.aging) && Array.isArray(data.teams) &&
+    Array.isArray(data.heatmap) && data.heatmap.length === 7 && data.heatmap.every(row => Array.isArray(row) && row.length === 3));
+}
 export const pageFromHash = (hash = location.hash): Page => {
   const value = hash.replace(/^#/, "");
-  return value === "board-title" ? "handover" : ["overview", "new-record", "handover", "history"].includes(value) ? value as Page : "overview";
+  return value === "board-title" ? "handover" : ["overview", "analytics", "new-record", "handover", "history"].includes(value) ? value as Page : "overview";
 };
 export class AppStore {
   state = defaults();
@@ -211,8 +220,22 @@ export class AppStore {
       }
     } finally { if (version === this.operationsVersion && epoch === this.epoch) this.patch({ operationsBusy: false }); }
   }
+  private analyticsVersion = 0;
+  loadAnalytics = async (days: AnalyticsDays = this.state.analyticsDays) => {
+    const version = ++this.analyticsVersion;
+    this.patch({ analyticsDays: days, analyticsBusy: true });
+    try {
+      const analytics = await this.read<Analytics>("/operations/analytics?days=" + days);
+      // Charts format dates and index arrays; never render a payload of the wrong shape.
+      if (!isAnalytics(analytics)) throw new ApiError("failed", this.t("failed"));
+      if (version === this.analyticsVersion) this.patch({ analytics, analyticsStale: false });
+    } catch (error) {
+      if (version === this.analyticsVersion && !isAbort(error)) { this.patch({ analyticsStale: true }); this.showError(error); }
+    } finally { if (version === this.analyticsVersion) this.patch({ analyticsBusy: false }); }
+  };
   refreshVisible = async () => {
     if (!this.state.user || this.state.page === "new-record") return;
+    if (this.state.page === "analytics") return this.loadAnalytics();
     await Promise.all([this.loadOperations(), this.state.page === "history" ? this.loadShifts() : this.loadCurrent()]);
   };
   private refreshing = false;

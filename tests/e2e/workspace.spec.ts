@@ -16,12 +16,14 @@ const changes = {
   ]
 };
 const summary = { changes, revision: 1, equipment, counts: { total: 8, important: 1, VALVE: 1, ATTENTION: 1, TASK: 6 }, openItems: [task, valve, attention], attention: [attention], important: [task], tasks: [task], valves: [valve], recent: [{ ...record(3, "NOTE", "Vardiya gözlemi"), priority: "NORMAL" }], activeShiftId: null, receipt: null };
+const stats = (opened: number, closed: number, backlog: number) => ({ opened, important: 1, closed, medianCloseHours: 6.5, backlog });
+const analytics = { days: 30, from: "2026-09-22T09:00:00Z", to: "2026-10-22T09:00:00Z", current: stats(12, 10, 8), previous: stats(9, 11, 6), comparable: true,  daily: Array.from({ length: 31 }, (_, i) => ({ day: new Date(Date.UTC(2026, 8, 22 + i)).toISOString().slice(0, 10), opened: i % 3, closed: (i + 1) % 2 })),  availability: equipment.map(unit => ({ code: unit.code, share: { ACTIVE: 80, MAINTENANCE: 15, INACTIVE: 5, UNKNOWN: 0 }, transitions: 2 })),  aging: [{ key: "lt1d", count: 2 }, { key: "d1to3", count: 3 }, { key: "d3to7", count: 1 }, { key: "gt7d", count: 2 }],  teams: [{ team: "Mekanik bakım", count: 5 }, { team: "", count: 3 }], heatmap: Array.from({ length: 7 }, (_, d) => [d, d + 2, 9 - d]) };
 async function login(page: Page, role = "WORKER") {
   await page.route("**/login", r => r.fulfill({ json: { token: "workspace-test", user: { id: 1, name: "Deniz Yılmaz", role } } }));
   await page.route("**/ai/status", r => r.fulfill({ json: { enabled: false } }));
   await page.route("**/shifts/current", r => r.fulfill({ json: { currentShift: null } }));
   await page.route(/\/shifts\?/, r => r.fulfill({ json: { items: [], total: 0, page: 1, pageSize: 20 } }));
-  await page.route("**/operations/**", r => r.fulfill({ json: r.request().url().endsWith("/summary") ? summary : { items: [], total: 0, page: 1, pageSize: 20 } }));
+  await page.route("**/operations/**", r => { const url = r.request().url(); return r.fulfill({ json: url.endsWith("/summary") ? summary : url.includes("/analytics?") ? analytics : { items: [], total: 0, page: 1, pageSize: 20 } }); });
   await page.goto("/app/");
   await page.locator("#email").fill("workspace@example.com"); await page.locator("#password").fill("workspace-password-123"); await page.locator("#login-button").click();
   await expect(page.locator("#overview-important")).toContainText(task.title);
@@ -105,9 +107,9 @@ test("unknown shift status is not presented as an inactive shift; recent notes l
 });
 
 
-test("plant workflow retains four pages and fixed turbine choices without catalog administration", async ({ page }) => {
+test("plant workflow has five pages and fixed turbine choices without catalog administration", async ({ page }) => {
   await login(page, "MANAGER");
-  await expect(page.locator("[data-nav]")).toHaveCount(4);
+  await expect(page.locator("[data-nav]")).toHaveCount(5);
   await navigate(page, "handover");
   await expect(page.locator("#catalog-add")).toHaveCount(0); await expect(page.locator(".catalog-rename")).toHaveCount(0);
   await expect(page.locator("#equipment-grid .equipment-card")).toHaveCount(3);
@@ -178,7 +180,7 @@ test("visible text meets WCAG AA contrast on all four pages in both themes", asy
   await page.evaluate(() => { const message = document.getElementById("dashboard-message")!; message.textContent = "Bağlantı hatası / Connection error"; message.classList.add("error"); });
   for (const theme of ["light", "dark"]) {
     if (await page.locator("html").getAttribute("data-theme") !== theme) await page.locator("#dashboard [data-theme-toggle]").click();
-    for (const section of ["overview", "new-record", "handover", "history"] as const) {
+    for (const section of ["overview", "analytics", "new-record", "handover", "history"] as const) {
       await navigate(page, section);
       const failures = await page.evaluate(() => {
         const rgb = (s: string) => (s.match(/[\d.]+/g) || []).map(Number);

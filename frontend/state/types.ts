@@ -1,5 +1,15 @@
 import type { Language } from "../lib/i18n";
-export type Page = "overview" | "new-record" | "handover" | "history";
+export type Page = "overview" | "analytics" | "new-record" | "handover" | "history";
+export type AnalyticsDays = 7 | 30 | 90;
+export type WindowStats = { opened: number; important: number; closed: number; medianCloseHours: number | null; backlog: number };
+export type Analytics = {
+  days: AnalyticsDays; from: string; to: string; current: WindowStats; previous: WindowStats; comparable: boolean;
+  daily: Array<{ day: string; opened: number; closed: number }>;
+  availability: Array<{ code: string; share: Record<EquipmentStatus, number>; transitions: number }>;
+  aging: Array<{ key: "lt1d" | "d1to3" | "d3to7" | "gt7d"; count: number }>;
+  teams: Array<{ team: string; count: number }>;
+  heatmap: number[][];
+};
 export type Theme = "light" | "dark";
 export type Kind = "EVENT" | "NOTE" | "VALVE" | "ATTENTION" | "TASK";
 export type Priority = "NORMAL" | "HIGH";
@@ -49,6 +59,7 @@ export type AppState = {
   authBusy: boolean; demoEnabled: boolean; authMessage: Message | null; authReset: number; dashboardMessage: Message | null;
   current: Shift | null | undefined; currentStale: boolean; schedule: { date: string; slot: string }; shiftBusy: boolean;
   summary: Summary | null; summaryStale: boolean; checkedAt: string | null; summaryBusy: boolean;
+  analytics: Analytics | null; analyticsDays: AnalyticsDays; analyticsBusy: boolean; analyticsStale: boolean;
   board: PageResult<Entry>; boardFilters: string; boardFilterDraft: { kind: string; equipment: string; priority: string };
   operations: PageResult<Entry>; operationFilters: string; operationFilterDraft: Record<string, string>; operationsBusy: boolean;
   shifts: PageResult<Shift>; shiftFilters: string; shiftFilterDraft: { from: string; to: string; scope: string }; shiftsLoading: boolean; shiftsFailed: boolean; exporting: boolean;

@@ -150,7 +150,7 @@ export interface SeedOptions { now?: Date; language?: DemoLanguage; days?: numbe
 
 /** Replaces every record in the database with a realistic demo plant history. */
 export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) {
-  const now = options.now ?? new Date(), lang = options.language === "en" ? 1 : 0, days = options.days ?? 21;
+  const now = options.now ?? new Date(), lang = options.language === "en" ? 1 : 0, days = options.days ?? 100;
   const t = (text: Text) => text[lang];
   const rand = random(20261124);
   const password = await hashPassword(randomBytes(32).toString("hex"));
@@ -194,8 +194,8 @@ export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) 
     const clamp = (time: number) => new Date(Math.min(time, now.getTime() - 5 * 60_000));
 
     // Closed board items spread across the history, cycling the templates.
-    const spacing = (days * DAY) / 26;
-    for (let i = 0; i < 26; i++) {
+    const closedCount = Math.round(days * 1.25), spacing = (days * DAY) / closedCount;
+    for (let i = 0; i < closedCount; i++) {
       const item = closedItems[i % closedItems.length]!;
       const createdAt = new Date(now.getTime() - days * DAY + i * spacing + rand() * spacing * 0.6);
       const closedAt = clamp(createdAt.getTime() + item.hours * HOUR * (0.7 + rand() * 0.6));
@@ -241,19 +241,26 @@ export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) 
     }
     await tx.operationEntry.createMany({ data: logs });
 
-    // Unit status history: GT1 tripped 9 days ago and recovered; GT2 entered its outage ~2 days ago.
+    // Unit status history: trips, reserve shutdowns and outages, ending with GT2 in its planned outage.
     const history: { code: "GT1" | "GT2" | "ST"; from: EquipmentStatus; to: EquipmentStatus; hoursAgo: number; note: Text }[] = [
       { code: "GT1", from: "UNKNOWN", to: "ACTIVE", hoursAgo: days * 24, note: ["Devrede, baz yük.", "Online at base load."] },
       { code: "GT2", from: "UNKNOWN", to: "ACTIVE", hoursAgo: days * 24, note: ["Devrede.", "Online."] },
       { code: "ST", from: "UNKNOWN", to: "ACTIVE", hoursAgo: days * 24, note: ["Devrede.", "Online."] },
       { code: "GT1", from: "ACTIVE", to: "INACTIVE", hoursAgo: 9 * 24, note: ["Alev söndü alarmı ile trip.", "Tripped on loss of flame."] },
       { code: "GT1", from: "INACTIVE", to: "ACTIVE", hoursAgo: 9 * 24 - 4, note: ["Alev dedektörü temizlendi, yeniden senkronize edildi.", "Flame detector cleaned; resynchronised."] },
+      { code: "GT2", from: "ACTIVE", to: "INACTIVE", hoursAgo: 75 * 24, note: ["Düşük talep nedeniyle yedekte bekletiliyor.", "Held in reserve on low demand."] },
+      { code: "GT2", from: "INACTIVE", to: "ACTIVE", hoursAgo: 75 * 24 - 20, note: ["Talep artışıyla yeniden devreye alındı.", "Returned to service as demand rose."] },
+      { code: "GT1", from: "ACTIVE", to: "MAINTENANCE", hoursAgo: 62 * 24, note: ["Planlı bakım: yağ sistemi revizyonu.", "Planned maintenance: lube oil system overhaul."] },
+      { code: "GT1", from: "MAINTENANCE", to: "ACTIVE", hoursAgo: 59 * 24, note: ["Bakım tamamlandı, ünite devrede.", "Maintenance complete; unit online."] },
+      { code: "ST", from: "ACTIVE", to: "INACTIVE", hoursAgo: 38 * 24, note: ["Kondenser vakum kaybı ile trip.", "Tripped on loss of condenser vacuum."] },
+      { code: "ST", from: "INACTIVE", to: "ACTIVE", hoursAgo: 38 * 24 - 5, note: ["Vakum pompası değiştirildi, yeniden yüklendi.", "Vacuum pump swapped; reloaded."] },
       { code: "GT2", from: "ACTIVE", to: "MAINTENANCE", hoursAgo: 50, note: ["Planlı bakım ve boroskop muayenesi sürüyor.", "Planned outage and borescope inspection in progress."] },
       { code: "GT1", from: "ACTIVE", to: "ACTIVE", hoursAgo: 30, note: ["#2 yatak titreşimi takip ediliyor.", "Monitoring bearing #2 vibration."] },
       { code: "ST", from: "ACTIVE", to: "ACTIVE", hoursAgo: 6, note: ["Drenaj vanası DV-221 kontrol edilecek.", "Drain valve DV-221 to be checked."] }
     ];
     for (const code of ["GT1", "GT2", "ST"] as const) {
-      const changes = history.filter(change => change.code === code);
+      // Chronological per unit; events older than the seeded history are skipped.
+      const changes = history.filter(change => change.code === code && change.hoursAgo <= days * 24).sort((a, b) => b.hoursAgo - a.hoursAgo);
       let last: { at: Date; userId: number; to: EquipmentStatus; note: string } | null = null;
       for (const change of changes) {
         const at = new Date(now.getTime() - change.hoursAgo * HOUR), userId = change.hoursAgo >= days * 24 ? supervisor : shiftAt(at).userId;
@@ -264,7 +271,7 @@ export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) 
         update: { status: last!.to, note: last!.note, version: changes.length, updatedAt: last!.at, updatedById: last!.userId } });
     }
     await tx.operationRevision.upsert({ where: { id: 1 }, create: { id: 1, version: 1 }, update: { version: { increment: 1 } } });
-    return { users: users.size, shifts: shifts.length, entries: 26 + openItems.length + logs.length };
+    return { users: users.size, shifts: shifts.length, entries: closedCount + openItems.length + logs.length };
   }, { timeout: 180_000, maxWait: 30_000 });
 }
 

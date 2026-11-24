@@ -7,10 +7,11 @@ import { Overview } from "./components/Overview";
 import { EntryForm } from "./components/EntryForm";
 import { Handover } from "./components/Handover";
 import { History } from "./components/History";
+import { Analytics } from "./components/Analytics";
 import { Dialogs } from "./components/Dialogs";
 import { AiChat } from "./components/AiChat";
 import { Brand, Preferences, Icon, MessageLine } from "./components/common";
-const pages = { overview: ["navOverview", "overviewHint", "overview"], "new-record": ["navNew", "newRecordHint", "plus"], handover: ["navHandover", "handoverPageHint", "handover"], history: ["navHistory", "historyPageHint", "history"] } as const;
+const pages = { overview: ["navOverview", "overviewHint", "overview"], analytics: ["navAnalytics", "analyticsPageHint", "chart"], "new-record": ["navNew", "newRecordHint", "plus"], handover: ["navHandover", "handoverPageHint", "handover"], history: ["navHistory", "historyPageHint", "history"] } as const;
 function ConnectionStatus() {
   const t = useT(), language = useApp(state => state.language), connection = useApp(state => state.connection);
   const status = !connection.browserOnline || connection.reachable === false ? "offline" : connection.failures.length ? "warning" : connection.reachable ? "online" : "checking";
@@ -26,6 +27,7 @@ function Dashboard() {
     <main className="workspace"><ConnectionStatus /><div className="welcome"><div><p className="eyebrow" id="greeting">{user ? t("greeting", { name: user.name.trim().split(/\s+/)[0] || user.name }) : ""}</p><h1 id="page-title" tabIndex={-1} ref={heading}>{t(pages[page][0])}</h1><p className="muted" id="page-description">{t(pages[page][1])}</p></div><div className="today"><span className="date-dot" aria-hidden="true" /><span id="today">{new Intl.DateTimeFormat(locale(language), { timeZone: "Europe/Istanbul", weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date())}</span></div></div>
       <MessageLine id="dashboard-message" className="dashboard-message" message={message} />
       <div id="page-overview" data-page="overview" hidden={page !== "overview"}><Overview /></div>
+      <div id="page-analytics" data-page="analytics" hidden={page !== "analytics"}><Analytics /></div>
       <div id="page-new-record" data-page="new-record" hidden={page !== "new-record"}><EntryForm /></div>
       <div id="page-handover" data-page="handover" hidden={page !== "handover"}><Handover /></div>
       <div id="page-history" data-page="history" hidden={page !== "history"}><History /></div>

@@ -14,6 +14,7 @@ export function Icon({ name, className = "", size = 20 }: { name: string; classN
     plus: <path d="M12 4v16M4 12h16" />,
     handover: <><rect x="5" y="4" width="14" height="17" rx="2" /><path d="M9 4V2h6v2M9 10h6m-6 5h6" /></>,
     history: <path d="M3 12a9 9 0 1 0 3-7M3 3v6h6m3-2v5l3 2" />,
+    chart: <path d="M4 20V10m6 10V4m6 16v-7m4 7H2" />,
     sun: <><circle cx="12" cy="12" r="4" /><path d="M12 1v3m0 16v3M1 12h3m16 0h3M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2" /></>,
     moon: <path d="M20 15.5A8.5 8.5 0 0 1 8.5 4 8.5 8.5 0 1 0 20 15.5Z" />,
     chat: <><path d="M20 11.5a8 8 0 0 1-8 8H5l-3 2v-7a8 8 0 1 1 18-3Z" /><path d="M8 10h8m-8 4h5" /></>,
