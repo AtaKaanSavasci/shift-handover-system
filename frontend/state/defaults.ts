@@ -8,7 +8,7 @@ export const emptyAi = (): AiState => ({ open: false, enabled: false, available:
 export function defaults(): AppState {
   return {
     language: "tr", theme: "light", themePreference: null, user: null, page: "overview", navigationVersion: 0,
-    authBusy: false, authMessage: null, authReset: 0, dashboardMessage: null,
+    authBusy: false, demoEnabled: false, authMessage: null, authReset: 0, dashboardMessage: null,
     current: undefined, currentStale: false, schedule: currentSchedule(), shiftBusy: false,
     summary: null, summaryStale: false, checkedAt: null, summaryBusy: false,
     board: emptyPage(), boardFilters: "", boardFilterDraft: { kind: "", equipment: "", priority: "" },

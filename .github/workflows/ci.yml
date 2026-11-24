@@ -121,3 +121,11 @@ jobs:
             test-results/
           if-no-files-found: ignore
           retention-days: 7
+
+  docker:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+      - name: Build production image
+        run: docker build --tag shift-handover:ci .

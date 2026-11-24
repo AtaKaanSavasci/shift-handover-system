@@ -343,3 +343,7 @@ td{font-size:13px}th{font-size:11px}.date-cell small{font-size:11px;color:#71806
 }
 .overview-topline .button svg{flex-shrink:0}
 .ai-details-empty{display:none}
+/* One-click demo sign-in (DEMO_MODE only). */
+.demo-login h2{font-size:22px;margin:0 0 8px}.demo-login>.muted{line-height:1.6}.demo-roles{display:grid;grid-template-columns:1fr;gap:10px;margin-top:18px}.demo-roles .button{width:100%}
+.demo-divider{display:flex;align-items:center;gap:12px;margin:26px 0 22px;color:var(--muted);font-size:12px}.demo-divider:before,.demo-divider:after{content:"";flex:1;border-top:1px solid var(--line)}
+@media(min-width:601px){.demo-roles{grid-template-columns:1fr 1fr}.demo-roles .button:first-child{grid-column:1/-1}}

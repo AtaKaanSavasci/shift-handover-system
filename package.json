@@ -15,7 +15,9 @@
     "dev:web": "vite",
     "build:web": "tsc --project frontend/tsconfig.json && tsc --project tsconfig.tools.json && vite build",
     "pretest": "npm run build:web",
-    "pretest:integration": "npm run build:web"
+    "pretest:integration": "npm run build:web",
+    "demo:seed": "node dist/demo/cli.js",
+    "demo:seed:dev": "tsx src/demo/cli.ts"
   },
   "keywords": [],
   "author": "",

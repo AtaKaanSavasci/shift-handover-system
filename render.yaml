@@ -1,0 +1,22 @@
+# Render Blueprint for the public demo: https://render.com/docs/blueprint-spec
+# DATABASE_URL is entered in the dashboard (e.g. a free Neon PostgreSQL database).
+# DEMO_MODE wipes and reseeds the database every DEMO_RESET_HOURS — use a dedicated demo database.
+services:
+  - type: web
+    name: shift-handover-demo
+    runtime: docker
+    plan: free
+    healthCheckPath: /healthz
+    envVars:
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DEMO_MODE
+        value: "true"
+      - key: DEMO_LANGUAGE
+        value: en
+      - key: DEMO_RESET_HOURS
+        value: "24"
+      - key: TRUST_PROXY
+        value: "1"

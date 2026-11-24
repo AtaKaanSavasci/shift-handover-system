@@ -53,6 +53,28 @@ AI is disabled by default. To enable it, configure `AI_ENABLED`, `OPENAI_API_KEY
 and `OPENAI_MODEL` as described in the [AI setup guide](docs/application-guide.md#configuration).
 OpenAI API billing is separate from a ChatGPT subscription.
 
+## Public demo and deployment
+
+`DEMO_MODE=true` turns an instance into a public demo: the sign-in page offers one-click
+**Operator / Supervisor / Manager** access, and the database is filled with three weeks of
+realistic plant history (shifts, open and closed work, progress notes, unit status changes).
+The data is wiped and reseeded every `DEMO_RESET_HOURS` (default 24), in `DEMO_LANGUAGE`
+(`tr` or `en`). **Seeding deletes every record**, so always give the demo its own database;
+it refuses to run if the database contains non-demo accounts.
+
+To load demo data manually: `DEMO_MODE=true npm run demo:seed` (after `npm run build`).
+
+**Deploy on Render (free):**
+
+1. Create a free PostgreSQL database, e.g. on [Neon](https://neon.tech), and copy its connection string.
+2. In Render choose **New → Blueprint**, select this repository; [render.yaml](render.yaml) is picked up.
+3. Paste the connection string as `DATABASE_URL`. `JWT_SECRET` is generated for you.
+
+The [Dockerfile](Dockerfile) runs `prisma migrate deploy` on start and works on any
+Docker host (Railway, Fly.io, a VPS). Set `TRUST_PROXY=1` behind one reverse proxy so
+rate limits see real client IPs. `GET /healthz` reports database connectivity.
+Free Render instances sleep when idle; the first request after a pause takes ~30–60 s.
+
 ## Tests
 
 After installing dependencies and generating the Prisma client:

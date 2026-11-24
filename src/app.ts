@@ -19,6 +19,7 @@ import { frontendAssets } from "./frontend-assets.js";
 import { requestPerformance, type PerformanceLogger } from "./performance.js";
 import { databasePoolStats } from "./database.js";
 import { createWorkLimit, WorkloadBusyError } from "./workload.js";
+import { demoAccounts, isDemoRole } from "./demo/seed.js";
 
 function credentials(body: unknown, registration = false) {
   if (!body || typeof body !== "object" || Array.isArray(body)) return null;
@@ -31,13 +32,18 @@ function credentials(body: unknown, registration = false) {
   return { email, password, name: typeof name === "string" ? name.trim() : "" };
 }
 
-export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null; performanceLogger?: PerformanceLogger } = {}) {
+export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null; performanceLogger?: PerformanceLogger; demo?: boolean; trustProxy?: number } = {}) {
   const app = express();
+  if (options.trustProxy) app.set("trust proxy", options.trustProxy);
   if (options.performanceLogger) app.use(requestPerformance(options.performanceLogger, () => databasePoolStats(prisma)));
   const registrationHash = options.registrationCode ? createHash("sha256").update(options.registrationCode).digest() : null;
   const authenticate = authenticateToken(prisma, secret);
   const shifts = createShiftService(prisma);
   const exports = createWorkLimit();
+  const session = (user: { id: number; email: string; name: string; role: Role }) => ({
+    token: jwt.sign({ id: user.id }, secret, { algorithm: "HS256", expiresIn: "8h" }),
+    user: { id: user.id, email: user.email, name: user.name, role: user.role }
+  });
   app.disable("x-powered-by");
   app.use(helmet({ contentSecurityPolicy: { directives: {
     imgSrc: ["'self'", "data:", "blob:"],
@@ -87,8 +93,20 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
     const user = await prisma.user.findUnique({ where: { email: input.email } });
     const matches = await verifyPassword(input.password, user?.password);
     if (!user || !matches) return res.status(401).json({ error: "Email veya şifre hatalı" });
-    const token = jwt.sign({ id: user.id }, secret, { algorithm: "HS256", expiresIn: "8h" });
-    res.json({ token, user: { id: user.id, email: user.email, name: user.name, role: user.role } });
+    res.json(session(user));
+  });
+  app.get("/healthz", async (_req, res) => {
+    try { await prisma.$queryRaw`SELECT 1`; res.json({ status: "ok" }); }
+    catch { res.status(503).json({ status: "unavailable" }); }
+  });
+  app.get("/demo", (_req, res) => { res.json({ enabled: Boolean(options.demo) }); });
+  app.post("/demo/login", limiter(30), async (req, res) => {
+    if (!options.demo) return res.status(404).json({ error: "Demo kapalı." });
+    const role: unknown = req.body?.role;
+    if (!isDemoRole(role)) return res.status(400).json({ error: "Geçerli bir demo rolü seçin." });
+    const user = await prisma.user.findUnique({ where: { email: demoAccounts[role].email } });
+    if (!user) return res.status(503).json({ error: "Demo verileri hazırlanıyor. Birkaç saniye sonra tekrar deneyin." });
+    res.json(session(user));
   });
   app.post("/shifts/start", authenticate, async (req, res) => {
     res.status(201).json(await shifts.startShift(req.user!.id, shiftSchedule(req.body)));

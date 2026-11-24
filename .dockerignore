@@ -1,0 +1,12 @@
+node_modules
+dist
+public
+src/generated
+.env
+.env.*
+!.env.example
+.git
+docs
+tests
+test-results
+playwright-report

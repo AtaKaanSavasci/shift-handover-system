@@ -95,12 +95,19 @@ export class AppStore {
   async json<T = unknown>(path: string, method: string, body: unknown): Promise<T> {
     return (await this.api(path, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })).json() as Promise<T>;
   }
-  async login(input: { email: string; password: string; name?: string; registrationCode?: string }, register: boolean) {
+  loadDemo = async () => {
+    try {
+      const response = await fetch("/demo");
+      if (response.ok) this.patch({ demoEnabled: Boolean(((await response.json()) as { enabled?: unknown }).enabled) });
+    } catch { /* Demo buttons stay hidden when the server is unreachable. */ }
+  };
+  demoLogin = (role: "worker" | "supervisor" | "manager") => this.login({ role }, false, "/demo/login");
+  async login(input: { email: string; password: string; name?: string; registrationCode?: string } | { role: string }, register: boolean, path = register ? "/register" : "/login") {
     if (this.state.authBusy) return false;
     const attempt = ++this.authVersion;
     this.patch({ authBusy: true, authMessage: { key: register ? "signupProgress" : "loginProgress" } });
     try {
-      const response = await fetch(register ? "/register" : "/login", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input) });
+      const response = await fetch(path, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(input) });
       if (attempt !== this.authVersion) throw aborted();
       if (!response.ok) {
         let code = "failed"; try { code = (await response.json()).error || code; } catch { /* Generic failure. */ }

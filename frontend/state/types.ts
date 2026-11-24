@@ -46,7 +46,7 @@ export type Observation = { type: "entry"; item: Entry } | { type: "change"; ite
 export type Connection = { browserOnline: boolean; reachable: boolean | null; failures: string[]; lastResponse: string | null; busy: boolean };
 export type AppState = {
   language: Language; theme: Theme; themePreference: Theme | null; user: User | null; page: Page; navigationVersion: number;
-  authBusy: boolean; authMessage: Message | null; authReset: number; dashboardMessage: Message | null;
+  authBusy: boolean; demoEnabled: boolean; authMessage: Message | null; authReset: number; dashboardMessage: Message | null;
   current: Shift | null | undefined; currentStale: boolean; schedule: { date: string; slot: string }; shiftBusy: boolean;
   summary: Summary | null; summaryStale: boolean; checkedAt: string | null; summaryBusy: boolean;
   board: PageResult<Entry>; boardFilters: string; boardFilterDraft: { kind: string; equipment: string; priority: string };

@@ -3,7 +3,8 @@ import { app } from "../state/store";
 import { useApp, useT } from "../state/hooks";
 import { Brand, Preferences, Field, MessageLine } from "./common";
 export function AuthView() {
-  const t = useT(), user = useApp(state => state.user), busy = useApp(state => state.authBusy), message = useApp(state => state.authMessage), reset = useApp(state => state.authReset);
+  const t = useT(), user = useApp(state => state.user), busy = useApp(state => state.authBusy), message = useApp(state => state.authMessage), reset = useApp(state => state.authReset), demo = useApp(state => state.demoEnabled);
+  useEffect(() => { void app.loadDemo(); }, []);
   const [signup, setSignup] = useState(false), [visible, setVisible] = useState(false);
   const [name, setName] = useState(""), [email, setEmail] = useState(""), [password, setPassword] = useState(""), [code, setCode] = useState("");
   const [validation, setValidation] = useState(0);
@@ -14,6 +15,13 @@ export function AuthView() {
   return <div id="auth-view" className="auth-layout" hidden={Boolean(user)}>
     <div className="auth-story"><Brand auth /><div className="story-content"><h1>{t("storyTitle")}</h1><p>{t("storyText")}</p></div></div>
     <main className="auth-main"><div className="auth-theme toolbar"><Preferences /></div><div className="auth-card">
+      {demo && !signup && <section id="demo-login" className="demo-login" aria-labelledby="demo-title">
+        <h2 id="demo-title">{t("demoTitle")}</h2><p className="muted">{t("demoDescription")}</p>
+        <div className="demo-roles">{(["worker", "supervisor", "manager"] as const).map((role, index) =>
+          <button key={role} id={`demo-${role}`} type="button" className={`button ${index === 0 ? "primary" : "outline"}`} disabled={busy} onClick={() => { void app.demoLogin(role); }}>
+            {t(role === "worker" ? "demoWorker" : role === "supervisor" ? "demoSupervisor" : "demoManager")}</button>)}</div>
+        <p className="demo-divider"><span>{t("demoOr")}</span></p>
+      </section>}
       <h2 id="auth-title">{t(signup ? "signupTitle" : "loginTitle")}</h2><p id="auth-description" className="muted">{t(signup ? "signupDescription" : "loginDescription")}</p>
       <form id="login-form" onReset={() => setVisible(false)} onSubmit={async event => {
         event.preventDefault();
