@@ -6,6 +6,8 @@ services:
     name: shift-handover-demo
     runtime: docker
     plan: free
+    # Same AWS region as the Neon database (us-east-2): every query is one network round trip.
+    region: ohio
     healthCheckPath: /healthz
     envVars:
       - key: DATABASE_URL
