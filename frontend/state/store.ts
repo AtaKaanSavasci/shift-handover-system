@@ -235,7 +235,15 @@ export class AppStore {
     } finally { if (version === this.operationsVersion && epoch === this.epoch) this.patch({ operationsBusy: false }); }
   }
   private analyticsVersion = 0;
-  loadAnalytics = async (days: AnalyticsDays = this.state.analyticsDays) => {
+  private analyticsPending?: { days: AnalyticsDays; promise: Promise<void> };
+  // Opening the page triggers both navigation refresh and the page's own first load; share one request.
+  loadAnalytics = (days: AnalyticsDays = this.state.analyticsDays) => {
+    if (this.analyticsPending?.days === days) return this.analyticsPending.promise;
+    const promise = this.fetchAnalytics(days).finally(() => { if (this.analyticsPending?.promise === promise) this.analyticsPending = undefined; });
+    this.analyticsPending = { days, promise };
+    return promise;
+  };
+  private fetchAnalytics = async (days: AnalyticsDays) => {
     const version = ++this.analyticsVersion;
     this.patch({ analyticsDays: days, analyticsBusy: true });
     try {
