@@ -14,7 +14,8 @@ export function changeText(item: Change, t: ReturnType<typeof useT>) {
 export const EquipmentCard = memo(function EquipmentCard({ item, editable = false }: { item: Equipment; editable?: boolean }) {
   const t = useT(), language = useApp(state => state.language);
   return <article className="equipment-card" data-status={item.status} title={item.updatedAt ? stamp(item.updatedAt, language) : t("neverUpdated")}>
-    <div className="section-title"><h3>{item.code}</h3><span className={"unit-status unit-" + item.status.toLowerCase()}>{t(item.status)}</span></div>
+    <div className="section-title"><div><h3>{item.code}</h3>{item.name && item.name !== item.code && <p className="unit-name">{item.name}</p>}</div><span className={"unit-status unit-" + item.status.toLowerCase()}>{t(item.status)}</span></div>
+    {item.description && <p className="hint unit-description">{item.description}</p>}
     <p className="equipment-note">{item.note || "—"}</p>
     {editable && <><p className="hint">{item.updatedAt ? stamp(item.updatedAt, language) + (item.updatedBy ? " · " + item.updatedBy.name : "") : t("neverUpdated")}</p><button type="button" className="button secondary small" onClick={() => app.openEquipment(item)}>{t("update")}</button></>}
   </article>;

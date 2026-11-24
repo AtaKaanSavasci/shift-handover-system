@@ -12,6 +12,7 @@ export function defaults(): AppState {
     current: undefined, currentStale: false, schedule: currentSchedule(), shiftBusy: false,
     summary: null, summaryStale: false, checkedAt: null, summaryBusy: false,
     analytics: null, analyticsDays: 30, analyticsBusy: false, analyticsStale: false,
+    units: [],
     board: emptyPage(), boardFilters: "", boardFilterDraft: { kind: "", equipment: "", priority: "" },
     operations: emptyPage(), operationFilters: "", operationFilterDraft: { q: "", kind: "", equipment: "", status: "", from: "", to: "" }, operationsBusy: false,
     shifts: emptyPage(), shiftFilters: "", shiftFilterDraft: { from: "", to: "", scope: "own" }, shiftsLoading: false, shiftsFailed: false, exporting: false,

@@ -3,13 +3,15 @@
 [![CI](https://github.com/AtaK123456/shift-handover-system/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/AtaK123456/shift-handover-system/actions/workflows/ci.yml)
 
 An industrial shift logbook that helps operators pass important alerts and
-unfinished work to the next shift. Built around GT1, GT2 and ST turbine operations.
+unfinished work to the next shift. Ships with GT1, GT2 and ST turbine units; managers can add and edit units.
 
 ## Features
 
 - Overview of equipment status, important alerts and ongoing work.
 - Shift schedules, handover acknowledgments and searchable history.
 - Photos, progress notes, responsible teams and next steps.
+- Analytics: opened vs closed work, time to close, unit availability, open-work aging and a shift workload heatmap.
+- Admin panel: create users with temporary passwords, manage roles and account access, edit and archive units, and review an activity log. See [Units and the admin panel](docs/application-guide.md#units-and-the-admin-panel).
 - Excel export, Turkish/English interface, light/dark themes and mobile layouts.
 - Optional AI chat with evidence and review suggestions; the operator makes the final decision.
 
@@ -93,7 +95,7 @@ auditing, integration tests and isolated Chromium suites.
 
 Registration requires the team code, and new accounts always receive the WORKER
 role. Use HTTPS in production and keep `.env` and secrets out of Git.
-**Logout does not yet revoke issued tokens; they expire after eight hours.**
+**Signing out does not revoke tokens on other devices; they expire after eight hours.** Deactivating an account or resetting its password revokes its sessions immediately.
 
 - [Application guide](docs/application-guide.md): setup, updates, troubleshooting, API and feature details.
 - [Illustrated project guide (Turkish)](docs/illustrated-guide/README.md): architecture, React, charts, design trade-offs and security results; PDF and offline HTML.

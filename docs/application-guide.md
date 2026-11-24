@@ -628,27 +628,45 @@ See the [2026-10-19 application bug review](reviews/2026-10-19-bug-review.md)
 for reproduced defects, fixes, verification, and remaining deployment checks.
 
 
-## Plant workflow restoration
+## Units and the admin panel
 
-The configurable equipment/work-area catalog has been withdrawn. The application
-again uses GT1, GT2 and ST, with the original turbine-specific labels, selectors,
-AI validation and status operations. The four-section observation workspace,
-photos, handover acknowledgment, history and Excel export remain available.
-Catalog creation and rename endpoints and their UI controls have been removed.
+Managers see an **Admin** page with three tabs. Every change listed below is
+recorded in the activity log with who made it and when.
 
-The previously published `20261020000100_equipment_catalog_names` migration and
-`Equipment.name` field remain for database compatibility. The application does
-not use display names. Keeping the original migration preserves installations
-that already applied it; no reverse migration, column deletion, data reset or
-migration-history edit is needed. Deploying on an earlier installation can still
-apply this additive migration using `npx prisma migrate deploy`.
+**Users.** Managers create accounts directly (no registration code needed). Each
+new account, and each password reset, gets a one-time temporary password that is
+shown once and never stored in plain text. Its owner must replace it at first
+sign-in; until then every other API call returns `PASSWORD_CHANGE_REQUIRED`.
+Role changes apply immediately. Deactivating an account blocks sign-in and revokes
+its existing sessions; its records and history stay intact. Managers cannot change
+their own role or state, and at least one active manager always remains. Any user
+can change their own password (`POST /account/password`), which also signs out
+their other sessions.
 
-Any extra equipment definitions created while testing the catalog remain in the
-database. Unit status panels show GT1/GT2/ST only. Existing entries linked to other
-codes remain readable in the shared board/history and closable through the
-normal workflow; creating new entries for those codes or updating their equipment
-status is disabled. No existing equipment, status notes, photos, entries or
-handover snapshots are deleted by this restoration.
+**Units.** GT1, GT2 and ST are the default units, but managers can add units
+(e.g. `BOILER-1`), rename them, describe them, reorder them and archive them.
+Codes are permanent because records and status history reference them. Archived
+units leave the status panels and cannot be picked for new records or status
+changes; their existing work stays readable, searchable in history filters and
+closable. The AI assistant receives the active units' codes, names and
+descriptions as data and may only suggest one of those codes, `GENERAL` or
+`UNKNOWN`.
+
+**Session revocation.** Tokens carry the account's `tokenVersion`. Deactivation,
+password resets and password changes increment it, so older tokens stop working
+immediately. Signing out on one device still does not revoke tokens on others.
+
+**Migration history.** A configurable catalog was briefly introduced and withdrawn
+in October 2026 (`20261020000100_equipment_catalog_names` added `Equipment.name`).
+The additive `20261124000100_unit_catalog_and_admin` migration adds unit
+descriptions, ordering and archiving, account state and the audit log. It gives
+GT1/GT2/ST their order and descriptions, and archives any codes left from the
+October catalog so they stay hidden exactly as before. No records are changed or
+deleted. Apply it with `npx prisma migrate deploy`.
+
+**Public demo.** In `DEMO_MODE` the three demo sign-in accounts cannot be
+deactivated or reset, and new accounts must use `@demo.local` addresses. The daily
+reset also removes units and accounts added by visitors.
 
 ### Alerts and ongoing work overview
 

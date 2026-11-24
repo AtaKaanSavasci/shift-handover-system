@@ -3,11 +3,12 @@ import { app } from "../state/store";
 import { useApp, useT } from "../state/hooks";
 import type { Entry } from "../state/types";
 import { boardKinds, stamp } from "../lib/format";
-import { Field, Pagination, workStatusKey } from "./common";
+import { Field, Pagination, unitLabel, workStatusKey } from "./common";
 import { EquipmentCard } from "./Overview";
+/** Filter options: active units first, then archived ones (their history stays searchable). */
 export const UnitOptions = ({ all = true }: { all?: boolean }) => {
-  const t = useT();
-  return <>{all && <option value="">{t("allUnits")}</option>}<option value="GENERAL">{t("general")}</option>{["GT1", "GT2", "ST"].map(code => <option key={code} value={code}>{code}</option>)}</>;
+  const t = useT(), units = useApp(state => state.units);
+  return <>{all && <option value="">{t("allUnits")}</option>}<option value="GENERAL">{t("general")}</option>{units.map(unit => <option key={unit.code} value={unit.code}>{unitLabel(unit)}{unit.archivedAt ? " · " + t("archivedTag") : ""}</option>)}</>;
 };
 export const EntryCard = memo(function EntryCard({ item }: { item: Entry }) {
   const t = useT(), language = useApp(state => state.language), trackable = boardKinds.includes(item.kind);

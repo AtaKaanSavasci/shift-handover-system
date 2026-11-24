@@ -7,12 +7,14 @@ import { createApp } from "../src/app.js";
 import { aiFailure, createOpenAiAnalyzer, validateAnalysis, type Analyzer, type AnalysisInput } from "../src/services/ai-analysis.js";
 import type { PrismaClient } from "../src/generated/prisma/client.js";
 const secret = "ai-test-secret-".repeat(4);
+const units = [{ code: "GT1", name: "GT1", description: "Gas turbine" }, { code: "GT2", name: "GT2", description: "Gas turbine" }, { code: "ST", name: "ST", description: "Steam turbine" }];
 const input: AnalysisInput = { title: "GT1 vibration", description: "GT1 vibration increased. Maintenance review requested.", language: "en" };
 const proposal = { equipment: "GT1", category: "VIBRATION", kind: "ATTENTION", priority: "HIGH",
   rationale: "A reported abnormal condition needs review.", uncertainty: "No measured value or plant limits provided.",
   evidence: ["GT1 vibration increased."], questions: ["What was the measured vibration?"] } as const;
 function setup(analyzer: Analyzer | null) {
-  const db = { user: { findUnique: async ({ where }: any) => where.id === 2 ? null : { id: where.id, role: "WORKER" } } } as unknown as PrismaClient;
+  const db = { user: { findUnique: async ({ where }: any) => where.id === 2 ? null : { id: where.id, email: "operator@example.com", role: "WORKER", active: true, tokenVersion: 0, mustChangePassword: false } },
+    equipment: { findMany: async () => units } } as unknown as PrismaClient;
   return createApp(db, secret, { analyzer });
 }
 const bearer = (id = 1) => `Bearer ${jwt.sign({ id }, secret, { expiresIn: "1h" })}`;
@@ -46,7 +48,8 @@ test("analysis returns proposals without writing operations or equipment", async
   let received: AnalysisInput | undefined;
   const app = setup(async value => { received = value; return analyzer(value); });
   await send(app).expect(200, { analysis: proposal });
-  assert.deepEqual(received, input);
+  // The route adds the plant's active units so the model can only suggest real codes.
+  assert.deepEqual(received, { ...input, units });
 });
 test("provider errors, fabricated evidence, and malformed results fail safely", async () => {
   const bad = [async () => { throw new Error("secret-provider-key and private-plant-record"); },
@@ -94,7 +97,7 @@ test("OpenAI adapter uses strict output, no storage, and only submitted text", a
   assert.equal(sent.text.format.schema.properties.rationale.minLength, undefined);
   assert.equal(sent.text.format.schema.properties.rationale.maxLength, undefined);
   assert.equal(sent.max_output_tokens, 1800);
-  assert.deepEqual(JSON.parse(sent.input[1].content), input);
+  assert.deepEqual(JSON.parse(sent.input[1].content), { ...input, units }); // record plus unit catalog, nothing else
   assert.match(sent.input[0].content, /untrusted JSON record/);
 });
 
@@ -140,4 +143,10 @@ test("incomplete, refused, and invalid provider responses remain distinct and ne
 test("connection and timeout errors use safe codes", () => {
   assert.deepEqual(aiFailure(new OpenAI.APIConnectionTimeoutError()), { error: "AI_TIMEOUT", status: 504 });
   assert.deepEqual(aiFailure(new OpenAI.APIConnectionError({ message: "private connection detail" })), { error: "AI_CONNECTION", status: 503 });
+});
+test("suggested equipment must come from the supplied unit catalog", () => {
+  const catalog = { ...input, units: [{ code: "BOILER", name: "Aux boiler", description: "Auxiliary boiler" }] };
+  assert.equal(validateAnalysis({ ...proposal, equipment: "BOILER" }, catalog).equipment, "BOILER");
+  assert.equal(validateAnalysis({ ...proposal, equipment: "GENERAL" }, catalog).equipment, "GENERAL");
+  assert.throws(() => validateAnalysis({ ...proposal, equipment: "GT1" }, catalog));
 });

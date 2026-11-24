@@ -2,6 +2,7 @@ import { readWork, writeWork, workSelect, workFields } from "../services/work-de
 import { appendUpdate, listUpdates, updatePreviews, emptyUpdates } from "../services/operation-updates.js";
 import { handoverSummary } from "../services/handover-summary.js";
 import { analytics, analyticsPeriod } from "../services/analytics.js";
+import { requireActiveUnit, requireKnownUnit, unitOrder } from "../services/units.js";
 import { operationQuery } from "../services/operation-query.js";
 import { Prisma } from "../generated/prisma/client.js";
 import { Router, type RequestHandler } from "express";
@@ -35,18 +36,23 @@ export function createOperationsRouter(prisma: PrismaClient) {
   });
   const writeLimit = rateLimit({ windowMs: 15 * 60 * 1000, limit: 60, standardHeaders: "draft-8", legacyHeaders: false,
     message: { error: "Çok fazla deneme. Lütfen daha sonra tekrar deneyin." } });
+  // Full catalog (archived last) for filters and labels; status panels use /equipment.
+  router.get("/units", async (_req, res) => {
+    res.json({ items: await prisma.equipment.findMany({ orderBy: [{ archivedAt: { sort: "asc", nulls: "first" } }, ...unitOrder], select: { code: true, name: true, description: true, archivedAt: true } }) });
+  });
   router.get("/equipment", async (_req, res) => {
-    res.json({ items: await prisma.equipment.findMany({ where: { code: { in: ["GT1", "GT2", "ST"] } }, orderBy: { code: "asc" }, include: { updatedBy: user } }) });
+    res.json({ items: await prisma.equipment.findMany({ where: { archivedAt: null }, orderBy: unitOrder, include: { updatedBy: user } }) });
   });
   router.put("/equipment/:code", writeLimit, async (req, res) => {
     const { status, version } = req.body ?? {};
     const code = req.params.code;
-    if (typeof code !== "string" || !["GT1", "GT2", "ST"].includes(code) || !Object.values(EquipmentStatus).includes(status) || !Number.isSafeInteger(version) || version < 0 || version >= 2147483647) {
+    if (typeof code !== "string" || !Object.values(EquipmentStatus).includes(status) || !Number.isSafeInteger(version) || version < 0 || version >= 2147483647) {
       throw new RequestError("Ekipman durumunu kontrol edin.", 400);
     }
     const note = text(req.body.note ?? "", 0, 1000);
     const result = await prisma.$transaction(async tx => {
       await tx.operationRevision.update({ where: { id: 1 }, data: { version: { increment: 1 } } });
+      await requireActiveUnit(tx, code);
       const existing = await tx.equipment.findUniqueOrThrow({ where: { code } });
       const update = await tx.equipment.updateMany({ where: { code, version }, data: { status, note, version: { increment: 1 }, updatedById: req.user!.id, updatedAt: new Date() } });
       if (!update.count) throw new RequestError("Kayıt başka bir kullanıcı tarafından güncellendi. Yenileyip tekrar deneyin.", 409);
@@ -57,6 +63,9 @@ export function createOperationsRouter(prisma: PrismaClient) {
   });
   router.get("/entries", async (req, res) => {
     const { where, page, view } = operationQuery(req.query);
+    // Archived units stay searchable; codes that never existed are rejected like other invalid filters.
+    const equipment = req.query.equipment;
+    if (typeof equipment === "string" && equipment !== "GENERAL" && !await requireKnownUnit(prisma, equipment)) throw new RequestError("Geçersiz filtre parametresi.", 400);
     const [items, total] = await Promise.all([
       prisma.operationEntry.findMany({ where, select: entrySelect, take: 20, skip: (Number(page) - 1) * 20, orderBy: view === "open" ? [{ priority: "desc" }, { createdAt: "desc" }, { id: "desc" }] : [{ createdAt: "desc" }, { id: "desc" }] }),
       prisma.operationEntry.count({ where })
@@ -70,7 +79,7 @@ export function createOperationsRouter(prisma: PrismaClient) {
     const { kind, priority = "NORMAL" } = req.body ?? {};
     if (!Object.values(EntryKind).includes(kind) || !Object.values(EntryPriority).includes(priority)) throw new RequestError("Geçerli bir kayıt türü seçin.", 400);
     const equipmentCode = [undefined, null, ""].includes(req.body.equipmentCode) ? null : req.body.equipmentCode;
-    if (equipmentCode !== null && !["GT1", "GT2", "ST"].includes(equipmentCode)) throw new RequestError("Ekipman durumunu kontrol edin.", 400);
+    if (equipmentCode !== null) await requireActiveUnit(prisma, equipmentCode);
     const title = text(req.body.title, 1, 160);
     const description = text(req.body.description, 1, 4000);
     const isBoard = boardKinds.includes(kind);

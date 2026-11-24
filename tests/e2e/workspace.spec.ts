@@ -23,7 +23,7 @@ async function login(page: Page, role = "WORKER") {
   await page.route("**/ai/status", r => r.fulfill({ json: { enabled: false } }));
   await page.route("**/shifts/current", r => r.fulfill({ json: { currentShift: null } }));
   await page.route(/\/shifts\?/, r => r.fulfill({ json: { items: [], total: 0, page: 1, pageSize: 20 } }));
-  await page.route("**/operations/**", r => { const url = r.request().url(); return r.fulfill({ json: url.endsWith("/summary") ? summary : url.includes("/analytics?") ? analytics : { items: [], total: 0, page: 1, pageSize: 20 } }); });
+  await page.route("**/operations/**", r => { const url = r.request().url(); return r.fulfill({ json: url.endsWith("/summary") ? summary : url.includes("/analytics?") ? analytics : url.endsWith("/operations/units") ? { items: equipment.map(unit => ({ code: unit.code, name: unit.code, description: "", archivedAt: null })) } : { items: [], total: 0, page: 1, pageSize: 20 } }); });
   await page.goto("/app/");
   await page.locator("#email").fill("workspace@example.com"); await page.locator("#password").fill("workspace-password-123"); await page.locator("#login-button").click();
   await expect(page.locator("#overview-important")).toContainText(task.title);
@@ -107,13 +107,13 @@ test("unknown shift status is not presented as an inactive shift; recent notes l
 });
 
 
-test("plant workflow has five pages and fixed turbine choices without catalog administration", async ({ page }) => {
+test("managers see six pages including Admin; the operations API has no catalog writes", async ({ page }) => {
   await login(page, "MANAGER");
-  await expect(page.locator("[data-nav]")).toHaveCount(5);
+  await expect(page.locator("[data-nav]")).toHaveCount(6); await expect(page.locator("[data-nav=admin]")).toBeVisible();
   await navigate(page, "handover");
   await expect(page.locator("#catalog-add")).toHaveCount(0); await expect(page.locator(".catalog-rename")).toHaveCount(0);
   await expect(page.locator("#equipment-grid .equipment-card")).toHaveCount(3);
-  await expect(page.locator("[data-i18n=equipmentHint]")).toContainText("gaz türbini");
+  await expect(page.locator("[data-i18n=equipmentHint]")).toContainText("Yönetim sayfasından");
   await navigate(page, "new-record");
   expect(await page.locator("#entry-unit option").evaluateAll(options => options.map(option => (option as HTMLOptionElement).value))).toEqual(["", "GT1", "GT2", "ST"]);
   await page.locator("#entry-unit").selectOption("GT2"); await page.locator("#entry-title").fill("GT2 vardiya notu");

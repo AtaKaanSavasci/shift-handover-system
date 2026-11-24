@@ -20,6 +20,7 @@ import { requestPerformance, type PerformanceLogger } from "./performance.js";
 import { databasePoolStats } from "./database.js";
 import { createWorkLimit, WorkloadBusyError } from "./workload.js";
 import { demoAccounts, isDemoRole } from "./demo/seed.js";
+import { createAdminRouter } from "./routes/admin.js";
 
 function credentials(body: unknown, registration = false) {
   if (!body || typeof body !== "object" || Array.isArray(body)) return null;
@@ -40,9 +41,9 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
   const authenticate = authenticateToken(prisma, secret);
   const shifts = createShiftService(prisma);
   const exports = createWorkLimit();
-  const session = (user: { id: number; email: string; name: string; role: Role }) => ({
-    token: jwt.sign({ id: user.id }, secret, { algorithm: "HS256", expiresIn: "8h" }),
-    user: { id: user.id, email: user.email, name: user.name, role: user.role }
+  const session = (user: { id: number; email: string; name: string; role: Role; tokenVersion: number; mustChangePassword: boolean }) => ({
+    token: jwt.sign({ id: user.id, v: user.tokenVersion }, secret, { algorithm: "HS256", expiresIn: "8h" }),
+    user: { id: user.id, email: user.email, name: user.name, role: user.role, mustChangePassword: user.mustChangePassword }
   });
   app.disable("x-powered-by");
   app.use(helmet({ contentSecurityPolicy: { directives: {
@@ -93,8 +94,24 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
     const user = await prisma.user.findUnique({ where: { email: input.email } });
     const matches = await verifyPassword(input.password, user?.password);
     if (!user || !matches) return res.status(401).json({ error: "Email veya şifre hatalı" });
+    // Only revealed after a correct password, so it does not disclose which emails exist.
+    if (user.active === false) return res.status(403).json({ error: "ACCOUNT_DISABLED" });
     res.json(session(user));
   });
+  // Any signed-in user may change their password; it is the only call allowed while a temporary password is set.
+  app.post("/account/password", limiter(10), authenticateToken(prisma, secret, { allowPasswordChange: true }), async (req, res) => {
+    const { currentPassword, newPassword } = req.body ?? {};
+    if (typeof currentPassword !== "string" || Buffer.byteLength(currentPassword) > 256 || typeof newPassword !== "string" ||
+        newPassword.length < 12 || Buffer.byteLength(newPassword) > 256 || newPassword === currentPassword) {
+      return res.status(400).json({ error: "PASSWORD_INVALID" });
+    }
+    const user = await prisma.user.findUniqueOrThrow({ where: { id: req.user!.id } });
+    if (!await verifyPassword(currentPassword, user.password)) return res.status(400).json({ error: "PASSWORD_CURRENT_WRONG" });
+    // Revoke other sessions and return a fresh one for this device.
+    const updated = await prisma.user.update({ where: { id: user.id }, data: { password: await hashPassword(newPassword), mustChangePassword: false, tokenVersion: { increment: 1 } } });
+    res.json(session(updated));
+  });
+  app.use("/admin", authenticate, requireManager, createAdminRouter(prisma, { demo: Boolean(options.demo) }));
   app.get("/healthz", async (_req, res) => {
     try { await prisma.$queryRaw`SELECT 1`; res.json({ status: "ok" }); }
     catch { res.status(503).json({ status: "unavailable" }); }
@@ -146,7 +163,7 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
     res.setHeader("Content-Disposition", `attachment; filename="vardiyalar-${date}.xlsx"`);
     res.send(Buffer.from(buffer));
   });
-  app.use("/ai", authenticate, createAiRouter(options.analyzer));
+  app.use("/ai", authenticate, createAiRouter(options.analyzer, prisma));
   app.use("/operations", authenticate, createOperationsRouter(prisma));
   const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
     if (error instanceof WorkloadBusyError) res.setHeader("Retry-After", String(error.retryAfterSeconds));

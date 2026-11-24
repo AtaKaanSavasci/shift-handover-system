@@ -1,4 +1,4 @@
-import { navigate } from "./navigation.js";
+import { navigate, unitCatalog } from "./navigation.js";
 import { test, expect, type Page } from "@playwright/test";
 // Multi-step chat flows also run on resource-constrained CI workers.
 test.setTimeout(60_000);
@@ -7,7 +7,7 @@ const proposal = { equipment: "GT1", category: "VIBRATION", kind: "ATTENTION", p
   evidence: ["GT1 ünitesinde titreşim artışı gözlendi."], questions: ["Ölçülen titreşim değeri nedir?"] };
 async function signIn(page: Page, enabled = true) {
   await page.route("**/ai/status", route => route.fulfill({ json: { enabled } }));
-  await page.route("**/operations/**", route => route.fulfill({ json: route.request().url().endsWith("/summary") ? {
+  await page.route("**/operations/**", route => route.fulfill({ json: route.request().url().endsWith("/operations/units") ? unitCatalog : route.request().url().endsWith("/summary") ? {
     revision: 0, equipment: [], counts: { total: 0, important: 0, VALVE: 0, ATTENTION: 0, TASK: 0 }, important: [], recent: [], activeShiftId: null, receipt: null
   } : { items: [], total: 0, page: 1, pageSize: 20 } }));
   await page.route("**/login", route => route.fulfill({ json: { token: "ui-test-token", user: { id: 1, name: "Deniz", email: "test@example.com", role: "WORKER" } } }));

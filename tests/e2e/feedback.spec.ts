@@ -1,7 +1,7 @@
 import { test, expect, type Page } from "@playwright/test";
 import sharp from "sharp";
 import { builtFrontend } from "../frontend-assets.js";
-import { navigate } from "./navigation.js";
+import { navigate, unitCatalog } from "./navigation.js";
 
 const summary = { equipment: [], counts: { total: 0, important: 0, VALVE: 0, ATTENTION: 0, TASK: 0 }, openItems: [], important: [], recent: [], activeShiftId: null, receipt: null, revision: 1 };
 async function setup(page: Page) {
@@ -10,7 +10,7 @@ async function setup(page: Page) {
   await page.route("**/ai/status", route => route.fulfill({ json: { enabled: false } }));
   await page.route("**/shifts/current", route => route.fulfill({ json: { currentShift: null } }));
   await page.route(/\/shifts\?/, route => route.fulfill({ json: { items: [], total: 0, page: 1, pageSize: 20 } }));
-  await page.route("**/operations/**", route => route.fulfill({ json: route.request().url().endsWith("/summary") ? summary : { items: [], total: 0, page: 1, pageSize: 20 } }));
+  await page.route("**/operations/**", route => route.fulfill({ json: route.request().url().endsWith("/operations/units") ? unitCatalog : route.request().url().endsWith("/summary") ? summary : { items: [], total: 0, page: 1, pageSize: 20 } }));
   await page.goto("/app/");
   await login(page);
 }

@@ -1,5 +1,5 @@
 import type { Language } from "../lib/i18n";
-export type Page = "overview" | "analytics" | "new-record" | "handover" | "history";
+export type Page = "overview" | "analytics" | "new-record" | "handover" | "history" | "admin";
 export type AnalyticsDays = 7 | 30 | 90;
 export type WindowStats = { opened: number; important: number; closed: number; medianCloseHours: number | null; backlog: number };
 export type Analytics = {
@@ -17,9 +17,14 @@ export type WorkStatus = "OPEN" | "IN_PROGRESS" | "WAITING";
 export type EquipmentStatus = "UNKNOWN" | "ACTIVE" | "INACTIVE" | "MAINTENANCE";
 export type Message = { key?: string; text?: string; api?: string; error?: boolean };
 export type Person = { id: number; name: string };
-export type User = Person & { email?: string; role: "MANAGER" | "WORKER" | "SUPERVISOR" };
+export type Role = "MANAGER" | "WORKER" | "SUPERVISOR";
+export type User = Person & { email?: string; role: Role; mustChangePassword?: boolean };
+export type Unit = { code: string; name: string; description: string; archivedAt: string | null };
+export type AdminUser = { id: number; email: string; name: string; role: Role; active: boolean; mustChangePassword: boolean; createdAt: string };
+export type AdminUnit = Unit & { status: EquipmentStatus; sortOrder: number; createdAt: string; entries: number };
+export type AuditEntry = { id: number; action: string; targetType: "USER" | "UNIT"; targetId: string; details: Record<string, unknown>; createdAt: string; actor: Person };
 export type Shift = { id: number; startTime: string; endTime?: string | null; shiftDate?: string; scheduledStart?: string; scheduledEnd?: string; status?: string; user: Person };
-export type Equipment = { code: string; status: EquipmentStatus; note?: string; version: number; updatedAt?: string | null; updatedBy?: Person | null };
+export type Equipment = { code: string; name?: string; description?: string; status: EquipmentStatus; note?: string; version: number; updatedAt?: string | null; updatedBy?: Person | null };
 export type WorkFields = { workStatus: WorkStatus; responsibleTeam: string; nextStep: string };
 export type Entry = Partial<WorkFields> & {
   id: number; kind: Kind; priority: Priority; title: string; description?: string; createdAt?: string;
@@ -60,6 +65,7 @@ export type AppState = {
   current: Shift | null | undefined; currentStale: boolean; schedule: { date: string; slot: string }; shiftBusy: boolean;
   summary: Summary | null; summaryStale: boolean; checkedAt: string | null; summaryBusy: boolean;
   analytics: Analytics | null; analyticsDays: AnalyticsDays; analyticsBusy: boolean; analyticsStale: boolean;
+  units: Unit[];
   board: PageResult<Entry>; boardFilters: string; boardFilterDraft: { kind: string; equipment: string; priority: string };
   operations: PageResult<Entry>; operationFilters: string; operationFilterDraft: Record<string, string>; operationsBusy: boolean;
   shifts: PageResult<Shift>; shiftFilters: string; shiftFilterDraft: { from: string; to: string; scope: string }; shiftsLoading: boolean; shiftsFailed: boolean; exporting: boolean;

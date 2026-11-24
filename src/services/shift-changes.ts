@@ -52,7 +52,7 @@ export async function shiftChanges(tx: Prisma.TransactionClient, now = new Date(
       c."equipmentCode", c."fromStatus"::text, c."toStatus"::text, a.name,
       c."createdAt", NULL::jsonb AS "workDetails", COUNT(*) OVER ()
       FROM "EquipmentChange" c JOIN "User" a ON a.id = c."userId"
-      WHERE c."equipmentCode" IN ('GT1', 'GT2', 'ST') AND c."createdAt" >= ${since} AND c."createdAt" <= ${until}
+      WHERE c."equipmentCode" IN (SELECT code FROM "Equipment" WHERE "archivedAt" IS NULL) AND c."createdAt" >= ${since} AND c."createdAt" <= ${until}
       ORDER BY c."createdAt" DESC, c.id DESC LIMIT 8)
     UNION ALL
     (SELECT 'WORK_DETAILS', w.id, e.id, e.kind::text, e.title, '', e."equipmentCode",

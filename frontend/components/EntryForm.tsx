@@ -3,9 +3,9 @@ import { app } from "../state/store";
 import { useApp, useT } from "../state/hooks";
 import type { Kind, Priority, WorkStatus } from "../state/types";
 import { boardKinds } from "../lib/format";
-import { Field, MessageLine } from "./common";
+import { Field, MessageLine, unitLabel } from "./common";
 export function EntryForm() {
-  const t = useT(), entry = useApp(state => state.entry), photos = useApp(state => state.photos), busy = useApp(state => state.entrySending);
+  const t = useT(), units = useApp(state => state.units), entry = useApp(state => state.entry), photos = useApp(state => state.photos), busy = useApp(state => state.entrySending);
   const message = useApp(state => state.entryMessage), reset = useApp(state => state.entryReset), focus = useApp(state => state.entryFocus);
   const title = useRef<HTMLInputElement>(null), form = useRef<HTMLFormElement>(null), files = useRef<HTMLInputElement>(null), camera = useRef<HTMLInputElement>(null);
   const work = boardKinds.includes(entry.kind), dirty = app.entryDirty();
@@ -15,7 +15,7 @@ export function EntryForm() {
     <div className="quick-actions" aria-label={t("quickAdd")}><span className="eyebrow">{t("quickAdd")}</span>{([["EVENT", "quickEvent"], ["VALVE", "quickValve"], ["TASK", "quickTask"], ["ATTENTION", "quickAttention"], ["NOTE", "quickNote"]] as const).map(([kind, key]) => <button key={kind} type="button" className="button secondary small" data-quick-kind={kind} disabled={busy} onClick={() => app.quickEntry(kind)}>{t(key)}</button>)}</div>
     <form id="entry-form" ref={form} aria-busy={busy || undefined} onSubmit={event => { event.preventDefault(); void app.saveEntry(); }} onReset={() => { if (!busy) app.resetEntry(); }}>
       <div className="two-fields"><div><Field id="entry-kind" name="kind" label={t("kind")} control="select" value={entry.kind} onValue={kind => app.changeEntry({ kind: kind as Kind })} disabled={busy}>{(["EVENT", "NOTE", "VALVE", "ATTENTION", "TASK"] as const).map(kind => <option key={kind} value={kind}>{t(kind)}</option>)}</Field></div><div><Field id="entry-priority" name="priority" label={t("priority")} control="select" value={entry.priority} onValue={priority => app.changeEntry({ priority: priority as Priority })} disabled={busy}><option value="NORMAL">{t("NORMAL")}</option><option value="HIGH">{t("HIGH")}</option></Field></div></div>
-      <Field id="entry-unit" name="equipmentCode" label={t("unit")} control="select" value={entry.equipmentCode} onValue={equipmentCode => app.changeEntry({ equipmentCode })} disabled={busy}><option value="">{t("general")}</option>{["GT1", "GT2", "ST"].map(code => <option key={code} value={code}>{code}</option>)}</Field>
+      <Field id="entry-unit" name="equipmentCode" label={t("unit")} control="select" value={entry.equipmentCode} onValue={equipmentCode => app.changeEntry({ equipmentCode })} disabled={busy}><option value="">{t("general")}</option>{units.filter(unit => !unit.archivedAt).map(unit => <option key={unit.code} value={unit.code}>{unitLabel(unit)}</option>)}</Field>
       <Field id="entry-title" name="title" label={t("title")} value={entry.title} onValue={title => app.changeEntry({ title })} maxLength={160} required disabled={busy} resetKey={reset} inputRef={title} />
       <Field id="entry-description" name="description" label={t("description")} control="textarea" value={entry.description} onValue={description => app.changeEntry({ description })} maxLength={4000} rows={4} required disabled={busy} resetKey={reset} />
       <fieldset id="entry-work-fields" className="work-fields" hidden={!work}><legend>{t("workDetails")}</legend>

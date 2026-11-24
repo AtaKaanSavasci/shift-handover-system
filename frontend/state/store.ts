@@ -5,7 +5,7 @@ import { defaults, emptyEntry } from "./defaults";
 import { aborted, ApiError, errorMessage, isAbort } from "./errors";
 import { AiController } from "./ai";
 import { NotesController, WorkController } from "./editors";
-import type { Analytics, AnalyticsDays, AppState, EntryDraft, Entry, Page, PageResult, Shift, Summary, User, Message, Theme, Equipment, EquipmentStatus, Kind } from "./types";
+import type { Analytics, AnalyticsDays, Unit, AppState, EntryDraft, Entry, Page, PageResult, Shift, Summary, User, Message, Theme, Equipment, EquipmentStatus, Kind } from "./types";
 
 const same = <T>(previous: T, next: T): T => JSON.stringify(previous) === JSON.stringify(next) ? previous : next;
 const query = (fields: Record<string, string>) => new URLSearchParams(Object.entries(fields).filter(([, value]) => value.trim())).toString();
@@ -20,7 +20,7 @@ function isAnalytics(value: unknown): value is Analytics {
 }
 export const pageFromHash = (hash = location.hash): Page => {
   const value = hash.replace(/^#/, "");
-  return value === "board-title" ? "handover" : ["overview", "analytics", "new-record", "handover", "history"].includes(value) ? value as Page : "overview";
+  return value === "board-title" ? "handover" : ["overview", "analytics", "new-record", "handover", "history", "admin"].includes(value) ? value as Page : "overview";
 };
 export class AppStore {
   state = defaults();
@@ -135,11 +135,25 @@ export class AppStore {
           this.patch({ dashboardMessage: { key: "draftRestored" } });
         }
       }
-      await Promise.all([this.refreshVisible(), this.ai.load()]);
+      // A temporary password unlocks only the password-change screen; load nothing else yet.
+      if (data.user.mustChangePassword) return attempt === this.authVersion;
+      await Promise.all([this.refreshVisible(), this.ai.load(), this.loadUnits()]);
       return attempt === this.authVersion && this.state.user?.id === data.user.id;
     } catch (error) { if (attempt === this.authVersion) this.showError(error instanceof TypeError ? new ApiError("connection", this.t("connection")) : error); return false; }
     finally { if (attempt === this.authVersion) this.patch({ authBusy: false }); }
   }
+  /** Replaces a temporary password; the server revokes older sessions and returns a fresh one. */
+  changePassword = async (currentPassword: string, newPassword: string) => {
+    const response = await this.api("/account/password", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ currentPassword, newPassword }) });
+    const data = await response.json() as { token: string; user: User };
+    this.token = data.token;
+    this.patch({ user: data.user, page: pageFromHash(), dashboardMessage: { key: "passwordChanged" } });
+    await Promise.all([this.refreshVisible(), this.ai.load(), this.loadUnits()]);
+  };
+  loadUnits = async () => {
+    try { this.patch({ units: (await this.read<{ items: Unit[] }>("/operations/units")).items }); }
+    catch (error) { if (!isAbort(error)) this.showError(error); }
+  };
   entryDirty = () => {
     const e = this.state.entry;
     return Boolean(e.title.trim() || e.description.trim() || e.responsibleTeam.trim() || e.nextStep.trim() || e.workStatus !== "OPEN" || this.state.photos.length);
@@ -236,6 +250,8 @@ export class AppStore {
   refreshVisible = async () => {
     if (!this.state.user || this.state.page === "new-record") return;
     if (this.state.page === "analytics") return this.loadAnalytics();
+    // The admin page loads its own data.
+    if (this.state.page === "admin") return;
     await Promise.all([this.loadOperations(), this.state.page === "history" ? this.loadShifts() : this.loadCurrent()]);
   };
   private refreshing = false;

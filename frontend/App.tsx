@@ -8,10 +8,12 @@ import { EntryForm } from "./components/EntryForm";
 import { Handover } from "./components/Handover";
 import { History } from "./components/History";
 import { Analytics } from "./components/Analytics";
+import { Admin } from "./components/Admin";
+import { PasswordChange } from "./components/PasswordChange";
 import { Dialogs } from "./components/Dialogs";
 import { AiChat } from "./components/AiChat";
 import { Brand, Preferences, Icon, MessageLine } from "./components/common";
-const pages = { overview: ["navOverview", "overviewHint", "overview"], analytics: ["navAnalytics", "analyticsPageHint", "chart"], "new-record": ["navNew", "newRecordHint", "plus"], handover: ["navHandover", "handoverPageHint", "handover"], history: ["navHistory", "historyPageHint", "history"] } as const;
+const pages = { overview: ["navOverview", "overviewHint", "overview"], analytics: ["navAnalytics", "analyticsPageHint", "chart"], "new-record": ["navNew", "newRecordHint", "plus"], handover: ["navHandover", "handoverPageHint", "handover"], history: ["navHistory", "historyPageHint", "history"], admin: ["navAdmin", "adminPageHint", "settings"] } as const;
 function ConnectionStatus() {
   const t = useT(), language = useApp(state => state.language), connection = useApp(state => state.connection);
   const status = !connection.browserOnline || connection.reachable === false ? "offline" : connection.failures.length ? "warning" : connection.reachable ? "online" : "checking";
@@ -22,8 +24,8 @@ function Dashboard() {
   const navigation = useApp(state => state.navigationVersion), message = useApp(state => state.dashboardMessage), heading = useRef<HTMLHeadingElement>(null);
   useEffect(() => { document.title = user ? t(pages[page][0]) + " · " + t("brand") : t("brand"); }, [user, page, t]);
   useEffect(() => { if (user && navigation) { heading.current?.focus({ preventScroll: true }); window.scrollTo({ top: 0, behavior: "instant" }); if (location.hash === "#board-title") document.getElementById("board-title")?.scrollIntoView(); } }, [navigation, user]);
-  return <div id="dashboard" hidden={!user}><header className="topbar"><div className="topbar-inner"><Brand /><div className="account-area"><Preferences /><span className="avatar" id="avatar" aria-hidden="true">{user?.name.trim().split(/\s+/).slice(0, 2).map(name => name[0]).join("").toLocaleUpperCase(locale(language))}</span><div className="account-details"><strong id="account-name">{user?.name || ""}</strong><small id="account-role">{user ? t(user.role) : ""}</small></div><button type="button" id="logout" className="button quiet" onClick={app.requestLogout}>{t("logout")}</button></div></div></header>
-    <nav className="workspace-nav" aria-label={t("brand")}>{(Object.entries(pages) as Array<[keyof typeof pages, typeof pages[keyof typeof pages]]>).map(([key, [label, , icon]]) => <a key={key} href={"#" + key} data-nav={key} aria-current={page === key ? "page" : undefined}><Icon name={icon} /><span>{t(label)}</span></a>)}</nav>
+  return <div id="dashboard" hidden={!user || user.mustChangePassword}><header className="topbar"><div className="topbar-inner"><Brand /><div className="account-area"><Preferences /><span className="avatar" id="avatar" aria-hidden="true">{user?.name.trim().split(/\s+/).slice(0, 2).map(name => name[0]).join("").toLocaleUpperCase(locale(language))}</span><div className="account-details"><strong id="account-name">{user?.name || ""}</strong><small id="account-role">{user ? t(user.role) : ""}</small></div><button type="button" id="logout" className="button quiet" onClick={app.requestLogout}>{t("logout")}</button></div></div></header>
+    <nav className="workspace-nav" aria-label={t("brand")}>{(Object.entries(pages) as Array<[keyof typeof pages, typeof pages[keyof typeof pages]]>).filter(([key]) => key !== "admin" || user?.role === "MANAGER").map(([key, [label, , icon]]) => <a key={key} href={"#" + key} data-nav={key} aria-current={page === key ? "page" : undefined}><Icon name={icon} /><span>{t(label)}</span></a>)}</nav>
     <main className="workspace"><ConnectionStatus /><div className="welcome"><div><p className="eyebrow" id="greeting">{user ? t("greeting", { name: user.name.trim().split(/\s+/)[0] || user.name }) : ""}</p><h1 id="page-title" tabIndex={-1} ref={heading}>{t(pages[page][0])}</h1><p className="muted" id="page-description">{t(pages[page][1])}</p></div><div className="today"><span className="date-dot" aria-hidden="true" /><span id="today">{new Intl.DateTimeFormat(locale(language), { timeZone: "Europe/Istanbul", weekday: "long", day: "numeric", month: "long", year: "numeric" }).format(new Date())}</span></div></div>
       <MessageLine id="dashboard-message" className="dashboard-message" message={message} />
       <div id="page-overview" data-page="overview" hidden={page !== "overview"}><Overview /></div>
@@ -31,8 +33,9 @@ function Dashboard() {
       <div id="page-new-record" data-page="new-record" hidden={page !== "new-record"}><EntryForm /></div>
       <div id="page-handover" data-page="handover" hidden={page !== "handover"}><Handover /></div>
       <div id="page-history" data-page="history" hidden={page !== "history"}><History /></div>
+      <div id="page-admin" data-page="admin" hidden={page !== "admin"}><Admin /></div>
       <footer className="workspace-footer"><span>{t("brand")}</span><span>{t("exportLimit")}</span></footer>
     </main><AiChat />
   </div>;
 }
-export function App() { useApplicationEffects(); useMobileViewport(); return <><AuthView /><Dashboard /><Dialogs /></>; }
+export function App() { useApplicationEffects(); useMobileViewport(); return <><AuthView /><PasswordChange /><Dashboard /><Dialogs /></>; }

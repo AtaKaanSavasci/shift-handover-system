@@ -1,10 +1,10 @@
 import { Prisma, type EquipmentStatus, type PrismaClient } from "../generated/prisma/client.js";
 import { RequestError } from "./shift-query.js";
+import { activeUnits } from "./units.js";
 
 export const ANALYTICS_PERIODS = [7, 30, 90] as const;
 export type AnalyticsPeriod = typeof ANALYTICS_PERIODS[number];
 const HOUR = 3_600_000, DAY = 24 * HOUR;
-const units = ["GT1", "GT2", "ST"] as const;
 const statuses = ["ACTIVE", "MAINTENANCE", "INACTIVE", "UNKNOWN"] as const satisfies readonly EquipmentStatus[];
 const board = Prisma.sql`ARRAY['TASK','VALVE','ATTENTION']::"EntryKind"[]`;
 // Timestamps are stored as UTC without zone; convert to plant-local time for calendar grouping.
@@ -36,7 +36,8 @@ async function windowStats(db: Prisma.TransactionClient, from: Date, to: Date) {
 /** Share of the window each unit spent in each status, from the status change log. */
 async function availability(db: Prisma.TransactionClient, from: Date, to: Date) {
   const span = to.getTime() - from.getTime();
-  return Promise.all(units.map(async code => {
+  const units = await activeUnits(db);
+  return Promise.all(units.map(async ({ code, name }) => {
     const before = await db.equipmentChange.findFirst({ where: { equipmentCode: code, createdAt: { lt: from } }, orderBy: [{ createdAt: "desc" }, { id: "desc" }], select: { toStatus: true } });
     const changes = await db.equipmentChange.findMany({ where: { equipmentCode: code, createdAt: { gte: from, lt: to } }, orderBy: [{ createdAt: "asc" }, { id: "asc" }], select: { toStatus: true, createdAt: true } });
     const time: Record<EquipmentStatus, number> = { ACTIVE: 0, MAINTENANCE: 0, INACTIVE: 0, UNKNOWN: 0 };
@@ -44,7 +45,7 @@ async function availability(db: Prisma.TransactionClient, from: Date, to: Date) 
     for (const change of changes) { time[status] += change.createdAt.getTime() - since; status = change.toStatus; since = change.createdAt.getTime(); }
     time[status] += to.getTime() - since;
     const share = Object.fromEntries(statuses.map(key => [key, Math.round((time[key] / span) * 1000) / 10])) as Record<EquipmentStatus, number>;
-    return { code, share, transitions: changes.length };
+    return { code, name, share, transitions: changes.length };
   }));
 }
 

@@ -32,6 +32,11 @@ model User {
   name       String
   password   String
   role       Role       @default(WORKER)
+  active     Boolean    @default(true)
+  /// Incremented to revoke every issued token (deactivation, password reset).
+  tokenVersion Int      @default(0)
+  mustChangePassword Boolean @default(false)
+  auditActions AuditLog[]
   createdAt  DateTime   @default(now())
   shifts     Shift[]
   logs       Log[]
@@ -120,6 +125,10 @@ enum EntryPriority {
 model Equipment {
   code String @id
   name String @default("")
+  description String @default("") @db.VarChar(300)
+  sortOrder Int @default(0)
+  archivedAt DateTime?
+  createdAt DateTime @default(now())
   status EquipmentStatus @default(UNKNOWN)
   note String @default("")
   version Int @default(0)
@@ -233,5 +242,18 @@ model WorkDetailChange {
   createdAt DateTime @default(now())
   @@unique([entryId, version])
   @@index([entryId, createdAt, id])
+  @@index([createdAt, id])
+}
+
+/// Administrative changes: users, roles, passwords and units.
+model AuditLog {
+  id Int @id @default(autoincrement())
+  actorId Int
+  actor User @relation(fields: [actorId], references: [id])
+  action String @db.VarChar(40)
+  targetType String @db.VarChar(20)
+  targetId String @db.VarChar(40)
+  details Json
+  createdAt DateTime @default(now())
   @@index([createdAt, id])
 }

@@ -258,7 +258,11 @@ export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) 
       { code: "GT1", from: "ACTIVE", to: "ACTIVE", hoursAgo: 30, note: ["#2 yatak titreşimi takip ediliyor.", "Monitoring bearing #2 vibration."] },
       { code: "ST", from: "ACTIVE", to: "ACTIVE", hoursAgo: 6, note: ["Drenaj vanası DV-221 kontrol edilecek.", "Drain valve DV-221 to be checked."] }
     ];
-    for (const code of ["GT1", "GT2", "ST"] as const) {
+    const catalog = { GT1: ["Gaz türbini 1", "Gas turbine 1", "Gaz türbini, 170 MW", "Gas turbine, 170 MW"], GT2: ["Gaz türbini 2", "Gas turbine 2", "Gaz türbini, 170 MW", "Gas turbine, 170 MW"],
+      ST: ["Buhar türbini", "Steam turbine", "Kombine çevrim buhar türbini, 120 MW", "Combined-cycle steam turbine, 120 MW"] } as const;
+    for (const [index, code] of (["GT1", "GT2", "ST"] as const).entries()) {
+      const [nameTr, nameEn, descriptionTr, descriptionEn] = catalog[code];
+      const unit = { name: lang ? nameEn : nameTr, description: lang ? descriptionEn : descriptionTr, sortOrder: index + 1, archivedAt: null };
       // Chronological per unit; events older than the seeded history are skipped.
       const changes = history.filter(change => change.code === code && change.hoursAgo <= days * 24).sort((a, b) => b.hoursAgo - a.hoursAgo);
       let last: { at: Date; userId: number; to: EquipmentStatus; note: string } | null = null;
@@ -267,8 +271,8 @@ export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) 
         await tx.equipmentChange.create({ data: { equipmentCode: code, fromStatus: change.from, toStatus: change.to, note: t(change.note), userId, createdAt: at } });
         last = { at, userId, to: change.to, note: t(change.note) };
       }
-      await tx.equipment.upsert({ where: { code }, create: { code, status: last!.to, note: last!.note, version: changes.length, updatedAt: last!.at, updatedById: last!.userId },
-        update: { status: last!.to, note: last!.note, version: changes.length, updatedAt: last!.at, updatedById: last!.userId } });
+      await tx.equipment.upsert({ where: { code }, create: { code, ...unit, status: last!.to, note: last!.note, version: changes.length, updatedAt: last!.at, updatedById: last!.userId },
+        update: { ...unit, status: last!.to, note: last!.note, version: changes.length, updatedAt: last!.at, updatedById: last!.userId } });
     }
     await tx.operationRevision.upsert({ where: { id: 1 }, create: { id: 1, version: 1 }, update: { version: { increment: 1 } } });
     return { users: users.size, shifts: shifts.length, entries: closedCount + openItems.length + logs.length };
@@ -276,6 +280,7 @@ export async function seedDemo(prisma: PrismaClient, options: SeedOptions = {}) 
 }
 
 export async function wipe(tx: Prisma.TransactionClient) {
+  await tx.auditLog.deleteMany();
   await tx.handoverRead.deleteMany();
   await tx.operationUpdate.deleteMany();
   await tx.workDetailChange.deleteMany();
@@ -283,6 +288,8 @@ export async function wipe(tx: Prisma.TransactionClient) {
   await tx.operationEntry.deleteMany();
   await tx.equipmentChange.deleteMany();
   await tx.equipment.updateMany({ data: { updatedById: null } });
+  // Units added by demo visitors go too; the plant units are reset by the seed.
+  await tx.equipment.deleteMany({ where: { code: { notIn: ["GT1", "GT2", "ST"] } } });
   await tx.handover.deleteMany();
   await tx.report.deleteMany();
   await tx.log.deleteMany();

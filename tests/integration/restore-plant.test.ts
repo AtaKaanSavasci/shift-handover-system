@@ -26,13 +26,14 @@ test("retained compatibility migration preserves existing equipment codes and re
   } finally { await client.query(`DROP SCHEMA IF EXISTS "${schema}" CASCADE`); await client.end(); }
 });
 
-test("restoring plant workflow disables catalog writes without deleting custom definitions or their work", async () => {
+test("archived units leave status panels and new records but keep their existing work readable and closable", async () => {
   const db = createPrismaClient(url), suffix = randomUUID().slice(0,8), code = `OLD-${suffix.toUpperCase()}`;
   let userId: number | undefined, entryId: number | undefined;
   try {
     userId = (await db.user.create({ data: { email: `restore-${suffix}@example.com`, name: "Restore Tester", password: "unused", role: "MANAGER" } })).id;
     const auth = `Bearer ${jwt.sign({ id: userId }, secret, { expiresIn: "1h" })}`, app = createApp(db, secret);
-    await db.equipment.create({ data: { code, name: "Previously configured area", status: "ACTIVE", note: "Retain this note" } });
+    // The 20261124 migration archives codes left over from the withdrawn October catalog; this models one.
+    await db.equipment.create({ data: { code, name: "Previously configured area", status: "ACTIVE", note: "Retain this note", archivedAt: new Date() } });
     const entry = await db.operationEntry.create({ data: { authorId: userId, equipmentCode: code, kind: "TASK", priority: "HIGH", title: "Existing handover work", description: "Keep the original reference" } }); entryId = entry.id;
     const get = (path: string) => request(app).get(path).set("Authorization", auth);
     const units = await get("/operations/equipment").expect(200);
@@ -41,6 +42,7 @@ test("restoring plant workflow disables catalog writes without deleting custom d
     assert.deepEqual(summary.equipment.map((item: any) => item.code), ["GT1", "GT2", "ST"]);
     assert.ok(summary.important.some((item: any) => item.id === entryId));
     assert.ok((await get("/operations/entries?view=open")).body.items.some((item: any) => item.id === entryId && item.equipmentCode === code));
+    // Unit administration lives under /admin; the operations API has no catalog writes.
     await request(app).post("/operations/equipment").set("Authorization", auth).send({ code: "NEW-AREA", name: "Not supported" }).expect(404);
     await request(app).patch(`/operations/equipment/${code}`).set("Authorization", auth).send({ name: "Overwrite", version: 0 }).expect(404);
     await request(app).put(`/operations/equipment/${code}`).set("Authorization", auth).send({ status: "INACTIVE", version: 0 }).expect(400);

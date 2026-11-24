@@ -1,3 +1,4 @@
+import { UNIT_CODE } from "./units.js";
 import type { Request } from "express";
 import { EntryKind, EntryPriority, type Prisma } from "../generated/prisma/client.js";
 import { parseShiftDate, RequestError } from "./shift-query.js";
@@ -17,7 +18,8 @@ export function operationQuery(query: Request["query"]) {
     }
   }
   if (kind !== undefined) { if (typeof kind !== "string" || !Object.values(EntryKind).includes(kind as EntryKind)) throw invalid(); conditions.push({ kind: kind as EntryKind }); }
-  if (equipment !== undefined) { if (typeof equipment !== "string" || !["GT1", "GT2", "ST", "GENERAL"].includes(equipment)) throw invalid(); conditions.push({ equipmentCode: equipment === "GENERAL" ? null : equipment }); }
+  // Format check only; the route rejects codes that are not in the unit catalog.
+  if (equipment !== undefined) { if (typeof equipment !== "string" || !(equipment === "GENERAL" || UNIT_CODE.test(equipment))) throw invalid(); conditions.push({ equipmentCode: equipment === "GENERAL" ? null : equipment }); }
   if (priority !== undefined) { if (typeof priority !== "string" || !Object.values(EntryPriority).includes(priority as EntryPriority)) throw invalid(); conditions.push({ priority: priority as EntryPriority }); }
   if (status !== undefined) { if (status !== "open" && status !== "closed") throw invalid(); conditions.push(status === "open" ? { closedAt: null, kind: { in: [EntryKind.VALVE, EntryKind.ATTENTION, EntryKind.TASK] } } : { closedAt: { not: null } }); }
   const start = from === undefined ? undefined : parseShiftDate(from), end = to === undefined ? undefined : parseShiftDate(to);

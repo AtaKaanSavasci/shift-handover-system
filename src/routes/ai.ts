@@ -1,8 +1,10 @@
 import { Router } from "express";
 import { rateLimit } from "express-rate-limit";
 import { aiFailure, createOpenAiAnalyzer, validateAnalysis, type AnalysisInput, type Analyzer } from "../services/ai-analysis.js";
+import type { PrismaClient } from "../generated/prisma/client.js";
+import { activeUnits } from "../services/units.js";
 
-export function createAiRouter(analyzer: Analyzer | null = createOpenAiAnalyzer()) {
+export function createAiRouter(analyzer: Analyzer | null = createOpenAiAnalyzer(), prisma?: PrismaClient) {
   const router = Router();
   router.get("/status", (_req, res) => { res.json({ enabled: Boolean(analyzer) }); });
   const limit = rateLimit({ windowMs: 15 * 60 * 1000, limit: 10,
@@ -21,7 +23,8 @@ export function createAiRouter(analyzer: Analyzer | null = createOpenAiAnalyzer(
     }
     if (!analyzer) return res.status(503).json({ error: "AI_DISABLED" });
     if (inFlight >= 3) return res.status(503).json({ error: "AI_BUSY" });
-    const input: AnalysisInput = { title: body.title.trim(), description: body.description.trim(), language: body.language };
+    const input: AnalysisInput = { title: body.title.trim(), description: body.description.trim(), language: body.language,
+      ...(prisma ? { units: await activeUnits(prisma) } : {}) };
     const controller = new AbortController();
     const cancel = () => controller.abort();
     const timer = setTimeout(cancel, 22_000);
