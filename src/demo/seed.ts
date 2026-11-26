@@ -290,9 +290,6 @@ export async function wipe(tx: Prisma.TransactionClient) {
   await tx.equipment.updateMany({ data: { updatedById: null } });
   // Units added by demo visitors go too; the plant units are reset by the seed.
   await tx.equipment.deleteMany({ where: { code: { notIn: ["GT1", "GT2", "ST"] } } });
-  await tx.handover.deleteMany();
-  await tx.report.deleteMany();
-  await tx.log.deleteMany();
   await tx.shift.deleteMany();
   await tx.user.deleteMany();
 }

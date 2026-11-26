@@ -93,7 +93,8 @@ export class AppStore {
     if (response.status === 401) {
       const dirty = this.dirty(); this.logout(true); this.patch({ authMessage: { key: dirty ? "expiredDraft" : "expired", error: true } }); throw aborted();
     }
-    if (!response.ok) {
+    // 304 only answers our own conditional summary request (see readSummary).
+    if (!response.ok && response.status !== 304) {
       let code = "failed";
       try { const body: unknown = await response.json(); if (body && typeof body === "object" && "error" in body && typeof body.error === "string") code = body.error; } catch { /* Non-JSON gateway response. */ }
       throw new ApiError(code, translateApiError(this.state.language, code));
@@ -101,6 +102,18 @@ export class AppStore {
     return response;
   }
   async read<T>(path: string): Promise<T> { return (await this.api(path)).json() as Promise<T>; }
+  // The summary is polled every 30 s; resend its ETag so an unchanged summary returns an empty 304.
+  // Keep the tag with the payload it describes, so a 304 can never pair a new tag with older data.
+  private summaryCache?: { epoch: number; etag: string; summary: Summary };
+  private async readSummary(): Promise<Summary> {
+    const epoch = this.epoch, cached = this.summaryCache?.epoch === epoch ? this.summaryCache : undefined;
+    const response = await this.api("/operations/summary", cached ? { headers: { "If-None-Match": cached.etag } } : {});
+    if (response.status === 304 && cached) return cached.summary;
+    if (response.status === 304) throw new ApiError("failed", this.t("failed"));
+    const summary = await response.json() as Summary, etag = response.headers.get("ETag");
+    this.summaryCache = etag ? { epoch, etag, summary } : undefined;
+    return summary;
+  }
   async json<T = unknown>(path: string, method: string, body: unknown): Promise<T> {
     return (await this.api(path, { method, headers: { "Content-Type": "application/json" }, body: JSON.stringify(body) })).json() as Promise<T>;
   }
@@ -213,7 +226,7 @@ export class AppStore {
     this.patch({ operationsBusy: true });
     try {
       const [summary, board, operations] = await Promise.all([
-        needSummary ? this.read<Summary>("/operations/summary") : null,
+        needSummary ? this.readSummary() : null,
         needBoard ? this.read<PageResult<Entry>>("/operations/entries?" + open) : null,
         needHistory ? this.read<PageResult<Entry>>("/operations/entries?" + historyQuery) : null
       ]);

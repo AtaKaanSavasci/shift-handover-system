@@ -7,12 +7,14 @@
 generator client {
   provider = "prisma-client"
   importFileExtension = "js"
-  previewFeatures = ["partialIndexes"]
+  previewFeatures = ["partialIndexes", "postgresqlExtensions"]
   output   = "../src/generated/prisma"
 }
 
 datasource db {
   provider = "postgresql"
+  // Trigram indexes let the free-text record search (ILIKE %term%) use an index.
+  extensions = [pg_trgm]
 }
 
 enum Role {
@@ -39,7 +41,6 @@ model User {
   auditActions AuditLog[]
   createdAt  DateTime   @default(now())
   shifts     Shift[]
-  logs       Log[]
   operationEntries OperationEntry[] @relation("EntryAuthor")
   operationUpdates OperationUpdate[]
   workChanges WorkDetailChange[]
@@ -47,8 +48,6 @@ model User {
   equipmentUpdates Equipment[]
   equipmentChanges EquipmentChange[]
   readReceipts HandoverRead[]
-  handoversFrom Handover[] @relation("HandoverFrom")
-  handoversTo   Handover[] @relation("HandoverTo")
 }
 
 model Shift {
@@ -58,9 +57,6 @@ model Shift {
   status     ShiftStatus @default(ACTIVE)
   userId     Int
   user       User       @relation(fields: [userId], references: [id])
-  logs       Log[]
-  handovers  Handover[]
-  reports    Report[]
   operationEntries OperationEntry[]
   readReceipts HandoverRead[]
   shiftDate String?
@@ -68,39 +64,14 @@ model Shift {
   scheduledEnd String?
   createdAt  DateTime   @default(now())
 
+  // Own history (per user) and the manager view (all users) both page by start time.
+  @@index([userId, startTime(sort: Desc), id(sort: Desc)])
+  @@index([startTime(sort: Desc), id(sort: Desc)])
   @@unique([userId], map: "Shift_one_active_per_user", where: raw("(status = 'ACTIVE'::\"ShiftStatus\")"))
 }
 
-model Handover {
-  id          Int      @id @default(autoincrement())
-  shiftId     Int
-  shift       Shift    @relation(fields: [shiftId], references: [id])
-  fromUserId  Int
-  fromUser    User     @relation("HandoverFrom", fields: [fromUserId], references: [id])
-  toUserId    Int
-  toUser      User     @relation("HandoverTo", fields: [toUserId], references: [id])
-  notes       String
-  createdAt   DateTime @default(now())
-}
 
-model Log {
-  id          Int      @id @default(autoincrement())
-  shiftId     Int
-  shift       Shift    @relation(fields: [shiftId], references: [id])
-  userId      Int
-  user        User     @relation(fields: [userId], references: [id])
-  category    String
-  description String
-  createdAt   DateTime @default(now())
-}
 
-model Report {
-  id          Int      @id @default(autoincrement())
-  shiftId     Int
-  shift       Shift    @relation(fields: [shiftId], references: [id])
-  summary     String
-  generatedAt DateTime @default(now())
-}
 
 enum EquipmentStatus {
   UNKNOWN
@@ -150,6 +121,8 @@ model EquipmentChange {
   user User @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
   @@index([createdAt, id])
+  // Availability analytics replay each unit's status history.
+  @@index([equipmentCode, createdAt])
 }
 
 enum WorkStatus {
@@ -186,6 +159,9 @@ model OperationEntry {
   @@index([closedAt, id])
   @@index([equipmentCode, createdAt])
   @@index([closedAt, kind, createdAt])
+  @@index([title(ops: raw("gin_trgm_ops"))], type: Gin)
+  @@index([description(ops: raw("gin_trgm_ops"))], type: Gin)
+  @@index([closeNote(ops: raw("gin_trgm_ops"))], type: Gin)
   @@index([priority(sort: Desc), createdAt(sort: Desc), id(sort: Desc)], map: "OperationEntry_open_board_order", where: raw("((\"closedAt\" IS NULL) AND (kind = ANY (ARRAY['TASK'::\"EntryKind\", 'VALVE'::\"EntryKind\", 'ATTENTION'::\"EntryKind\"])))"))
 }
 
@@ -195,6 +171,7 @@ model OperationPhoto {
   entry OperationEntry @relation(fields: [entryId], references: [id], onDelete: Cascade)
   data Bytes
   createdAt DateTime @default(now())
+  @@index([entryId])
 }
 
 

@@ -37,7 +37,7 @@ async function fixture(run: (context: Context) => Promise<void>) {
 test("assessment: anonymous requests cannot reach any operations, shift, AI or photo handler", async () => fixture(async ({ db, app }) => {
   const revision = await db.operationRevision.findUniqueOrThrow({ where: { id: 1 } });
   const routes = [
-    ["get", "/users"], ["get", "/shifts"], ["get", "/shifts/current"], ["get", "/shifts/export"],
+    ["get", "/admin/users"], ["get", "/shifts"], ["get", "/shifts/current"], ["get", "/shifts/export"],
     ["post", "/shifts/start"], ["post", "/shifts/end"], ["get", "/operations/equipment"], ["put", "/operations/equipment/GT1"],
     ["get", "/operations/entries"], ["post", "/operations/entries"], ["get", "/operations/entries/1/work"],
     ["patch", "/operations/entries/1/work"], ["get", "/operations/entries/1/updates"], ["post", "/operations/entries/1/updates"],
@@ -53,7 +53,7 @@ test("assessment: anonymous requests cannot reach any operations, shift, AI or p
 
 test("assessment: forged claims cannot escalate roles or start/end another worker's shift", async () => fixture(async ({ db, app, users, auth }) => {
   const forged = `Bearer ${jwt.sign({ id: users[0].id, role: "MANAGER", userId: users[2].id }, secret, { expiresIn: "1h" })}`;
-  await request(app).get("/users").set("Authorization", forged).expect(403);
+  await request(app).get("/admin/users").set("Authorization", forged).expect(403);
   await request(app).get("/shifts?scope=all").set("Authorization", forged).expect(403);
   await request(app).get("/shifts/export?scope=all").set("Authorization", forged).expect(403);
   const other = await request(app).post("/shifts/start").set("Authorization", auth[1]).send({}).expect(201);
@@ -63,8 +63,8 @@ test("assessment: forged claims cannot escalate roles or start/end another worke
   assert.equal((await db.shift.findUniqueOrThrow({ where: { id: other.body.id } })).status, "ACTIVE");
   const listing = await request(app).get("/shifts").set("Authorization", auth[0]).expect(200);
   assert.ok(listing.body.items.length > 0 && listing.body.items.every((item: any) => item.user.id === users[0].id));
-  const manager = await request(app).get("/users").set("Authorization", auth[2]).expect(200);
-  assert.ok(manager.body.length > 0); assert.ok(manager.body.every((item: any) => !("password" in item)));
+  const manager = await request(app).get("/admin/users").set("Authorization", auth[2]).expect(200);
+  assert.ok(manager.body.items.length > 0); assert.ok(manager.body.items.every((item: any) => !("password" in item)));
 }));
 
 test("assessment: registration rejects invalid codes and cannot inject a manager role", async () => fixture(async ({ db, app, ids }) => {

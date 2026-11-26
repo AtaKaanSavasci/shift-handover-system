@@ -1,6 +1,6 @@
 import { readWork, writeWork, workSelect, workFields } from "../services/work-details.js";
 import { appendUpdate, listUpdates, updatePreviews, emptyUpdates } from "../services/operation-updates.js";
-import { handoverSummary } from "../services/handover-summary.js";
+import { handoverSummary, summaryTag } from "../services/handover-summary.js";
 import { analytics, analyticsPeriod } from "../services/analytics.js";
 import { requireActiveUnit, requireKnownUnit, unitOrder } from "../services/units.js";
 import { operationQuery } from "../services/operation-query.js";
@@ -148,7 +148,12 @@ export function createOperationsRouter(prisma: PrismaClient) {
     res.json(await analytics(prisma, analyticsPeriod(req.query)));
   });
   router.get("/summary", async (req, res) => {
-    res.json(await prisma.$transaction(tx => handoverSummary(tx, req.user!.id), { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead }));
+    // Polling clients send their last tag; an unchanged summary costs one query instead of a dozen.
+    if (req.get("If-None-Match") === await summaryTag(prisma, req.user!.id)) return res.status(304).end();
+    const { tag, summary } = await prisma.$transaction(async tx => ({ tag: await summaryTag(tx, req.user!.id), summary: await handoverSummary(tx, req.user!.id) }),
+      { isolationLevel: Prisma.TransactionIsolationLevel.RepeatableRead });
+    res.setHeader("ETag", tag);
+    res.json(summary);
   });
   router.post("/summary/read", writeLimit, async (req, res) => {
     const revision = req.body?.revision;

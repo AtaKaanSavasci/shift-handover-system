@@ -30,7 +30,8 @@ function credentials(body: unknown, registration = false) {
       typeof password !== "string" || password.length === 0 || Buffer.byteLength(password) > 256) return null;
   if (registration && (password.length < 12 || typeof name !== "string" ||
       name.trim().length === 0 || name.length > 100 || name.includes("\0"))) return null;
-  return { email, password, name: typeof name === "string" ? name.trim() : "" };
+  // Addresses are stored lowercase (a CHECK constraint enforces it), so sign-in ignores letter case.
+  return { email: email.toLowerCase(), password, name: typeof name === "string" ? name.trim() : "" };
 }
 
 export function createApp(prisma: PrismaClient, secret: string, options: { analyzer?: Analyzer | null; registrationCode?: string | null; performanceLogger?: PerformanceLogger; demo?: boolean; trustProxy?: number } = {}) {
@@ -60,12 +61,6 @@ export function createApp(prisma: PrismaClient, secret: string, options: { analy
 
   app.get("/", (_req, res) => { res.redirect("/app/"); });
   app.use("/app", frontendAssets(fileURLToPath(new URL("../public", import.meta.url))));
-  app.get("/users", authenticate, requireManager, async (_req, res) => {
-    const users = await prisma.user.findMany({ select: {
-      id: true, email: true, name: true, role: true, createdAt: true
-    } });
-    res.json(users);
-  });
   app.post("/register", limiter(10), async (req, res) => {
     if (!registrationHash) return res.status(403).json({ error: "Kayıt kapalı." });
     const code: unknown = req.body?.registrationCode;

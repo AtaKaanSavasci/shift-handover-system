@@ -31,7 +31,7 @@ const bearer = (claims: object = { id: 1 }, options: jwt.SignOptions = {}) =>
   `Bearer ${jwt.sign(claims, secret, { expiresIn: '1h', ...options })}`;
 test('anonymous users cannot list users or access shifts', async () => {
   const { app, listed } = setup();
-  await request(app).get('/users').expect(401);
+  await request(app).get('/admin/users').expect(401);
   await request(app).get('/shifts/current').expect(401);
   await request(app).post('/shifts/start').expect(401);
   await request(app).post('/shifts/end').expect(401);
@@ -39,12 +39,12 @@ test('anonymous users cannot list users or access shifts', async () => {
 });
 test('database WORKER role overrides stale MANAGER token claim', async () => {
   const { app, listed } = setup();
-  await request(app).get('/users').set('Authorization', bearer({ id: 1, role: 'MANAGER' })).expect(403);
+  await request(app).get('/admin/users').set('Authorization', bearer({ id: 1, role: 'MANAGER' })).expect(403);
   assert.equal(listed(), false);
 });
 test('current manager can list users', async () => {
   const { app, listed } = setup({ ...base, role: 'MANAGER' });
-  await request(app).get('/users').set('Authorization', bearer()).expect(200);
+  await request(app).get('/admin/users').set('Authorization', bearer()).expect(200);
   assert.equal(listed(), true);
 });
 test('malformed, expired, wrong-algorithm, unsigned and invalid-claim tokens fail', async () => {
@@ -52,10 +52,10 @@ test('malformed, expired, wrong-algorithm, unsigned and invalid-claim tokens fai
   const values = ['Basic abc', 'Bearer abc extra', 'Bearer garbage', bearer({}), bearer({ id: '1' }),
     bearer({ id: -1 }), bearer({ id: 1 }, { expiresIn: -1 }), bearer({ id: 1 }, { algorithm: 'HS384' }),
     `Bearer ${jwt.sign({ id: 1 }, secret)}`, `Bearer ${jwt.sign({ id: 1 }, '', { algorithm: 'none' })}`];
-  for (const value of values) await request(app).get('/users').set('Authorization', value).expect(401);
+  for (const value of values) await request(app).get('/admin/users').set('Authorization', value).expect(401);
 });
 test('deleted user token is rejected', async () => {
-  await request(setup(null).app).get('/users').set('Authorization', bearer()).expect(401);
+  await request(setup(null).app).get('/admin/users').set('Authorization', bearer()).expect(401);
 });
 test('shift ownership uses authenticated identity', async () => {
   const { app, owner } = setup();
@@ -170,7 +170,7 @@ test('body limits, JSON errors and database errors return safe responses', async
   const { app } = setup(null, true);
   await request(app).post('/login').set('Content-Type', 'application/json').send('{').expect(400);
   await request(app).post('/login').send({ data: 'a'.repeat(17000) }).expect(413);
-  const res = await request(app).get('/users').set('Authorization', bearer()).expect(500);
+  const res = await request(app).get('/admin/users').set('Authorization', bearer()).expect(500);
   assert.equal(JSON.stringify(res.body).includes('DATABASE_URL'), false);
   assert.equal(res.headers['x-powered-by'], undefined);
   assert.equal(res.headers['cache-control'], 'no-store');

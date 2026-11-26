@@ -186,7 +186,7 @@ session/deployment limitations. It is a local assessment, not a security certifi
   `WORKER` accounts. Existing accounts with shorter passwords can still log in.
 - `/login` and `/register` allow 20 and 10 requests per IP address per 15 minutes,
   respectively.
-- `/users` requires the user's current database role to be `MANAGER`.
+- `/admin/*` requires the user's current database role to be `MANAGER`.
 - Shift endpoints use the identity of the authenticated user from the token.
 - JWTs accept only HS256 and expire after 8 hours. The current user role is read
   from the database on each authenticated request.
@@ -680,7 +680,7 @@ The light theme uses layered cool-gray page, card and form-field surfaces instea
 
 - Overview requests current shift and summary only. Compared with the previous implementation, overview startup uses two operational reads instead of five (AI availability is an additional unchanged read).
 - Handover adds the open-board page; history loads shift history and its own entry page. New Entry does not poll operational data. Entering a page refreshes its data, while unsaved form text and photos remain intact.
-- Live overview/handover refresh runs every 30 seconds only while the tab is visible. Returning to a visible live page triggers a refresh, with overlapping automatic refreshes suppressed.
+- Live overview/handover refresh runs every 30 seconds only while the tab is visible. Returning to a visible live page triggers a refresh, with overlapping automatic refreshes suppressed. The summary request sends its last `ETag`; when nothing changed the server answers `304` after one query instead of rebuilding the summary.
 - Unchanged overview data preserves card DOM nodes and keyboard focus; unchanged board data skips rebuilding entry cards. Freshness/error status is updated separately. Date/time formatters are reused per language. Photos continue to load only when requested.
 - Server authorization, versioned acknowledgement, closure history and retained compatibility migration are unchanged. The page-loading changes themselves require no additional migration or dependency. No production latency or large-dataset benchmark is claimed.
 
